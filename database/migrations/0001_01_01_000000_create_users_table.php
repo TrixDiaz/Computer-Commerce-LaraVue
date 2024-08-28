@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('phone')->nullable();
             $table->string('address')->nullable();
             $table->dateTime('birth_date')->nullable();
+            $table->string('role_id')->default(0);
             $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
