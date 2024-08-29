@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
@@ -6,6 +7,8 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import Eye from '@/Components/Icons/Eye.vue';
+import CloseEye from '@/Components/Icons/CloseEye.vue';
 
 defineProps({
     canResetPassword: {
@@ -27,6 +30,8 @@ const submit = () => {
         onFinish: () => form.reset('password'),
     });
 };
+
+const showPassword = ref(false);
 </script>
 
 <template>
@@ -48,13 +53,15 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
+            <div class="relative mt-4">
                 <InputLabel for="password" value="Password" />
 
-                <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required
+                <TextInput id="password" :type="showPassword ? 'text' : 'password'" class="mt-1 block w-full" v-model="form.password" required
                     autocomplete="current-password" />
 
                 <InputError class="mt-2" :message="form.errors.password" />
+                <CloseEye v-if="showPassword" @click="showPassword = !showPassword" class="absolute top-9 right-4" />
+                <Eye @click="showPassword = !showPassword" class="absolute top-9 right-4" />
             </div>
             <div class="block mt-4">
                 <div class="flex items-center justify-between">

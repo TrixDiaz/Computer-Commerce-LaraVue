@@ -6,7 +6,8 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
-
+import Eye from '@/Components/Icons/Eye.vue';
+import CloseEye from '@/Components/Icons/CloseEye.vue';
 
 defineProps({
     roles: {
@@ -29,6 +30,8 @@ const createUser = () => {
         },
     });
 };
+
+const showPassword = ref(false);
 </script>
 
 <template>
@@ -60,10 +63,12 @@ const createUser = () => {
                                     <InputError class="mt-2" :message="form.errors.email" />
                                 </div>
 
-                                <div class="col-span-6 sm:col-span-3">
+                                <div class="relative col-span-6 sm:col-span-3">
                                     <InputLabel for="password" value="password" />
-                                    <TextInput id="password" v-model="form.password" type="password" class="mt-1 block w-full" />
+                                    <TextInput id="password" v-model="form.password" :type="showPassword ? 'text' : 'password'" class="mt-1 block w-full" />
                                     <InputError class="mt-2" :message="form.errors.password" />
+                                    <CloseEye v-if="showPassword" @click="showPassword = !showPassword" class="absolute top-9 right-4" />
+                                    <Eye @click="showPassword = !showPassword" class="absolute top-9 right-4" />
                                 </div>
 
                                 <div class="col-span-6 sm:col-span-3">

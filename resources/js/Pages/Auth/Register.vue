@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -6,6 +7,8 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import Checkbox from '@/Components/Checkbox.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import Eye from '@/Components/Icons/Eye.vue';
+import CloseEye from '@/Components/Icons/CloseEye.vue';
 
 const form = useForm({
     name: '',
@@ -24,6 +27,9 @@ const submit = () => {
 const validateName = (event) => {
     form.name = event.target.value.replace(/[^a-zA-Z\s]/g, '');
 };
+
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
 </script>
 
 <template>
@@ -53,22 +59,29 @@ const validateName = (event) => {
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
-            <div class="mt-4">
+            <div class="relative mt-4">
                 <InputLabel for="password" value="Password" />
 
-                <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password" required
-                    autocomplete="new-password" pattern=".{8,}" title="8 characters minimum" />
+                <TextInput id="password" :type="showPassword ? 'text' : 'password'" class="mt-1 block w-full"
+                    v-model="form.password" required autocomplete="new-password" pattern=".{8,}"
+                    title="8 characters minimum" />
 
                 <InputError class="mt-2" :message="form.errors.password" />
+                <CloseEye v-if="showPassword" @click="showPassword = !showPassword" class="absolute top-9 right-4" />
+                <Eye @click="showPassword = !showPassword" class="absolute top-9 right-4" />
             </div>
 
-            <div class="mt-4">
+            <div class="relative mt-4">
                 <InputLabel for="password_confirmation" value="Confirm Password" />
 
-                <TextInput id="password_confirmation" type="password" class="mt-1 block w-full"
-                    v-model="form.password_confirmation" required autocomplete="new-password" pattern=".{8,}" title="8 characters minimum" />
+                <TextInput id="password_confirmation" :type="showConfirmPassword ? 'text' : 'password'" class="mt-1 block w-full"
+                    v-model="form.password_confirmation" required autocomplete="new-password" pattern=".{8,}"
+                    title="8 characters minimum" />
 
                 <InputError class="mt-2" :message="form.errors.password_confirmation" />
+
+                <CloseEye v-if="showConfirmPassword" @click="showConfirmPassword = !showConfirmPassword" class="absolute top-9 right-4" />
+                <Eye @click="showConfirmPassword = !showConfirmPassword" class="absolute top-9 right-4" />
             </div>
 
             <div class="mt-2">
@@ -78,8 +91,7 @@ const validateName = (event) => {
                     </div>
                     <div class="ml-3 text-sm">
                         <label for="terms" class="font-light text-slate-500">I accept the <a
-                                class="font-medium text-red-600 hover:underline"
-                                href="#">Terms
+                                class="font-medium text-red-600 hover:underline" href="#">Terms
                                 and Conditions</a></label>
                     </div>
                 </div>
@@ -96,8 +108,7 @@ const validateName = (event) => {
             <div class="mt-2">
                 <p class="text-sm font-light text-slate-500 ">
                     Already have an account?
-                    <Link :href="route('login')"
-                        class="font-medium text-red-600 hover:underline">
+                    <Link :href="route('login')" class="font-medium text-red-600 hover:underline">
                     Login here</Link>
                 </p>
             </div>
