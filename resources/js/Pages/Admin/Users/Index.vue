@@ -18,6 +18,8 @@ import { initFlowbite } from 'flowbite'
 onMounted(() => {
     initFlowbite();
 })
+
+
 </script>
 
 <template>
@@ -185,7 +187,7 @@ onMounted(() => {
                                             {{ user.email }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
-                                            {{ user.role.name || user.role }}
+                                            {{ user.role?.name || 'No Role Assigned' }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{ user.created_at }}
@@ -193,9 +195,9 @@ onMounted(() => {
 
                                         <td
                                             class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <a href="#" class="text-slate-600 hover:text-slate-900">
+                                            <Link :href="route('users.edit',user.id)" class="text-slate-600 hover:text-slate-900">
                                                 Edit
-                                            </a>
+                                            </Link>
                                             <button class="ml-2 text-red-600 hover:text-red-900">
                                                 Delete
                                             </button>

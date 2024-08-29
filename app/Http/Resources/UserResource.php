@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'role_id' => $this->role_id,
             'phone' => $this->phone,
             'address' => $this->address,
-            'role' => $this->role ? RoleResource::make($this->whenLoaded('role')) : 'Users',
+            'role' =>  RoleResource::make($this->whenLoaded('role')),
             'birth_date' => $this->birth_date,
             'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at->diffForHumans(),
