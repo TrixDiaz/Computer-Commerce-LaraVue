@@ -2,7 +2,7 @@
 import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Pagination from "@/Components/Pagination.vue";
-import { Link } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 
 
 defineProps({
@@ -19,7 +19,13 @@ onMounted(() => {
     initFlowbite();
 })
 
+const deleteForm = useForm({});
 
+const deleteStudent = (userId) => {
+    if(confirm('Are you sure you want to delete this user?')) {
+        deleteForm.delete(route('users.destroy', userId)); 
+    }
+}
 </script>
 
 <template>
@@ -198,7 +204,9 @@ onMounted(() => {
                                             <Link :href="route('users.edit',user.id)" class="text-slate-600 hover:text-slate-900">
                                                 Edit
                                             </Link>
-                                            <button class="ml-2 text-red-600 hover:text-red-900">
+                                            <button
+                                             @click="deleteStudent(user.id)"
+                                             class="ml-2 text-red-600 hover:text-red-900">
                                                 Delete
                                             </button>
                                         </td>
