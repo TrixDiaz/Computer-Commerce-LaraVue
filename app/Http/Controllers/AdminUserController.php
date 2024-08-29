@@ -6,14 +6,16 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class AdminUserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return inertia('Admin/Index');
+        $users =  UserResource::collection(User::paginate(10));
+
+        return inertia('Admin/Users/Index', compact('users'));
     }
 
     /**

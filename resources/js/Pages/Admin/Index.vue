@@ -1,3 +1,5 @@
+<script setup></script>
+
 <template>
-    <p>Admin</p>
+    admin
 </template>

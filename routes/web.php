@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,8 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', config('sanctum.middleware.admin')])->group(function () {
-   Route::resource('/admin', AdminController::class);
+Route::middleware(['auth', config('sanctum.middleware.admin')])->prefix('admin')->group(function () {
+    Route::resource('/', AdminController::class);
+    Route::resource('/users', AdminUserController::class);
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
