@@ -6,6 +6,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
+use Illuminate\Database\Eloquent\Builder;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,21 +18,20 @@ class AdminUserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
         $usersQuery = User::query();
 
-        $this->applySearch($usersQuery, $request->search);
+        $usersQuery = $this->applySearch($usersQuery, request('search'));
 
-        $users =  UserResource::collection($usersQuery->paginate(10));
 
         return inertia('Admin/Users/Index', [
-            'users' => $users,
+            'users' => UserResource::collection($usersQuery->paginate(10)),
             'search' => $request->search ?? '',
         ]);
     }
 
-    protected function applySearch($query, $search) 
+    protected function applySearch(Builder $query, $search) 
     {
         return $query->when($search, function ($query, $search) {
             $query->where('name', 'like', '%'.$search.'%')

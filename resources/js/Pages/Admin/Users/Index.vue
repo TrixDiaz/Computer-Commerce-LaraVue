@@ -15,18 +15,27 @@ defineProps({
     users: {
         type: Object,
     },
+  
 });
 
-let search = ref(usePage().props.search);
+let search = ref(usePage().props.search ?? '');
 let pageNumbers = ref(1);
-let usersUrl = computed(() => {
-    let url = new URL(route('users.index'));
-    url.searchParams.append('page', pageNumbers.value);
+
+    let usersUrl = computed(() => {
+        let url = new URL(route('users.index'));
+
+    url.searchParams.set('page', pageNumbers.value);
+
     if (search.value) {
-        url.searchParams.append('search', search.value);
+        url.searchParams.set('search', search.value);
     }
+
     return url.toString();
 });
+
+const pageNumberUpdated = (link) => {
+    pageNumber.value = link.url.split("=")[1];
+};
 
 watch(() => usersUrl.value, (updateUserUrl) => {
     router.visit(updateUserUrl, {
@@ -230,7 +239,10 @@ const deleteStudent = (userId) => {
                                 </tbody>
                             </table>
                         </div>
-                        <Pagination :data="users" />
+                        <Pagination 
+                        :data="users" 
+                        :pageNumberUpdated="pageNumberUpdated" 
+                        />
                     </div>
                 </div>
             </div>
