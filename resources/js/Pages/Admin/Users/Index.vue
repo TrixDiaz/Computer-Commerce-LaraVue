@@ -1,8 +1,8 @@
 <script setup>
 import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
+import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Pagination from "@/Components/Pagination.vue";
 import { Link } from "@inertiajs/vue3";
-import PrimaryButton from '@/Components/PrimaryButton.vue';
 
 
 defineProps({
@@ -50,10 +50,10 @@ onMounted(() => {
                             </div>
                             <div
                                 class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-2">
-                                <Link href="#">
-                                <PrimaryButton>
-                                    Add User
-                                </PrimaryButton>
+                                <Link :href="route('users.create')">
+                                    <PrimaryButton>
+                                        Add User
+                                    </PrimaryButton>
                                 </Link>
 
                                 <div class="flex items-center w-full space-x-2 md:w-auto">
