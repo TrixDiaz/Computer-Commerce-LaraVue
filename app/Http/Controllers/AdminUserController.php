@@ -17,11 +17,26 @@ class AdminUserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users =  UserResource::collection(User::paginate(10));
+        $usersQuery = User::query();
 
-        return inertia('Admin/Users/Index', compact('users'));
+        $this->applySearch($usersQuery, $request->search);
+
+        $users =  UserResource::collection($usersQuery->paginate(10));
+
+        return inertia('Admin/Users/Index', [
+            'users' => $users,
+            'search' => $request->search ?? '',
+        ]);
+    }
+
+    protected function applySearch($query, $search) 
+    {
+        return $query->when($search, function ($query, $search) {
+            $query->where('name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%');
+        });
     }
 
     /**
@@ -81,6 +96,7 @@ class AdminUserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->validated());
+
         return redirect()->route('users.index');
     }
 
@@ -90,6 +106,7 @@ class AdminUserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+
         return redirect()->route('users.index');
     }
 }

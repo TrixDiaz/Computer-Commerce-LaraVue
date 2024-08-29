@@ -1,9 +1,15 @@
 <script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import { Head, Link, useForm, router, usePage } from "@inertiajs/vue3";
+import { initFlowbite } from 'flowbite'
 import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import Pagination from "@/Components/Pagination.vue";
-import { Link, useForm } from "@inertiajs/vue3";
+import TextInput from '@/Components/TextInput.vue';
 
+onMounted(() => {
+    initFlowbite();
+})
 
 defineProps({
     users: {
@@ -11,24 +17,35 @@ defineProps({
     },
 });
 
-import { onMounted } from 'vue'
-import { initFlowbite } from 'flowbite'
+let search = ref(usePage().props.search);
+let pageNumbers = ref(1);
+let usersUrl = computed(() => {
+    let url = new URL(route('users.index'));
+    url.searchParams.append('page', pageNumbers.value);
+    if (search.value) {
+        url.searchParams.append('search', search.value);
+    }
+    return url.toString();
+});
 
-// initialize components based on data attribute selectors
-onMounted(() => {
-    initFlowbite();
-})
+watch(() => usersUrl.value, (updateUserUrl) => {
+    router.visit(updateUserUrl, {
+        preserveScroll: true,
+        preserveState: true,
+    });
+});
 
 const deleteForm = useForm({});
 
 const deleteStudent = (userId) => {
-    if(confirm('Are you sure you want to delete this user?')) {
-        deleteForm.delete(route('users.destroy', userId)); 
+    if (confirm('Are you sure you want to delete this user?')) {
+        deleteForm.delete(route('users.destroy', userId));
     }
 }
 </script>
 
 <template>
+    <Head title="Users" />
     <div class="bg-gray-100 py-10">
         <div class="mx-auto max-w-7xl">
             <section class="flex items-center">
@@ -50,18 +67,17 @@ const deleteStudent = (userId) => {
                                                     clip-rule="evenodd" />
                                             </svg>
                                         </div>
-                                        <input type="text" id="simple-search"
-                                            class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50"
-                                            placeholder="Search" required="">
+                                        <TextInput v-model="search" type="text" placeholder="Search"
+                                            class="block w-full p-2 pl-10 text-sm" />
                                     </div>
                                 </form>
                             </div>
                             <div
                                 class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-2">
                                 <Link :href="route('users.create')">
-                                    <PrimaryButton>
-                                        Add User
-                                    </PrimaryButton>
+                                <PrimaryButton>
+                                    Add User
+                                </PrimaryButton>
                                 </Link>
 
                                 <div class="flex items-center w-full space-x-2 md:w-auto">
@@ -201,12 +217,12 @@ const deleteStudent = (userId) => {
 
                                         <td
                                             class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <Link :href="route('users.edit',user.id)" class="text-slate-600 hover:text-slate-900">
-                                                Edit
+                                            <Link :href="route('users.edit', user.id)"
+                                                class="text-slate-600 hover:text-slate-900">
+                                            Edit
                                             </Link>
-                                            <button
-                                             @click="deleteStudent(user.id)"
-                                             class="ml-2 text-red-600 hover:text-red-900">
+                                            <button @click="deleteStudent(user.id)"
+                                                class="ml-2 text-red-600 hover:text-red-900">
                                                 Delete
                                             </button>
                                         </td>
