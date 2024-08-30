@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,12 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        //
+
+        $products = ProductResource::collection(Product::paginate(10));
+
+        return inertia('Admin/Products/Index', [
+            'products' => $products
+        ]);
     }
 
     /**
