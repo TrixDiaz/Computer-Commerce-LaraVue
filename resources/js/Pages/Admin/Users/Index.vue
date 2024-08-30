@@ -47,6 +47,15 @@ watch(
     });
 });
 
+watch(
+    () => search.value,
+    (value) => {
+        if (value) {
+            pageNumber.value = 1;
+        }
+    }
+);
+
 const deleteForm = useForm({});
 
 const deleteStudent = (userId) => {
