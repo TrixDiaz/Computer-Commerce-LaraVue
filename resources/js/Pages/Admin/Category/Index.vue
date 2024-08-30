@@ -89,7 +89,7 @@ const deleteStudent = (categorieId) => {
 </script>
 
 <template>
-    <Head title="categories" />
+    <Head title="Categories" />
     <div class="bg-gray-100 py-10">
         <div class="mx-auto max-w-7xl">
             <section class="flex items-center">
@@ -228,10 +228,6 @@ const deleteStudent = (categorieId) => {
                                             Category Name
                                         </th>
                                         <th scope="col"
-                                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Slug
-                                        </th>
-                                        <th scope="col"
                                             class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Created At
                                         </th>
@@ -247,9 +243,6 @@ const deleteStudent = (categorieId) => {
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                             {{ category.name }}
-                                        </td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{ category.slug }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{ category.created_at }}

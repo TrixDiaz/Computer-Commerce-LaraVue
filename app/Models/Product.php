@@ -11,14 +11,14 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'slug',
         'description',
         'price',
         'category_id',
         'brand_id',
         'user_id',
         'stock',
-        'image'
+        'image',
+        'is_active',
     ];
 
     protected $with = ['category', 'brand', 'user'];
