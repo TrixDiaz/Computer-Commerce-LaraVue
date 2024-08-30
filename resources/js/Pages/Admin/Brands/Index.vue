@@ -72,11 +72,11 @@ const sortbrands = (order) => {
     sort.value = order;
 };
 
-const filterbrands = (roleId) => {
-    if (filter.value.includes(roleId)) {
-        filter.value = filter.value.filter(id => id !== roleId);
+const filtercategories = (activeId) => {
+    if (filter.value.includes(activeId)) {
+        filter.value = filter.value.filter(id => id !== activeId);
     } else {
-        filter.value.push(roleId);
+        filter.value.push(activeId);
     }
 };
 
@@ -121,9 +121,9 @@ const deleteStudent = (brandId) => {
                             <div
                                 class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-2">
                                 <Link :href="route('brands.create')">
-                                    <PrimaryButton>
-                                        Add Brand
-                                    </PrimaryButton>
+                                <PrimaryButton>
+                                    Add Brand
+                                </PrimaryButton>
                                 </Link>
 
                                 <div class="flex items-center w-full space-x-2 md:w-auto">
@@ -177,32 +177,28 @@ const deleteStudent = (brandId) => {
                                         </h6>
                                         <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                             <li class="flex items-center">
-                                                <TextInput @change="filterbrands(1)" id="brands" type="checkbox"
+                                                <TextInput @change="filtercategories(1)" id="editors" type="checkbox"
                                                     value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <InputLabel for="brands" class="ml-2 text-sm font-medium text-gray-900">
-                                                    brands
+                                                <InputLabel for="editors"
+                                                    class="ml-2 text-sm font-medium text-gray-900">
+                                                    Active Categories
                                                 </InputLabel>
                                             </li>
                                             <li class="flex items-center">
-                                                <TextInput @change="filterbrands(2)" id="editors" type="checkbox" value=""
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <InputLabel for="editors" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Editors
-                                                </InputLabel>
-                                            </li>
-                                            <li class="flex items-center">
-                                                <TextInput @change="filterbrands(3)" id="admins" type="checkbox" value=""
+                                                <TextInput @change="filtercategories(false)" id="admins" type="checkbox"
+                                                    value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                 <InputLabel for="admins" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Admins
+                                                    Inactive Categories
                                                 </InputLabel>
                                             </li>
                                             <li class="flex items-center">
                                                 <TextInput id="deleted" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <InputLabel for="deleted" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Deleted brands
+                                                <InputLabel for="deleted"
+                                                    class="ml-2 text-sm font-medium text-gray-900">
+                                                    Deleted Categories
                                                 </InputLabel>
                                             </li>
                                         </ul>
@@ -230,6 +226,10 @@ const deleteStudent = (brandId) => {
                                             Brand Name
                                         </th>
                                         <th scope="col"
+                                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                            Status
+                                        </th>
+                                        <th scope="col"
                                             class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Created At
                                         </th>
@@ -245,6 +245,10 @@ const deleteStudent = (brandId) => {
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                             {{ brand.name }}
+                                        </td>
+                                        <td
+                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                            {{ brand.is_active ? 'Active' : 'Inactive' }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{ brand.created_at }}

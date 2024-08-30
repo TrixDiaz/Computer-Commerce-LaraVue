@@ -17,7 +17,7 @@ class BrandResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'slug' => $this->slug,
+            'is_active' => $this->is_active,
             'created_at' => $this->created_at->toFormattedDateString(),
             'updated_at' => $this->updated_at->diffForHumans(),
         ];

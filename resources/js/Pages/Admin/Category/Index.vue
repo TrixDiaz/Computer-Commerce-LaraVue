@@ -72,11 +72,11 @@ const sortcategories = (order) => {
     sort.value = order;
 };
 
-const filtercategories = (roleId) => {
-    if (filter.value.includes(roleId)) {
-        filter.value = filter.value.filter(id => id !== roleId);
+const filtercategories = (activeId) => {
+    if (filter.value.includes(activeId)) {
+        filter.value = filter.value.filter(id => id !== activeId);
     } else {
-        filter.value.push(roleId);
+        filter.value.push(activeId);
     }
 };
 
@@ -177,32 +177,24 @@ const deleteStudent = (categorieId) => {
                                         </h6>
                                         <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                             <li class="flex items-center">
-                                                <TextInput @change="filtercategories(1)" id="categories" type="checkbox"
-                                                    value=""
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <InputLabel for="categories" class="ml-2 text-sm font-medium text-gray-900">
-                                                    categories
-                                                </InputLabel>
-                                            </li>
-                                            <li class="flex items-center">
-                                                <TextInput @change="filtercategories(2)" id="editors" type="checkbox" value=""
+                                                <TextInput @change="filtercategories(1)" id="editors" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                 <InputLabel for="editors" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Editors
+                                                    Active Categories
                                                 </InputLabel>
                                             </li>
                                             <li class="flex items-center">
-                                                <TextInput @change="filtercategories(3)" id="admins" type="checkbox" value=""
+                                                <TextInput @change="filtercategories(false)" id="admins" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                 <InputLabel for="admins" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Admins
+                                                    Inactive Categories
                                                 </InputLabel>
                                             </li>
                                             <li class="flex items-center">
                                                 <TextInput id="deleted" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                 <InputLabel for="deleted" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Deleted categories
+                                                    Deleted Categories
                                                 </InputLabel>
                                             </li>
                                         </ul>
@@ -230,6 +222,10 @@ const deleteStudent = (categorieId) => {
                                             Category Name
                                         </th>
                                         <th scope="col"
+                                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                            Status
+                                        </th>
+                                        <th scope="col"
                                             class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Created At
                                         </th>
@@ -245,6 +241,10 @@ const deleteStudent = (categorieId) => {
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                             {{ category.name }}
+                                        </td>
+                                        <td
+                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                            {{ category.is_active ? 'Active' : 'Inactive' }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{ category.created_at }}
