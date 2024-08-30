@@ -18,7 +18,12 @@ defineProps({
     products: {
         type: Object,
     },
-
+    categories: {
+        type: Object,
+    },
+    brands: {
+        type: Object,
+    }
 });
 
 let search = ref(usePage().props.search ?? '');
@@ -168,37 +173,39 @@ const deleteStudent = (productId) => {
                                     </SecondaryButton>
 
                                     <!-- Dropdown menu -->
-                                    <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow">
-                                        <h6 class="mb-3 text-sm font-medium text-gray-900">
-                                            Category
-                                        </h6>
-                                        <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                                            <li class="flex items-center">
-                                                <TextInput @change="filterproducts(1)" id="active" type="checkbox"
-                                                    value=""
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <InputLabel for="active" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Active Products
-                                                </InputLabel>
-                                            </li>
-                                            <li class="flex items-center">
-                                                <TextInput @change="filterproducts(false)" id="inactive" type="checkbox"
-                                                    value=""
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <InputLabel for="inactive"
-                                                    class="ml-2 text-sm font-medium text-gray-900">
-                                                    Inactive Products
-                                                </InputLabel>
-                                            </li>
-                                            <li class="flex items-center">
-                                                <TextInput id="deleted" type="checkbox" value=""
-                                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <InputLabel for="deleted"
-                                                    class="ml-2 text-sm font-medium text-gray-900">
-                                                    Deleted products
-                                                </InputLabel>
-                                            </li>
-                                        </ul>
+                                    <div id="filterDropdown" class="z-10 hidden max-w-60 p-3 bg-white rounded-lg shadow">
+                                        <div class="flex flex-row justify-center items-center w-full gap-2">
+                                            <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                                <h6 class="mb-3 text-sm font-medium text-gray-900">
+                                                    Category
+                                                </h6>
+                                                <li v-for="category in categories.data" :key="category.id"
+                                                    class="flex items-center">
+                                                    <input @change="filterproducts(category.id)" :id="category.id"
+                                                        type="checkbox" :value="category.id"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
+                                                    <InputLabel for="active"
+                                                        class="ml-2 text-sm font-medium text-gray-900">
+                                                        {{ category.name }}
+                                                    </InputLabel>
+                                                </li>
+                                            </ul>
+                                            <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                                <h6 class="mb-3 text-sm font-medium text-gray-900">
+                                                    Brand
+                                                </h6>
+                                                <li v-for="brand in brands.data" :key="brand.id"
+                                                    class="flex items-center">
+                                                    <input @change="filterproducts(brand.id)" :id="brand.id"
+                                                        type="checkbox" :value="brand.id"
+                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
+                                                    <InputLabel for="active"
+                                                        class="ml-2 text-sm font-medium text-gray-900">
+                                                        {{ brand.name }}
+                                                    </InputLabel>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -209,37 +216,37 @@ const deleteStudent = (productId) => {
                         <div class="flex items-center px-4 pb-4 space-x-2">
                             <p class="font-meduim font-bold text-sm">Show only:</p>
                             <div class="flex flex-row items-center">
-                                <TextInput id="deleted" type="checkbox" value=""
+                                <input id="featured" type="checkbox" value=""
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                <InputLabel for="deleted" class="ml-2 text-sm font-medium text-gray-900">
+                                <InputLabel for="featured" class="ml-2 text-sm font-medium text-gray-900">
                                     Featured Products
                                 </InputLabel>
                             </div>
                             <div class="flex flex-row items-center">
-                                <TextInput id="deleted" type="checkbox" value=""
+                                <input id="sale" type="checkbox" value=""
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                <InputLabel for="deleted" class="ml-2 text-sm font-medium text-gray-900">
+                                <InputLabel for="sale" class="ml-2 text-sm font-medium text-gray-900">
                                     Sale Products
                                 </InputLabel>
                             </div>
                             <div class="flex flex-row items-center">
-                                <TextInput id="deleted" type="checkbox" value=""
+                                <input id="new" type="checkbox" value=""
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                <InputLabel for="deleted" class="ml-2 text-sm font-medium text-gray-900">
+                                <InputLabel for="new" class="ml-2 text-sm font-medium text-gray-900">
                                     New Products
                                 </InputLabel>
                             </div>
                             <div class="flex flex-row items-center">
-                                <TextInput id="deleted" type="checkbox" value=""
+                                <input id="active" type="checkbox" value=""
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                <InputLabel for="deleted" class="ml-2 text-sm font-medium text-gray-900">
+                                <InputLabel for="active" class="ml-2 text-sm font-medium text-gray-900">
                                     Active Products
                                 </InputLabel>
                             </div>
                             <div class="flex flex-row items-center">
-                                <TextInput id="deleted" type="checkbox" value=""
+                                <input id="inactive" type="checkbox" value=""
                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                <InputLabel for="deleted" class="ml-2 text-sm font-medium text-gray-900">
+                                <InputLabel for="inactive" class="ml-2 text-sm font-medium text-gray-900">
                                     Inactive Products
                                 </InputLabel>
                             </div>
@@ -273,6 +280,14 @@ const deleteStudent = (productId) => {
                                         </th>
                                         <th scope="col"
                                             class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                            Category Name
+                                        </th>
+                                        <th scope="col"
+                                            class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                            Brand Name
+                                        </th>
+                                        <th scope="col"
+                                            class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                                             Status
                                         </th>
                                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6" />
@@ -293,6 +308,12 @@ const deleteStudent = (productId) => {
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
                                             {{ product.stock }}
+                                        </td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
+                                            {{ product.category.name }}
+                                        </td>
+                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
+                                            {{ product.brand.name }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                             {{ product.is_active === 1 ? 'Active' : 'Inactive' }}

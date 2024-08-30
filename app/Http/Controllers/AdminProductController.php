@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BrandResource;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class AdminProductController extends Controller
@@ -15,16 +19,21 @@ class AdminProductController extends Controller
     public function index(Request $request)
     {
         $productsQuery = Product::query();
-
+        
         $this->applySearch($productsQuery, $request->search);
         $this->applySort($productsQuery, $request->sort);
-        $this->applyFilter($productsQuery, $request->filter);
-
+        $this->applyCategoryFilter($productsQuery, $request->filter);
+        $this->applyBrandFilter($productsQuery, $request->filter);
+        
         $products = ProductResource::collection($productsQuery->paginate(10));
+        $category = CategoryResource::collection(Category::all());
+        $brands = BrandResource::collection(Brand::all());
 
         return inertia('Admin/Products/Index', [
             'products' => $products,
             'search' => $request->search ?? '',
+            'categories' => $category,
+            'brands' => $brands,
         ]);
     }
 
@@ -33,6 +42,7 @@ class AdminProductController extends Controller
         return $query->when($search, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%');
         });
+        
     }
 
     protected function applySort(Builder $query, $sort)
@@ -43,13 +53,22 @@ class AdminProductController extends Controller
         });
     }
 
-    protected function applyFilter(Builder $query, $filter)
+    protected function applyCategoryFilter(Builder $query, $filter)
     {
         return $query->when($filter, function ($query, $filter) {
             $is_active = explode(',', $filter);
-            $query->whereIn('is_active', $is_active);
+            $query->whereIn('category_id', $is_active);
         });
     }
+
+    protected function applyBrandFilter(Builder $query, $filter)
+    {
+        return $query->when($filter, function ($query, $filter) {
+            $is_active = explode(',', $filter);
+            $query->whereIn('brand_id', $is_active);
+        });
+    }
+    
 
     /**
      * Show the form for creating a new resource.
