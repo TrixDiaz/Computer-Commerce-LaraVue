@@ -15,32 +15,35 @@ defineProps({
     users: {
         type: Object,
     },
-  
+
 });
 
 let search = ref(usePage().props.search ?? '');
-let pageNumbers = ref(1);
+let pageNumber = ref(1);
 
-    let usersUrl = computed(() => {
-        let url = new URL(route('users.index'));
+let usersUrl = computed(() => {
+    let url = new URL(route('users.index'));
 
-    url.searchParams.set('page', pageNumbers.value);
+    url.searchParams.set('page', pageNumber.value);
 
     if (search.value) {
         url.searchParams.set('search', search.value);
     }
 
-    return url.toString();
+    return url;
 });
 
 const pageNumberUpdated = (link) => {
     pageNumber.value = link.url.split("=")[1];
 };
 
-watch(() => usersUrl.value, (updateUserUrl) => {
-    router.visit(updateUserUrl, {
+watch(
+    () => usersUrl.value,
+    (updateUserUrl) => {
+        router.visit(updateUserUrl, {
         preserveScroll: true,
         preserveState: true,
+        replace: true,
     });
 });
 
@@ -239,10 +242,7 @@ const deleteStudent = (userId) => {
                                 </tbody>
                             </table>
                         </div>
-                        <Pagination 
-                        :data="users" 
-                        :pageNumberUpdated="pageNumberUpdated" 
-                        />
+                        <Pagination :data="users" :pageNumberUpdated="pageNumberUpdated" />
                     </div>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 <script setup>
 import { router } from "@inertiajs/vue3";
+
 defineProps({
     data: {
         type: Object,
@@ -9,7 +10,6 @@ defineProps({
         required: true,
     },
 });
-
 </script>
 
 <template>
@@ -53,7 +53,7 @@ defineProps({
                                 class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
                                 aria-label="Pagination"
                             >
-                                <button
+                            <button
                                     v-for="(link, index) in data.meta.links"
                                     :key="index"
                                     @click.prevent="pageNumberUpdated(link)"

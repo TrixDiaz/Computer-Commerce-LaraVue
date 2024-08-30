@@ -18,15 +18,16 @@ class AdminUserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $usersQuery = User::query();
 
-        $usersQuery = $this->applySearch($usersQuery, request('search'));
+        $this->applySearch($usersQuery, $request->search);
 
+        $users = UserResource::collection($usersQuery->paginate(10));  
 
         return inertia('Admin/Users/Index', [
-            'users' => UserResource::collection($usersQuery->paginate(10)),
+            'users' => $users,
             'search' => $request->search ?? '',
         ]);
     }
