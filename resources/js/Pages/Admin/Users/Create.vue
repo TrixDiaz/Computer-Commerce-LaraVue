@@ -82,7 +82,6 @@ const showPassword = ref(false);
                                         <option v-for="role in roles.data" :key="role.id" :value="role.id"
                                             class="capitalize">{{ role.name }}</option>
                                     </select>
-
                                 </div>
 
                             </div>

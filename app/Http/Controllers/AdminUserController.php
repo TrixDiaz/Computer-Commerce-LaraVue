@@ -23,8 +23,10 @@ class AdminUserController extends Controller
         $usersQuery = User::query();
 
         $this->applySearch($usersQuery, $request->search);
+        $this->applySort($usersQuery, $request->sort);
+        $this->applyFilter($usersQuery, $request->filter);
 
-        $users = UserResource::collection($usersQuery->paginate(10));  
+        $users = UserResource::collection($usersQuery->paginate(10));
 
         return inertia('Admin/Users/Index', [
             'users' => $users,
@@ -32,13 +34,30 @@ class AdminUserController extends Controller
         ]);
     }
 
-    protected function applySearch(Builder $query, $search) 
+    protected function applySearch(Builder $query, $search)
     {
         return $query->when($search, function ($query, $search) {
-            $query->where('name', 'like', '%'.$search.'%')
-                ->orWhere('email', 'like', '%'.$search.'%');
+            $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%');
         });
     }
+
+    protected function applySort(Builder $query, $sort)
+    {
+        return $query->when($sort, function ($query, $sort) {
+            $direction = $sort === 'asc' ? 'asc' : 'desc';
+            $query->orderBy('name', $direction);
+        });
+    }
+
+    protected function applyFilter(Builder $query, $filter)
+    {
+        return $query->when($filter, function ($query, $filter) {
+            $roles = explode(',', $filter);
+            $query->whereIn('role_id', $roles);
+        });
+    }
+
 
     /**
      * Show the form for creating a new resource.

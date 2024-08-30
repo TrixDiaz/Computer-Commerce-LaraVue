@@ -19,6 +19,8 @@ defineProps({
 });
 
 let search = ref(usePage().props.search ?? '');
+let sort = ref('');
+let filter = ref([]);
 let pageNumber = ref(1);
 
 let usersUrl = computed(() => {
@@ -30,8 +32,17 @@ let usersUrl = computed(() => {
         url.searchParams.set('search', search.value);
     }
 
+    if (sort.value) {
+        url.searchParams.set('sort', sort.value);
+    }
+
+    if (filter.value.length > 0) {
+        url.searchParams.set('filter', filter.value.join(','));
+    }
+
     return url;
 });
+
 
 const pageNumberUpdated = (link) => {
     pageNumber.value = link.url.split("=")[1];
@@ -41,11 +52,11 @@ watch(
     () => usersUrl.value,
     (updateUserUrl) => {
         router.visit(updateUserUrl, {
-        preserveScroll: true,
-        preserveState: true,
-        replace: true,
+            preserveScroll: true,
+            preserveState: true,
+            replace: true,
+        });
     });
-});
 
 watch(
     () => search.value,
@@ -55,6 +66,19 @@ watch(
         }
     }
 );
+
+const sortUsers = (order) => {
+    sort.value = order;
+};
+
+const filterUsers = (roleId) => {
+    if (filter.value.includes(roleId)) {
+        filter.value = filter.value.filter(id => id !== roleId);
+    } else {
+        filter.value.push(roleId);
+    }
+};
+
 
 const deleteForm = useForm({});
 
@@ -110,21 +134,22 @@ const deleteStudent = (userId) => {
                                             <path clip-rule="evenodd" fill-rule="evenodd"
                                                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                                         </svg>
-                                        Actions
+                                        Sort
                                     </button>
                                     <div id="actionsDropdown"
                                         class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44">
                                         <ul class="py-1 text-sm text-gray-700" aria-labelledby="actionsDropdownButton">
                                             <li>
-                                                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Mass
-                                                    Edit</a>
+                                                <Link @click.prevent="sortUsers('asc')" href="#"
+                                                    class="block px-4 py-2 hover:bg-gray-100 capitalize">sort by a-z
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link @click.prevent="sortUsers('desc')" href="#"
+                                                    class="block px-4 py-2 hover:bg-gray-100 capitalize">sort by z-a
+                                                </Link>
                                             </li>
                                         </ul>
-                                        <div class="py-1">
-                                            <a href="#"
-                                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Delete
-                                                all</a>
-                                        </div>
                                     </div>
 
                                     <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
@@ -143,6 +168,7 @@ const deleteStudent = (userId) => {
                                                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                                         </svg>
                                     </button>
+
                                     <!-- Dropdown menu -->
                                     <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow">
                                         <h6 class="mb-3 text-sm font-medium text-gray-900">
@@ -150,31 +176,31 @@ const deleteStudent = (userId) => {
                                         </h6>
                                         <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                             <li class="flex items-center">
-                                                <input id="apple" type="checkbox" value=""
+                                                <input @change="filterUsers(1)" id="users" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <label for="apple" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Apple (56)
+                                                <label for="users" class="ml-2 text-sm font-medium text-gray-900">
+                                                    Users
                                                 </label>
                                             </li>
                                             <li class="flex items-center">
-                                                <input id="fitbit" type="checkbox" value=""
+                                                <input @change="filterUsers(2)" id="editors" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <label for="fitbit" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Fitbit (56)
+                                                <label for="editors" class="ml-2 text-sm font-medium text-gray-900">
+                                                    Editors
                                                 </label>
                                             </li>
                                             <li class="flex items-center">
-                                                <input id="dell" type="checkbox" value=""
+                                                <input @change="filterUsers(3)" id="admins" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <label for="dell" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Dell (56)
+                                                <label for="admins" class="ml-2 text-sm font-medium text-gray-900">
+                                                    Admins
                                                 </label>
                                             </li>
                                             <li class="flex items-center">
-                                                <input id="asus" type="checkbox" value="" checked
+                                                <input id="deleted" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <label for="asus" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Asus (97)
+                                                <label for="deleted" class="ml-2 text-sm font-medium text-gray-900">
+                                                    Deleted Users
                                                 </label>
                                             </li>
                                         </ul>
