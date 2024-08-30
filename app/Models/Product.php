@@ -13,24 +13,32 @@ class Product extends Model
         'name',
         'description',
         'price',
+        'sale_price',
         'category_id',
         'brand_id',
         'user_id',
         'stock',
         'image',
         'is_active',
+        'is_featured',
+        'is_sale',
+        'is_new_product',
     ];
 
-    protected $with = ['category', 'brand', 'user'];
+    protected $with = [
+        'category',
+        'brand',
+        'user'
+    ];
 
     public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class)->where('is_active', true);
     }
 
     public function brand()
     {
-        return $this->belongsTo(Brand::class);
+        return $this->belongsTo(Brand::class)->where('is_active', true);
     }
 
     public function user()

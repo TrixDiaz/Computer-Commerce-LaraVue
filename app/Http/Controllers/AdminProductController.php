@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class AdminProductController extends Controller
@@ -11,14 +12,43 @@ class AdminProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $productsQuery = Product::query();
 
-        $products = ProductResource::collection(Product::paginate(10));
+        $this->applySearch($productsQuery, $request->search);
+        $this->applySort($productsQuery, $request->sort);
+        $this->applyFilter($productsQuery, $request->filter);
+
+        $products = ProductResource::collection($productsQuery->paginate(10));
 
         return inertia('Admin/Products/Index', [
-            'products' => $products
+            'products' => $products,
+            'search' => $request->search ?? '',
         ]);
+    }
+
+    protected function applySearch(Builder $query, $search)
+    {
+        return $query->when($search, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        });
+    }
+
+    protected function applySort(Builder $query, $sort)
+    {
+        return $query->when($sort, function ($query, $sort) {
+            $direction = $sort === 'asc' ? 'asc' : 'desc';
+            $query->orderBy('name', $direction);
+        });
+    }
+
+    protected function applyFilter(Builder $query, $filter)
+    {
+        return $query->when($filter, function ($query, $filter) {
+            $is_active = explode(',', $filter);
+            $query->whereIn('is_active', $is_active);
+        });
     }
 
     /**

@@ -4,8 +4,10 @@ import { Head, Link, useForm, router, usePage } from "@inertiajs/vue3";
 import { initFlowbite } from 'flowbite'
 import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Pagination from "@/Components/Pagination.vue";
 import TextInput from '@/Components/TextInput.vue';
+import InputLabel from '@/Components/InputLabel.vue';
 
 onMounted(() => {
     initFlowbite();
@@ -100,7 +102,7 @@ const deleteStudent = (userId) => {
                             class="flex flex-col items-center justify-between p-4 space-y-2 md:flex-row md:space-y-0 md:space-x-4">
                             <div class="w-full md:w-1/2">
                                 <form class="flex items-center">
-                                    <label for="simple-search" class="sr-only">Search</label>
+                                    <InputLabel for="simple-search" class="sr-only">Search</InputLabel>
                                     <div class="relative w-full">
                                         <div
                                             class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -125,7 +127,7 @@ const deleteStudent = (userId) => {
                                 </Link>
 
                                 <div class="flex items-center w-full space-x-2 md:w-auto">
-                                    <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
+                                    <SecondaryButton id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
                                         class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto hover:bg-gray-100 hover:text-primary-700"
                                         type="button">
                                         <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
@@ -134,7 +136,7 @@ const deleteStudent = (userId) => {
                                                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                                         </svg>
                                         Sort
-                                    </button>
+                                    </SecondaryButton>
                                     <div id="actionsDropdown"
                                         class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44">
                                         <ul class="py-1 text-sm text-gray-700" aria-labelledby="actionsDropdownButton">
@@ -151,7 +153,7 @@ const deleteStudent = (userId) => {
                                         </ul>
                                     </div>
 
-                                    <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
+                                    <SecondaryButton id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
                                         class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto hover:bg-gray-100 hover:text-primary-700"
                                         type="button">
                                         <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
@@ -166,7 +168,7 @@ const deleteStudent = (userId) => {
                                             <path clip-rule="evenodd" fill-rule="evenodd"
                                                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
                                         </svg>
-                                    </button>
+                                    </SecondaryButton>
 
                                     <!-- Dropdown menu -->
                                     <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow">
@@ -175,32 +177,32 @@ const deleteStudent = (userId) => {
                                         </h6>
                                         <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                             <li class="flex items-center">
-                                                <input @change="filterUsers(1)" id="users" type="checkbox" value=""
+                                                <TextInput @change="filterUsers(1)" id="users" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <label for="users" class="ml-2 text-sm font-medium text-gray-900">
+                                                <InputLabel for="users" class="ml-2 text-sm font-medium text-gray-900">
                                                     Users
-                                                </label>
+                                                </InputLabel>
                                             </li>
                                             <li class="flex items-center">
-                                                <input @change="filterUsers(2)" id="editors" type="checkbox" value=""
+                                                <TextInput @change="filterUsers(2)" id="editors" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <label for="editors" class="ml-2 text-sm font-medium text-gray-900">
+                                                <InputLabel for="editors" class="ml-2 text-sm font-medium text-gray-900">
                                                     Editors
-                                                </label>
+                                                </InputLabel>
                                             </li>
                                             <li class="flex items-center">
-                                                <input @change="filterUsers(3)" id="admins" type="checkbox" value=""
+                                                <TextInput @change="filterUsers(3)" id="admins" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <label for="admins" class="ml-2 text-sm font-medium text-gray-900">
+                                                <InputLabel for="admins" class="ml-2 text-sm font-medium text-gray-900">
                                                     Admins
-                                                </label>
+                                                </InputLabel>
                                             </li>
                                             <li class="flex items-center">
-                                                <input id="deleted" type="checkbox" value=""
+                                                <TextInput id="deleted" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <label for="deleted" class="ml-2 text-sm font-medium text-gray-900">
+                                                <InputLabel for="deleted" class="ml-2 text-sm font-medium text-gray-900">
                                                     Deleted Users
-                                                </label>
+                                                </InputLabel>
                                             </li>
                                         </ul>
                                     </div>

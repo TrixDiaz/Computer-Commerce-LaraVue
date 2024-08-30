@@ -16,11 +16,15 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->decimal('price', 10, 2);
+            $table->decimal('sale_price', 10, 2)->nullable();
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('user_id');
             $table->integer('stock');
             $table->string('image')->nullable();
+            $table->boolean('is_featured')->default(false);
+            $table->boolean('is_sale')->default(false);
+            $table->boolean('is_new_product')->default(false);
             $table->boolean('is_active')->default(true);
             $table->softDeletes();
             $table->timestamps();
