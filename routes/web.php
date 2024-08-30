@@ -33,6 +33,7 @@ Route::middleware(['auth', config('sanctum.middleware.admin')])->prefix('admin')
     Route::resource('/users', AdminUserController::class);
     Route::resource('/products', AdminProductController::class);
     Route::resource('/brands', AdminBrandController::class);
+    Route::resource('/categories', AdminBrandController::class);
 });
 
 require __DIR__ . '/auth.php';

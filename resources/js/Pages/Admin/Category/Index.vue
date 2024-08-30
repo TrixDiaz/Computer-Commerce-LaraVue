@@ -12,7 +12,7 @@ onMounted(() => {
 })
 
 defineProps({
-    brands: {
+    categories: {
         type: Object,
     },
 
@@ -23,8 +23,8 @@ let sort = ref('');
 let filter = ref([]);
 let pageNumber = ref(1);
 
-let brandsUrl = computed(() => {
-    let url = new URL(route('brands.index'));
+let categoriesUrl = computed(() => {
+    let url = new URL(route('categories.index'));
 
     url.searchParams.set('page', pageNumber.value);
 
@@ -48,9 +48,9 @@ const pageNumberUpdated = (link) => {
 };
 
 watch(
-    () => brandsUrl.value,
-    (updatebrandUrl) => {
-        router.visit(updatebrandUrl, {
+    () => categoriesUrl.value,
+    (updatecategorieUrl) => {
+        router.visit(updatecategorieUrl, {
             preserveScroll: true,
             preserveState: true,
             replace: true,
@@ -66,11 +66,11 @@ watch(
     }
 );
 
-const sortbrands = (order) => {
+const sortcategories = (order) => {
     sort.value = order;
 };
 
-const filterbrands = (roleId) => {
+const filtercategories = (roleId) => {
     if (filter.value.includes(roleId)) {
         filter.value = filter.value.filter(id => id !== roleId);
     } else {
@@ -81,20 +81,20 @@ const filterbrands = (roleId) => {
 
 const deleteForm = useForm({});
 
-const deleteStudent = (brandId) => {
-    if (confirm('Are you sure you want to delete this brand?')) {
-        deleteForm.delete(route('brands.destroy', brandId));
+const deleteStudent = (categorieId) => {
+    if (confirm('Are you sure you want to delete this categorie?')) {
+        deleteForm.delete(route('categories.destroy', categorieId));
     }
 }
 </script>
 
 <template>
-    <Head title="brands" />
+    <Head title="categories" />
     <div class="bg-gray-100 py-10">
         <div class="mx-auto max-w-7xl">
             <section class="flex items-center">
                 <div class="w-full">
-                    <p class="p-4 font-medium text-xl Capitalize">View all Brands</p>
+                    <p class="p-4 font-medium text-xl Capitalize">View all Categories</p>
                     <div class="relative bg-white shadow-md sm:rounded-lg">
                         <div
                             class="flex flex-col items-center justify-between p-4 space-y-2 md:flex-row md:space-y-0 md:space-x-4">
@@ -118,9 +118,9 @@ const deleteStudent = (brandId) => {
                             </div>
                             <div
                                 class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-2">
-                                <Link :href="route('brands.create')">
+                                <Link :href="route('categories.create')">
                                     <PrimaryButton>
-                                        Add Brand
+                                        Add Categories
                                     </PrimaryButton>
                                 </Link>
 
@@ -139,12 +139,12 @@ const deleteStudent = (brandId) => {
                                         class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44">
                                         <ul class="py-1 text-sm text-gray-700" aria-labelledby="actionsDropdownButton">
                                             <li>
-                                                <Link @click.prevent="sortbrands('asc')" href="#"
+                                                <Link @click.prevent="sortcategories('asc')" href="#"
                                                     class="block px-4 py-2 hover:bg-gray-100 capitalize">sort by a-z
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link @click.prevent="sortbrands('desc')" href="#"
+                                                <Link @click.prevent="sortcategories('desc')" href="#"
                                                     class="block px-4 py-2 hover:bg-gray-100 capitalize">sort by z-a
                                                 </Link>
                                             </li>
@@ -175,22 +175,22 @@ const deleteStudent = (brandId) => {
                                         </h6>
                                         <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                             <li class="flex items-center">
-                                                <input @change="filterbrands(1)" id="brands" type="checkbox"
+                                                <input @change="filtercategories(1)" id="categories" type="checkbox"
                                                     value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                <label for="brands" class="ml-2 text-sm font-medium text-gray-900">
-                                                    brands
+                                                <label for="categories" class="ml-2 text-sm font-medium text-gray-900">
+                                                    categories
                                                 </label>
                                             </li>
                                             <li class="flex items-center">
-                                                <input @change="filterbrands(2)" id="editors" type="checkbox" value=""
+                                                <input @change="filtercategories(2)" id="editors" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                 <label for="editors" class="ml-2 text-sm font-medium text-gray-900">
                                                     Editors
                                                 </label>
                                             </li>
                                             <li class="flex items-center">
-                                                <input @change="filterbrands(3)" id="admins" type="checkbox" value=""
+                                                <input @change="filtercategories(3)" id="admins" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                 <label for="admins" class="ml-2 text-sm font-medium text-gray-900">
                                                     Admins
@@ -200,7 +200,7 @@ const deleteStudent = (brandId) => {
                                                 <input id="deleted" type="checkbox" value=""
                                                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                 <label for="deleted" class="ml-2 text-sm font-medium text-gray-900">
-                                                    Deleted brands
+                                                    Deleted categories
                                                 </label>
                                             </li>
                                         </ul>
@@ -225,7 +225,7 @@ const deleteStudent = (brandId) => {
                                         </th>
                                         <th scope="col"
                                             class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Brand Name
+                                            Category Name
                                         </th>
                                         <th scope="col"
                                             class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
@@ -239,29 +239,29 @@ const deleteStudent = (brandId) => {
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-200 bg-white">
-                                    <tr v-for="brand in brands.data" :key="brand.id">
+                                    <tr v-for="category in categories.data" :key="category.id">
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                            {{ brand.id }}
+                                            {{ category.id }}
                                         </td>
                                         <td
                                             class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                            {{ brand.name }}
+                                            {{ category.name }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{ brand.slug }}
+                                            {{ category.slug }}
                                         </td>
                                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{ brand.created_at }}
+                                            {{ category.created_at }}
                                         </td>
 
                                         <td
                                             class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <Link :href="route('brands.edit', brand.id)"
+                                            <Link :href="route('categories.edit', category.id)"
                                                 class="text-slate-600 hover:text-slate-900">
                                             Edit
                                             </Link>
-                                            <button @click="deleteStudent(brand.id)"
+                                            <button @click="deleteStudent(category.id)"
                                                 class="ml-2 text-red-600 hover:text-red-900">
                                                 Delete
                                             </button>
@@ -270,7 +270,7 @@ const deleteStudent = (brandId) => {
                                 </tbody>
                             </table>
                         </div>
-                        <Pagination :data="brands" :pageNumberUpdated="pageNumberUpdated" />
+                        <Pagination :data="categories" :pageNumberUpdated="pageNumberUpdated" />
                     </div>
                 </div>
             </div>
