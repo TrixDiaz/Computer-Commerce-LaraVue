@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->integer('stock');
             $table->string('image')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->softDeletes();
             $table->timestamps();
 

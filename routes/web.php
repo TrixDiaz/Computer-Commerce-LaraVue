@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminBrandController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminUserController;
@@ -31,6 +32,7 @@ Route::middleware(['auth', config('sanctum.middleware.admin')])->prefix('admin')
     Route::resource('/', AdminController::class);
     Route::resource('/users', AdminUserController::class);
     Route::resource('/products', AdminProductController::class);
+    Route::resource('/brands', AdminBrandController::class);
 });
 
 require __DIR__ . '/auth.php';

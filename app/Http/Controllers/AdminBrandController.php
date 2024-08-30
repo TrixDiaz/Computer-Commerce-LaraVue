@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BrandResource;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,11 @@ class AdminBrandController extends Controller
      */
     public function index()
     {
-        //
+        $brands = BrandResource::collection(Brand::paginate(10));
+
+        return inertia('Admin/Brands/Index', [
+            'brands' => $brands,
+        ]);
     }
 
     /**
