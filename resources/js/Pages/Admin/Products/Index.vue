@@ -1,6 +1,6 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
-import { Head, Link, useForm, router, usePage } from "@inertiajs/vue3";
+import { Link, useForm, router, usePage } from "@inertiajs/vue3";
 import { initFlowbite } from 'flowbite'
 import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -8,6 +8,7 @@ import SecondaryButton from '@/Components/SecondaryButton.vue';
 import Pagination from "@/Components/Pagination.vue";
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
+import AdminLayout from '@/Layouts/AdminLayout.vue';
 
 
 onMounted(() => {
@@ -97,247 +98,254 @@ const deleteStudent = (productId) => {
 </script>
 
 <template>
-    <Head title="Products" />
-    <div class="bg-gray-100 py-10">
-        <div class="mx-auto max-w-7xl">
-            <section class="flex items-center">
-                <div class="w-full">
-                    <p class="p-4 font-medium text-xl Capitalize">View all Products</p>
-                    <div class="relative bg-white shadow-md sm:rounded-lg">
-                        <div
-                            class="flex flex-col items-center justify-between p-4 space-y-2 md:flex-row md:space-y-0 md:space-x-4">
-                            <div class="w-full md:w-1/2">
-                                <form class="flex items-center">
-                                    <InputLabel for="simple-search" class="sr-only">Search</InputLabel>
-                                    <div class="relative w-full">
-                                        <div
-                                            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                            <svg aria-hidden="true" class="w-5 h-5 text-gray-500" fill="currentColor"
-                                                viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <AdminLayout>
+        <div>
+            <div class="mx-auto max-w-full">
+                <section class="flex items-center">
+                    <div class="w-full">
+                        <p class="p-4 font-medium text-xl Capitalize">View all Products</p>
+                        <div class="relative bg-white shadow-md sm:rounded-lg">
+                            <div
+                                class="flex flex-col items-center justify-between p-4 space-y-2 md:flex-row md:space-y-0 md:space-x-4">
+                                <div class="w-full md:w-1/2">
+                                    <form class="flex items-center">
+                                        <InputLabel for="simple-search" class="sr-only">Search</InputLabel>
+                                        <div class="relative w-full">
+                                            <div
+                                                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500"
+                                                    fill="currentColor" viewbox="0 0 20 20"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd"
+                                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                                        clip-rule="evenodd" />
+                                                </svg>
+                                            </div>
+                                            <TextInput v-model="search" type="text" placeholder="Search"
+                                                class="block w-full p-2 pl-10 text-sm" />
+                                        </div>
+                                    </form>
+                                </div>
+                                <div
+                                    class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-2">
+                                    <Link :href="route('products.create')">
+                                    <PrimaryButton>
+                                        Add product
+                                    </PrimaryButton>
+                                    </Link>
+
+                                    <div class="flex items-center w-full space-x-2 md:w-auto">
+                                        <SecondaryButton id="actionsDropdownButton"
+                                            data-dropdown-toggle="actionsDropdown">
+                                            <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                <path clip-rule="evenodd" fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                                            </svg>
+                                            Sort
+                                        </SecondaryButton>
+                                        <div id="actionsDropdown"
+                                            class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44">
+                                            <ul class="py-1 text-sm text-gray-700"
+                                                aria-labelledby="actionsDropdownButton">
+                                                <li>
+                                                    <Link @click.prevent="sortproducts('asc')" href="#"
+                                                        class="block px-4 py-2 hover:bg-gray-100 capitalize">sort by a-z
+                                                    </Link>
+                                                </li>
+                                                <li>
+                                                    <Link @click.prevent="sortproducts('desc')" href="#"
+                                                        class="block px-4 py-2 hover:bg-gray-100 capitalize">sort by z-a
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                        <SecondaryButton id="filterDropdownButton"
+                                            data-dropdown-toggle="filterDropdown">
+                                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                                                class="w-4 h-4 mr-2 text-gray-400" viewbox="0 0 20 20"
+                                                fill="currentColor">
                                                 <path fill-rule="evenodd"
-                                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                                    d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
                                                     clip-rule="evenodd" />
                                             </svg>
-                                        </div>
-                                        <TextInput v-model="search" type="text" placeholder="Search"
-                                            class="block w-full p-2 pl-10 text-sm" />
-                                    </div>
-                                </form>
-                            </div>
-                            <div
-                                class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-2">
-                                <Link :href="route('products.create')">
-                                <PrimaryButton>
-                                    Add product
-                                </PrimaryButton>
-                                </Link>
+                                            Filter
+                                            <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
+                                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                <path clip-rule="evenodd" fill-rule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+                                            </svg>
+                                        </SecondaryButton>
 
-                                <div class="flex items-center w-full space-x-2 md:w-auto">
-                                    <SecondaryButton id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown">
-                                        <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path clip-rule="evenodd" fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                                        </svg>
-                                        Sort
-                                    </SecondaryButton>
-                                    <div id="actionsDropdown"
-                                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44">
-                                        <ul class="py-1 text-sm text-gray-700" aria-labelledby="actionsDropdownButton">
-                                            <li>
-                                                <Link @click.prevent="sortproducts('asc')" href="#"
-                                                    class="block px-4 py-2 hover:bg-gray-100 capitalize">sort by a-z
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link @click.prevent="sortproducts('desc')" href="#"
-                                                    class="block px-4 py-2 hover:bg-gray-100 capitalize">sort by z-a
-                                                </Link>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <SecondaryButton id="filterDropdownButton" data-dropdown-toggle="filterDropdown">
-                                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-                                            class="w-4 h-4 mr-2 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd"
-                                                d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
-                                                clip-rule="evenodd" />
-                                        </svg>
-                                        Filter
-                                        <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                            <path clip-rule="evenodd" fill-rule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                                        </svg>
-                                    </SecondaryButton>
-
-                                    <!-- Dropdown menu -->
-                                    <div id="filterDropdown" class="z-10 hidden max-w-60 p-3 bg-white rounded-lg shadow">
-                                        <div class="flex flex-row justify-center items-center w-full gap-2">
-                                            <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                                                <h6 class="mb-3 text-sm font-medium text-gray-900">
-                                                    Category
-                                                </h6>
-                                                <li v-for="category in categories.data" :key="category.id"
-                                                    class="flex items-center">
-                                                    <input @change="filterproducts(category.id)" :id="category.id"
-                                                        type="checkbox" :value="category.id"
-                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                    <InputLabel for="active"
-                                                        class="ml-2 text-sm font-medium text-gray-900">
-                                                        {{ category.name }}
-                                                    </InputLabel>
-                                                </li>
-                                            </ul>
-                                            <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                                                <h6 class="mb-3 text-sm font-medium text-gray-900">
-                                                    Brand
-                                                </h6>
-                                                <li v-for="brand in brands.data" :key="brand.id"
-                                                    class="flex items-center">
-                                                    <input @change="filterproducts(brand.id)" :id="brand.id"
-                                                        type="checkbox" :value="brand.id"
-                                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                                    <InputLabel for="active"
-                                                        class="ml-2 text-sm font-medium text-gray-900">
-                                                        {{ brand.name }}
-                                                    </InputLabel>
-                                                </li>
-                                            </ul>
+                                        <!-- Dropdown menu -->
+                                        <div id="filterDropdown"
+                                            class="z-10 hidden max-w-60 p-3 bg-white rounded-lg shadow">
+                                            <div class="flex flex-row justify-center items-center w-full gap-2">
+                                                <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                                    <h6 class="mb-3 text-sm font-medium text-gray-900">
+                                                        Category
+                                                    </h6>
+                                                    <li v-for="category in categories.data" :key="category.id"
+                                                        class="flex items-center">
+                                                        <input @change="filterproducts(category.id)" :id="category.id"
+                                                            type="checkbox" :value="category.id"
+                                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
+                                                        <InputLabel for="active"
+                                                            class="ml-2 text-sm font-medium text-gray-900">
+                                                            {{ category.name }}
+                                                        </InputLabel>
+                                                    </li>
+                                                </ul>
+                                                <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
+                                                    <h6 class="mb-3 text-sm font-medium text-gray-900">
+                                                        Brand
+                                                    </h6>
+                                                    <li v-for="brand in brands.data" :key="brand.id"
+                                                        class="flex items-center">
+                                                        <input @change="filterproducts(brand.id)" :id="brand.id"
+                                                            type="checkbox" :value="brand.id"
+                                                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
+                                                        <InputLabel for="active"
+                                                            class="ml-2 text-sm font-medium text-gray-900">
+                                                            {{ brand.name }}
+                                                        </InputLabel>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="px-4 pb-3">
-                            <hr>
-                        </div>
-                        <div class="flex items-center px-4 pb-4 space-x-2">
-                            <p class="font-meduim font-bold text-sm">Show only:</p>
-                            <div class="flex flex-row items-center">
-                                <input id="featured" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                <InputLabel for="featured" class="ml-2 text-sm font-medium text-gray-900">
-                                    Featured Products
-                                </InputLabel>
+                            <div class="px-4 pb-3">
+                                <hr>
                             </div>
-                            <div class="flex flex-row items-center">
-                                <input id="sale" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                <InputLabel for="sale" class="ml-2 text-sm font-medium text-gray-900">
-                                    Sale Products
-                                </InputLabel>
-                            </div>
-                            <div class="flex flex-row items-center">
-                                <input id="new" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                <InputLabel for="new" class="ml-2 text-sm font-medium text-gray-900">
-                                    New Products
-                                </InputLabel>
-                            </div>
-                            <div class="flex flex-row items-center">
-                                <input id="active" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                <InputLabel for="active" class="ml-2 text-sm font-medium text-gray-900">
-                                    Active Products
-                                </InputLabel>
-                            </div>
-                            <div class="flex flex-row items-center">
-                                <input id="inactive" type="checkbox" value=""
-                                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
-                                <InputLabel for="inactive" class="ml-2 text-sm font-medium text-gray-900">
-                                    Inactive Products
-                                </InputLabel>
+                            <div class="flex items-center px-4 pb-4 space-x-2">
+                                <p class="font-meduim font-bold text-sm">Show only:</p>
+                                <div class="flex flex-row items-center">
+                                    <input id="featured" type="checkbox" value=""
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
+                                    <InputLabel for="featured" class="ml-2 text-sm font-medium text-gray-900">
+                                        Featured Products
+                                    </InputLabel>
+                                </div>
+                                <div class="flex flex-row items-center">
+                                    <input id="sale" type="checkbox" value=""
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
+                                    <InputLabel for="sale" class="ml-2 text-sm font-medium text-gray-900">
+                                        Sale Products
+                                    </InputLabel>
+                                </div>
+                                <div class="flex flex-row items-center">
+                                    <input id="new" type="checkbox" value=""
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
+                                    <InputLabel for="new" class="ml-2 text-sm font-medium text-gray-900">
+                                        New Products
+                                    </InputLabel>
+                                </div>
+                                <div class="flex flex-row items-center">
+                                    <input id="active" type="checkbox" value=""
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
+                                    <InputLabel for="active" class="ml-2 text-sm font-medium text-gray-900">
+                                        Active Products
+                                    </InputLabel>
+                                </div>
+                                <div class="flex flex-row items-center">
+                                    <input id="inactive" type="checkbox" value=""
+                                        class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
+                                    <InputLabel for="inactive" class="ml-2 text-sm font-medium text-gray-900">
+                                        Inactive Products
+                                    </InputLabel>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <div class="mt-4 flex flex-col">
-                <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg relative">
-                            <table class="min-w-full divide-y divide-gray-300">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th scope="col"
-                                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            ID
-                                        </th>
-                                        <th scope="col"
-                                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Product Name
-                                        </th>
-                                        <th scope="col"
-                                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                            Price
-                                        </th>
-                                        <th scope="col"
-                                            class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Stock
-                                        </th>
-                                        <th scope="col"
-                                            class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Category Name
-                                        </th>
-                                        <th scope="col"
-                                            class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Brand Name
-                                        </th>
-                                        <th scope="col"
-                                            class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                            Status
-                                        </th>
-                                        <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6" />
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200 bg-white">
-                                    <tr v-for="product in products.data" :key="product.id">
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                            {{ product.id }}
-                                        </td>
-                                        <td
-                                            class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                            {{ product.name }}
-                                        </td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{ product.price }}
-                                        </td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
-                                            {{ product.stock }}
-                                        </td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
-                                            {{ product.category.name }}
-                                        </td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
-                                            {{ product.brand.name }}
-                                        </td>
-                                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                            {{ product.is_active === 1 ? 'Active' : 'Inactive' }}
-                                        </td>
+                <div class="mt-4 flex flex-col">
+                    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                        <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                            <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg relative">
+                                <table class="min-w-full divide-y divide-gray-300">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col"
+                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                                ID
+                                            </th>
+                                            <th scope="col"
+                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                                Product Name
+                                            </th>
+                                            <th scope="col"
+                                                class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
+                                                Price
+                                            </th>
+                                            <th scope="col"
+                                                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                Stock
+                                            </th>
+                                            <th scope="col"
+                                                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                Category Name
+                                            </th>
+                                            <th scope="col"
+                                                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                Brand Name
+                                            </th>
+                                            <th scope="col"
+                                                class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                                                Status
+                                            </th>
+                                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6" />
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200 bg-white">
+                                        <tr v-for="product in products.data" :key="product.id">
+                                            <td
+                                                class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                {{ product.id }}
+                                            </td>
+                                            <td
+                                                class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                                                {{ product.name }}
+                                            </td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                {{ product.price }}
+                                            </td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
+                                                {{ product.stock }}
+                                            </td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
+                                                {{ product.category.name }}
+                                            </td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
+                                                {{ product.brand.name }}
+                                            </td>
+                                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                                {{ product.is_active === 1 ? 'Active' : 'Inactive' }}
+                                            </td>
 
-                                        <td
-                                            class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                            <Link :href="route('products.edit', product.id)"
-                                                class="text-slate-600 hover:text-slate-900">
-                                            Edit
-                                            </Link>
-                                            <button @click="deleteStudent(product.id)"
-                                                class="ml-2 text-red-600 hover:text-red-900">
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                            <td
+                                                class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                                <Link :href="route('products.edit', product.id)"
+                                                    class="text-slate-600 hover:text-slate-900">
+                                                Edit
+                                                </Link>
+                                                <button @click="deleteStudent(product.id)"
+                                                    class="ml-2 text-red-600 hover:text-red-900">
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <Pagination :data="products" :pageNumberUpdated="pageNumberUpdated" />
                         </div>
-                        <Pagination :data="products" :pageNumberUpdated="pageNumberUpdated" />
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </AdminLayout>
 </template>
