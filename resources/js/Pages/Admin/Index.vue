@@ -1,5 +1,7 @@
-<script setup></script>
+<script setup>
+import AdminLayout from '@/Layouts/AdminLayout.vue';
+</script>
 
 <template>
-    admin
+   <AdminLayout/>
 </template>
