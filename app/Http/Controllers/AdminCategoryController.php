@@ -56,7 +56,7 @@ class AdminCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Admin/Category/Create');
     }
 
     /**
@@ -64,7 +64,14 @@ class AdminCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'is_active' => 'required|boolean',
+        ]);
+
+        Category::create($request->all());
+
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -80,7 +87,9 @@ class AdminCategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return inertia('Admin/Category/Edit', [
+            'category' => new CategoryResource($category),
+        ]);
     }
 
     /**
@@ -88,7 +97,14 @@ class AdminCategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'is_active' => 'required|boolean',
+        ]);
+
+        $category->update($request->all());
+
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -96,6 +112,8 @@ class AdminCategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+
+        return redirect()->route('categories.index');
     }
 }

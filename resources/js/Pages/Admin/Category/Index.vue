@@ -94,7 +94,7 @@ const deleteStudent = (categorieId) => {
 </script>
 
 <template>
-    <AdminLayout>
+    <AdminLayout title="Categories">
         <div>
             <div class="mx-auto max-w-full">
                 <section class="flex items-center">

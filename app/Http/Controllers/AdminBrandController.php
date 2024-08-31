@@ -56,7 +56,7 @@ class AdminBrandController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Admin/Brands/Create');
     }
 
     /**
@@ -64,7 +64,14 @@ class AdminBrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'is_active' => 'required|boolean',
+        ]);
+
+        Brand::create($request->all());
+
+        return redirect()->route('brands.index');
     }
 
     /**
@@ -80,7 +87,9 @@ class AdminBrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        return inertia('Admin/Brands/Edit', [
+            'brand' => new BrandResource($brand),
+        ]);
     }
 
     /**
@@ -88,7 +97,14 @@ class AdminBrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'is_active' => 'required|boolean',
+        ]);
+
+        $brand->update($request->all());
+
+        return redirect()->route('brands.index');
     }
 
     /**
@@ -96,6 +112,8 @@ class AdminBrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+
+        return redirect()->route('brands.index');
     }
 }
