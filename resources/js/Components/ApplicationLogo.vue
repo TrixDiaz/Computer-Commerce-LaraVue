@@ -1,6 +1,6 @@
 <template>
     <Link :href="route('welcome')">
-        <img src="/images/Logo.png" alt="logo" class="w-14 h-14 object-cover drop-shadow-lg" >
+        <img src="/images/Logo.png" alt="logo" class="w-10 h-10 object-cover drop-shadow-lg" >
     </Link>
 </template>
 

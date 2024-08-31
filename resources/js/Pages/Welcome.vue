@@ -1,71 +1,112 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Link } from '@inertiajs/vue3';
+import { ref } from 'vue';
+import UserLayout from '@/Layouts/UserLayout.vue';
+import Hero from '@/Components/Hero.vue';
+import VueCarousel from '@/Components/VueCarousel.vue';
+import ProductCard from '@/Components/ProductCard.vue';
+import Banner from '@/Components/Banner.vue';
+import Products from '@/Components/Products.vue';
+import TabsProduct from '@/Components/TabsProduct.vue';
+import Brands from '@/Components/Brands.vue';
+import Promotion from '@/Components/Promotion.vue';
+import Support from '@/Components/Support.vue';
+import Accordion from '@/Components/Accordion.vue';
 
-defineProps({
-    canLogin: {
-        type: Boolean,
-    },
-    canRegister: {
-        type: Boolean,
-    },
-    laravelVersion: {
-        type: String,
-        required: true,
-    },
-    phpVersion: {
-        type: String,
-        required: true,
-    },
-});
+const response = ref([
+  {
+    id: 1,
+    name: 'Motherboard powerful server motherboard',
+    rating: '5',
+    username: 'John Doe',
+    feedback: 'This is a great product This is a great product This is a great product',
+    title: 'Motherboard powerful server motherboard',
+  },
+  {
+    id: 2,
+    name: 'Motherboard powerful server motherboard',
+    rating: '3',
+    username: 'John Doe',
+    feedback: 'This is a great product This is a great product This is a great product This is a great product This is a great product',
+    title: 'Motherboard powerful server motherboard',
+  },
+  {
+    id: 3,
+    name: 'Motherboard powerful server motherboard',
+    rating: '3',
+    username: 'John Doe',
+    feedback: 'This is a great product This is a great product This is a great product This is a great product This is a great product',
+    title: 'Motherboard powerful server motherboard',
+  },
+  {
+    id: 4,
+    name: 'Motherboard powerful server motherboard',
+    rating: '1',
+    username: 'John Doe',
+    feedback: 'This is a great product This is a great product This is a great product This is a great productThis is a great product',
+    title: 'Motherboard powerful server motherboard',
+  },
+  {
+    id: 5,
+    name: 'Motherboard powerful server motherboard',
+    rating: '3',
+    username: 'John Doe',
+    feedback: 'This is a great product This is a great product This is a great product This is a great productThis is a great product',
+    title: 'Motherboard powerful server motherboard',
+  },
+  {
+    id: 6,
+    name: 'Motherboard powerful server motherboard',
+    rating: '3',
+    username: 'John Doe',
+    feedback: 'This is a great product This is a great product This is a great product This is a great product',
+    title: 'Motherboard powerful server motherboard',
+  },
+  {
+    id: 7,
+    name: 'Motherboard powerful server motherboard',
+    rating: '3',
+    username: 'John Doe',
+    feedback: 'This is a great product This is a great product This is a great product This is a great product',
+    title: 'Motherboard powerful server motherboard',
+  },
+]);
 
-function handleImageError() {
-    document.getElementById('screenshot-container')?.classList.add('!hidden');
-    document.getElementById('docs-card')?.classList.add('!row-span-1');
-    document.getElementById('docs-card-content')?.classList.add('!flex-row');
-    document.getElementById('background')?.classList.add('!hidden');
-}
 </script>
 
 <template>
-    <Head title="Welcome" />
-    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-        <img
-            id="background"
-            class="absolute -left-20 top-0 max-w-[877px]"
-            src="https://laravel.com/assets/img/welcome/background.svg"
-        />
-        <div
-            class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white"
-        >
-            
-                    <!-- <nav v-if="canLogin" class="-mx-3 flex flex-1 justify-end">
-                        <Link
-                            v-if="$page.props.auth.user"
-                            :href="route('dashboard')"
-                            class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                        >
-                            Dashboard
-                        </Link>
+    <UserLayout title="Welcome">
+        <Hero />
 
-                        <template v-else>
-                            <Link
-                                :href="route('login')"
-                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                            >
-                                Log in
-                            </Link>
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col sm:flex-row justify-between items-center">
+                <p class="text-xl font-bold my-4">New Products</p>
+                <Link href="#" class="text-blue-600 underline capitalize text-sm">See all new product</Link>
+            </div>
+            <VueCarousel :products="response">
+                <template v-slot:default="{ product }">
+                    <ProductCard :product="product" />
+                </template>
+            </VueCarousel>
+        </div>
 
-                            <Link
-                                v-if="canRegister"
-                                :href="route('register')"
-                                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
-                            >
-                                Register
-                            </Link>
-                        </template>
-                    </nav> -->
-               
+        <Banner class="bg-white" />
 
-          </div>
-    </div>
+        <Products/>
+
+        <TabsProduct/>
+
+        <TabsProduct/>
+        
+        <Products/>
+
+        <Brands/>
+
+        <Promotion/>
+
+        <Support/>
+
+        <Accordion/>
+
+    </UserLayout>
 </template>
