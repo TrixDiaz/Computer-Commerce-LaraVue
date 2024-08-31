@@ -18,18 +18,19 @@ onMounted(() => {
 
 <template>
     <Head :title="title" />
-    
+
     <Announcement>
-        This is default text for Announcement header
-        This is default text for Announcement header
-        This is default text for Announcement header
-        This is default text for Announcement header
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet,
+        quam magni. Odio quibusdam quia commodi illum quidem placeat
+        dolorem nemo temporibus, sapiente id excepturi quasi officia
+        maxime et voluptate corporis.
     </Announcement>
+    
     <Header />
 
     <main>
         <slot />
     </main>
 
-    <Footer />  
+    <Footer />
 </template>
