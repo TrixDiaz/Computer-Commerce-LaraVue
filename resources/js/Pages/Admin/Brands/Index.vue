@@ -9,6 +9,8 @@ import Pagination from "@/Components/Pagination.vue";
 import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
+import ArrowDown from '@/Components/Icons/ArrowDown.vue';
+import Filter from '@/Components/Icons/Filter.vue';
 
 onMounted(() => {
     initFlowbite();
@@ -92,7 +94,7 @@ const deleteStudent = (brandId) => {
 </script>
 
 <template>
-    <AdminLayout>
+    <AdminLayout title="Brands">
         <div>
             <div class="mx-auto max-w-full">
                 <section class="flex items-center">
@@ -102,30 +104,25 @@ const deleteStudent = (brandId) => {
                             <div
                                 class="flex flex-col items-center justify-between p-4 space-y-2 md:flex-row md:space-y-0 md:space-x-4">
                                 <div class="w-full md:w-1/2">
-                                    <form class="flex items-center">
+                                    <form class="flex flex-row items-center gap-2">
                                         <InputLabel for="simple-search" class="sr-only">Search</InputLabel>
                                         <div class="relative w-full">
                                             <div
                                                 class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                                <svg aria-hidden="true" class="w-5 h-5 text-gray-500"
-                                                    fill="currentColor" viewbox="0 0 20 20"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd"
-                                                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                                        clip-rule="evenodd" />
-                                                </svg>
+                                                <Filter class="w-4 h-4 text-gray-400" />
                                             </div>
                                             <TextInput v-model="search" type="text" placeholder="Search"
                                                 class="block w-full p-2 pl-10 text-sm" />
                                         </div>
+                                        <Link :href="route('brands.index')">Reset</Link>
                                     </form>
                                 </div>
                                 <div
                                     class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-2">
                                     <Link :href="route('brands.create')">
-                                    <PrimaryButton>
-                                        Add Brand
-                                    </PrimaryButton>
+                                        <PrimaryButton>
+                                            Add Brand
+                                        </PrimaryButton>
                                     </Link>
 
                                     <div class="flex items-center w-full space-x-2 md:w-auto">
@@ -133,11 +130,7 @@ const deleteStudent = (brandId) => {
                                             data-dropdown-toggle="actionsDropdown"
                                             class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto hover:bg-gray-100 hover:text-primary-700"
                                             type="button">
-                                            <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
-                                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                <path clip-rule="evenodd" fill-rule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                                            </svg>
+                                            <ArrowDown/>
                                             Sort
                                         </SecondaryButton>
                                         <div id="actionsDropdown"
@@ -160,19 +153,9 @@ const deleteStudent = (brandId) => {
                                         <SecondaryButton id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
                                             class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto hover:bg-gray-100 hover:text-primary-700"
                                             type="button">
-                                            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
-                                                class="w-4 h-4 mr-2 text-gray-400" viewbox="0 0 20 20"
-                                                fill="currentColor">
-                                                <path fill-rule="evenodd"
-                                                    d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
-                                                    clip-rule="evenodd" />
-                                            </svg>
+                                            <Filter/>
                                             Filter
-                                            <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20"
-                                                xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                <path clip-rule="evenodd" fill-rule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                                            </svg>
+                                            <ArrowDown/>
                                         </SecondaryButton>
 
                                         <!-- Dropdown menu -->
@@ -183,7 +166,7 @@ const deleteStudent = (brandId) => {
                                             </h6>
                                             <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                                 <li class="flex items-center">
-                                                    <TextInput @change="filtercategories(1)" id="editors"
+                                                    <input @change="filtercategories(1)" id="editors"
                                                         type="checkbox" value=""
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                     <InputLabel for="editors"
@@ -192,7 +175,7 @@ const deleteStudent = (brandId) => {
                                                     </InputLabel>
                                                 </li>
                                                 <li class="flex items-center">
-                                                    <TextInput @change="filtercategories(false)" id="admins"
+                                                    <input @change="filtercategories(false)" id="admins"
                                                         type="checkbox" value=""
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                     <InputLabel for="admins"
@@ -201,7 +184,7 @@ const deleteStudent = (brandId) => {
                                                     </InputLabel>
                                                 </li>
                                                 <li class="flex items-center">
-                                                    <TextInput id="deleted" type="checkbox" value=""
+                                                    <input id="deleted" type="checkbox" value=""
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                     <InputLabel for="deleted"
                                                         class="ml-2 text-sm font-medium text-gray-900">
@@ -217,6 +200,7 @@ const deleteStudent = (brandId) => {
                     </div>
                 </section>
 
+                <!-- Table -->
                 <div class="mt-4 flex flex-col">
                     <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
                         <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
