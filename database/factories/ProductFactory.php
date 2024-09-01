@@ -28,7 +28,7 @@ class ProductFactory extends Factory
             'is_active' => $this->faker->boolean,
             'is_featured' => $this->faker->boolean,
             'is_sale' => $this->faker->boolean,
-            'is_new_product' => $this->faker->boolean,
+            'is_new' => $this->faker->boolean,
             'stock' => $this->faker->numberBetween(1, 100),
         ];
     }

@@ -14,15 +14,15 @@ class Product extends Model
         'description',
         'price',
         'sale_price',
+        'stock',
+        'image',
         'category_id',
         'brand_id',
         'user_id',
-        'stock',
-        'image',
-        'is_active',
         'is_featured',
         'is_sale',
-        'is_new_product',
+        'is_new',
+        'is_active',
     ];
 
     protected $with = [

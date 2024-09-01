@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->boolean('is_featured')->default(false);
             $table->boolean('is_sale')->default(false);
-            $table->boolean('is_new_product')->default(false);
+            $table->boolean('is_new')->default(false);
             $table->boolean('is_active')->default(true);
             $table->softDeletes();
             $table->timestamps();

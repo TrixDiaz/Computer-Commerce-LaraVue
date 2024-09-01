@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use App\Http\Resources\BrandResource;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
@@ -10,6 +11,7 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminProductController extends Controller
 {
@@ -19,12 +21,12 @@ class AdminProductController extends Controller
     public function index(Request $request)
     {
         $productsQuery = Product::query();
-        
+
         $this->applySearch($productsQuery, $request->search);
         $this->applySort($productsQuery, $request->sort);
         $this->applyCategoryFilter($productsQuery, $request->filter);
         $this->applyBrandFilter($productsQuery, $request->filter);
-        
+
         $products = ProductResource::collection($productsQuery->paginate(10));
         $category = CategoryResource::collection(Category::all());
         $brands = BrandResource::collection(Brand::all());
@@ -42,7 +44,6 @@ class AdminProductController extends Controller
         return $query->when($search, function ($query, $search) {
             $query->where('name', 'like', '%' . $search . '%');
         });
-        
     }
 
     protected function applySort(Builder $query, $sort)
@@ -68,23 +69,41 @@ class AdminProductController extends Controller
             $query->whereIn('brand_id', $is_active);
         });
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        $categories = CategoryResource::collection(Category::all());
+        $brands = BrandResource::collection(Brand::all());
+
+        return inertia('Admin/Products/Create', [
+            'categories' => $categories,
+            'brands' => $brands,
+        ]);
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        //
-    }
+        $data = $request->validated();
+    
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+    
+        // Get the authenticated user's ID and add it to the data array
+        $data['user_id'] = auth()->id();
+    
+        Product::create($data);
+    
+        return redirect()->route('products.index');
+    }    
 
     /**
      * Display the specified resource.
