@@ -265,7 +265,7 @@ const deleteStudent = (productId) => {
                                             </th>
                                             <th scope="col"
                                                 class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                                Stock
+                                                Stocks
                                             </th>
                                             <th scope="col"
                                                 class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -296,7 +296,7 @@ const deleteStudent = (productId) => {
                                                 {{ product.price }}
                                             </td>
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
-                                                {{ product.stock }}
+                                                {{ product.stocks }}
                                             </td>
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize">
                                                 {{ product.category.name }}

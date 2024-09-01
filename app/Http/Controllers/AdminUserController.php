@@ -106,7 +106,7 @@ class AdminUserController extends Controller
 
         return inertia('Admin/Users/Edit', [
             'roles' => $roles,
-            'users' => UserResource::make($user),
+            'user' => UserResource::make($user),
         ]);
     }
 

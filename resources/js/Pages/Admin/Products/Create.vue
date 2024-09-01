@@ -24,8 +24,8 @@ const form = useForm({
     description: '',
     price: '',
     sale_price: '',
-    stock: '',
-    image: null,
+    stocks: '',
+    // image: null,
     category_id: '',
     brand_id: '',
     is_featured: true,
@@ -95,17 +95,17 @@ const createProducts = () => {
 
                                     <div class="col-span-6 sm:col-span-3">
                                         <InputLabel for="stock" value="Stock" />
-                                        <TextInput id="stock" v-model="form.stock" type="text"
+                                        <TextInput id="stock" v-model="form.stocks" type="text"
                                             class="mt-1 block w-full" />
                                         <InputError class="mt-2" :message="form.errors.stock" />
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                    <!-- <div class="col-span-6 sm:col-span-3">
                                         <InputLabel for="Image" value="Image" />
                                         <input id="image" type="file" @change="form.image = $event.target.files[ 0 ]"
                                             class="mt-1 block w-full" />
                                         <InputError class="mt-2" :message="form.errors.image" />
-                                    </div>
+                                    </div> -->
 
                                     <div class="col-span-6 sm:col-span-3">
                                         <label for="category_id"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\BrandResource;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
@@ -118,15 +119,32 @@ class AdminProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = CategoryResource::collection(Category::all());
+        $brands = BrandResource::collection(Brand::all());
+
+        return inertia('Admin/Products/Edit', [
+            'product' => ProductResource::make($product),
+            'categories' => $categories,
+            'brands' => $brands,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $data = $request->validated();
+    
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('images', 'public');
+        }
+
+        $data['user_id'] = auth()->id();
+    
+        $product->update($data);
+    
+        return redirect()->route('products.index');
     }
 
     /**
@@ -134,6 +152,8 @@ class AdminProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+    
+        return redirect()->route('products.index');
     }
 }

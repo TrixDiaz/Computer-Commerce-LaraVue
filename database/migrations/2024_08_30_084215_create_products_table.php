@@ -20,7 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('user_id');
-            $table->integer('stock');
+            $table->integer('stocks');
             $table->string('image')->nullable();
             $table->boolean('is_featured')->default(false);
             $table->boolean('is_sale')->default(false);

@@ -14,13 +14,13 @@ defineProps({
         type: Object,
         required: true,
     },
-    users: {
+    user: {
         type: Object,
         required: true,
     },
 });
 
-let user = usePage().props.users.data;
+let user = usePage().props.user.data;
 
 const form = useForm({
     name: user.name,

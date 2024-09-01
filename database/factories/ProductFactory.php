@@ -22,6 +22,7 @@ class ProductFactory extends Factory
             'price' => $this->faker->randomFloat(2, 1, 1000),
             'sale_price' => $this->faker->randomFloat(2, 1, 1000),
             'image' => $this->faker->imageUrl(),
+            'stocks' => $this->faker->numberBetween(1, 100),
             'brand_id' => \App\Models\Brand::factory(),
             'category_id' => \App\Models\Category::factory(),
             'user_id' => \App\Models\User::factory(),
@@ -29,7 +30,6 @@ class ProductFactory extends Factory
             'is_featured' => $this->faker->boolean,
             'is_sale' => $this->faker->boolean,
             'is_new' => $this->faker->boolean,
-            'stock' => $this->faker->numberBetween(1, 100),
         ];
     }
 }
