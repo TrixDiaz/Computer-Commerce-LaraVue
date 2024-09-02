@@ -13,6 +13,8 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class AdminProductController extends Controller
 {
@@ -71,7 +73,6 @@ class AdminProductController extends Controller
         });
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
@@ -84,7 +85,6 @@ class AdminProductController extends Controller
             'categories' => $categories,
             'brands' => $brands,
         ]);
-
     }
 
     /**
@@ -93,17 +93,17 @@ class AdminProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
-    
+
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('images', 'public');
         }
-    
+
         $data['user_id'] = Auth::id();
-    
+
         Product::create($data);
-    
+
         return redirect()->route('products.index');
-    }    
+    }
 
     /**
      * Display the specified resource.
@@ -134,16 +134,24 @@ class AdminProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $data = $request->validated();
-    
+
         if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
             $data['image'] = $request->file('image')->store('images', 'public');
         }
 
-        $data['user_id'] = auth()->id();
-    
+        // Handle boolean fields
+        $data['is_featured'] = $request->boolean('is_featured');
+        $data['is_sale'] = $request->boolean('is_sale');
+        $data['is_new'] = $request->boolean('is_new');
+        $data['is_active'] = $request->boolean('is_active');
+
         $product->update($data);
-    
-        return redirect()->route('products.index');
+
+        return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -152,7 +160,7 @@ class AdminProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-    
+
         return redirect()->route('products.index');
     }
 }

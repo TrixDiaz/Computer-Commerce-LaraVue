@@ -24,7 +24,7 @@ class Product extends Model
         'is_new',
         'is_active',
     ];
-
+    
     protected $with = [
         'category',
         'brand',

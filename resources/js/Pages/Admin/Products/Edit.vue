@@ -42,7 +42,6 @@ const form = useForm({
 
 
 const updateProduct = () => {
-    console.log(form);
     form.put(route('products.update', product.id));
 };
 
@@ -103,10 +102,12 @@ const updateProduct = () => {
                                         <InputError class="mt-2" :message="form.errors.stock" />
                                     </div>
 
-                                    <div class="col-span-6 sm:col-span-3">
+                                   <div class="col-span-6 sm:col-span-3">
                                         <InputLabel for="Image" value="Image" />
-                                        <TextInput id="image" v-model="form.image" type="file" @change="form.image = $event.target.files[0]"
-                                            class="mt-1 block w-full border " />
+                                        <input type="file" @input="form.image = $event.target.files[ 0 ]" class="w-full border" />
+                                        <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                                            {{ form.progress.percentage }}%
+                                        </progress>
                                         <InputError class="mt-2" :message="form.errors.image" />
                                     </div>
 

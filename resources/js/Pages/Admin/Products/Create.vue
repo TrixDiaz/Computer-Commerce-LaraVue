@@ -34,6 +34,24 @@ const form = useForm({
     is_active: true,
 });
 
+// Add this new ref for image preview
+const imagePreview = ref(null);
+
+// Add this new function to handle image selection
+const handleImageSelection = (event) => {
+    const file = event.target.files[0];
+    form.image = file;
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imagePreview.value = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    } else {
+        imagePreview.value = null;
+    }
+};
 
 const createProducts = () => {
     form.post(route('products.store'), {
@@ -73,17 +91,17 @@ const createProducts = () => {
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">
-                                        <InputLabel for="description" value="Description" />
-                                        <TextInput id="description" v-model="form.description" type="text"
-                                            class="mt-1 block w-full" />
-                                        <InputError class="mt-2" :message="form.errors.description" />
-                                    </div>
-
-                                    <div class="col-span-6 sm:col-span-3">
                                         <InputLabel for="price" value="Price" />
                                         <TextInput id="price" v-model="form.price" type="text"
                                             class="mt-1 block w-full" />
                                         <InputError class="mt-2" :message="form.errors.price" />
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-full">
+                                        <InputLabel for="description" value="Description" />
+                                        <TextInput id="description" v-model="form.description" type="text"
+                                            class="mt-1 block w-full" />
+                                        <InputError class="mt-2" :message="form.errors.description" />
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">
@@ -98,15 +116,6 @@ const createProducts = () => {
                                         <TextInput id="stock" v-model="form.stocks" type="text"
                                             class="mt-1 block w-full" />
                                         <InputError class="mt-2" :message="form.errors.stock" />
-                                    </div>
-
-                                    <div class="col-span-6 sm:col-span-3">
-                                        <InputLabel for="Image" value="Image" />
-                                        <input type="file" @input="form.image = $event.target.files[ 0 ]" />
-                                        <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                                            {{ form.progress.percentage }}%
-                                        </progress>
-                                        <InputError class="mt-2" :message="form.errors.image" />
                                     </div>
 
                                     <div class="col-span-6 sm:col-span-3">
@@ -129,6 +138,21 @@ const createProducts = () => {
                                             <option v-for="brand in brands.data" :key="brand.id" :value="brand.id"
                                                 class="capitalize">{{ brand.name }}</option>
                                         </select>
+                                    </div>
+
+                                    <div class="col-span-6 sm:col-span-3">
+                                        <InputLabel for="Image" value="Image" />
+                                        <TextInput type="file" @input="handleImageSelection" accept="image/*"
+                                            class="mt-1 block w-full border" />
+                                        <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                                            {{ form.progress.percentage }}%
+                                        </progress>
+                                        <InputError class="mt-2" :message="form.errors.image" />
+                                    </div>
+
+                                    <div v-if="imagePreview" class="col-span-6 sm:col-span-3">
+                                        <img :src="imagePreview" alt="Image preview"
+                                            class="max-w-full w-full h-auto max-h-72 rounded-md" />
                                     </div>
 
                                 </div>

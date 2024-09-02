@@ -285,8 +285,10 @@ const deleteStudent = (productId) => {
                                         <tr v-for="product in products.data" :key="product.id">
                                             <td
                                                 class="py-4 pl-2 text-sm font-medium text-gray-900">
-                                                <img :src="`/storage/${product.image}`" alt="Product Image"
+                                                <img v-if="product.image" :src="`/storage/${product.image}`" alt="Product Image"
                                                     class="w-56 h-24 object-contain rounded-md">
+                                                <img v-else src="https://placehold.co/1000x500" alt="Placeholder Image"
+                                                    class="w-72 h-32 object-contain rounded-md">
                                             </td>
                                             <td
                                                 class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
