@@ -4,6 +4,7 @@ import { Link, router } from '@inertiajs/vue3';
 const logout = () => {
     router.post(route('logout'));
 };
+
 </script>
 
 <template>
@@ -29,7 +30,13 @@ const logout = () => {
                     My profile
                 </Link>
             </li>
-            <li>
+            <li v-if="$page.url === '/admin/products'">
+                <Link :href="route('welcome')"
+                    class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">
+                    Users
+                </Link>
+            </li>
+            <li v-else>
                 <Link :href="route('index')"
                     class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">
                     Admin

@@ -31,7 +31,7 @@ const form = useForm({
     price: product.price,
     sale_price: product.sale_price,
     stocks: String(product.stocks),
-    // image: product.image,
+    image: product.image,
     category_id: product.category.id,
     brand_id: product.brand.id,
     is_featured: product.is_featured,
@@ -103,12 +103,12 @@ const updateProduct = () => {
                                         <InputError class="mt-2" :message="form.errors.stock" />
                                     </div>
 
-                                    <!-- <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-3">
                                         <InputLabel for="Image" value="Image" />
                                         <TextInput id="image" v-model="form.image" type="file" @change="form.image = $event.target.files[0]"
                                             class="mt-1 block w-full border " />
                                         <InputError class="mt-2" :message="form.errors.image" />
-                                    </div> -->
+                                    </div>
 
                                     <div class="col-span-6 sm:col-span-3">
                                         <label for="category_id"

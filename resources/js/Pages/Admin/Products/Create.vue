@@ -25,7 +25,7 @@ const form = useForm({
     price: '',
     sale_price: '',
     stocks: '',
-    // image: null,
+    image: null,
     category_id: '',
     brand_id: '',
     is_featured: true,
@@ -100,12 +100,14 @@ const createProducts = () => {
                                         <InputError class="mt-2" :message="form.errors.stock" />
                                     </div>
 
-                                    <!-- <div class="col-span-6 sm:col-span-3">
+                                    <div class="col-span-6 sm:col-span-3">
                                         <InputLabel for="Image" value="Image" />
-                                        <input id="image" type="file" @change="form.image = $event.target.files[ 0 ]"
-                                            class="mt-1 block w-full" />
+                                        <input type="file" @input="form.image = $event.target.files[ 0 ]" />
+                                        <progress v-if="form.progress" :value="form.progress.percentage" max="100">
+                                            {{ form.progress.percentage }}%
+                                        </progress>
                                         <InputError class="mt-2" :message="form.errors.image" />
-                                    </div> -->
+                                    </div>
 
                                     <div class="col-span-6 sm:col-span-3">
                                         <label for="category_id"

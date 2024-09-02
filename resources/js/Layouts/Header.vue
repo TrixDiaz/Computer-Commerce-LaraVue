@@ -3,7 +3,7 @@
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-import AuthenticatedDropdown from './AuthenticatedDropdown.vue';
+import AuthenticatedDropdown from '@/Layouts/AuthenticatedDropdown.vue';
 
 const isOpen = ref(false);
 defineProps({

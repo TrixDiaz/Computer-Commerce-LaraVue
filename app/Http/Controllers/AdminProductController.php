@@ -98,8 +98,7 @@ class AdminProductController extends Controller
             $data['image'] = $request->file('image')->store('images', 'public');
         }
     
-        // Get the authenticated user's ID and add it to the data array
-        $data['user_id'] = auth()->id();
+        $data['user_id'] = Auth::id();
     
         Product::create($data);
     

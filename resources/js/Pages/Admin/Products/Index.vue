@@ -88,7 +88,6 @@ const filterproducts = (activeId) => {
     }
 };
 
-
 const deleteForm = useForm({});
 
 const deleteStudent = (productId) => {
@@ -133,7 +132,7 @@ const deleteStudent = (productId) => {
                                     <div class="flex items-center w-full space-x-2 md:w-auto">
                                         <SecondaryButton id="actionsDropdownButton"
                                             data-dropdown-toggle="actionsDropdown">
-                                            <ArrowDown/>
+                                            <ArrowDown />
                                             Sort
                                         </SecondaryButton>
                                         <div id="actionsDropdown"
@@ -155,9 +154,9 @@ const deleteStudent = (productId) => {
 
                                         <SecondaryButton id="filterDropdownButton"
                                             data-dropdown-toggle="filterDropdown">
-                                            <Filter/>
+                                            <Filter />
                                             Filter
-                                            <ArrowDown/>
+                                            <ArrowDown />
                                         </SecondaryButton>
 
                                         <!-- Dropdown menu -->
@@ -253,7 +252,7 @@ const deleteStudent = (productId) => {
                                         <tr>
                                             <th scope="col"
                                                 class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                                ID
+                                                Image
                                             </th>
                                             <th scope="col"
                                                 class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
@@ -285,8 +284,9 @@ const deleteStudent = (productId) => {
                                     <tbody class="divide-y divide-gray-200 bg-white">
                                         <tr v-for="product in products.data" :key="product.id">
                                             <td
-                                                class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                                                {{ product.id }}
+                                                class="py-4 pl-2 text-sm font-medium text-gray-900">
+                                                <img :src="`/storage/${product.image}`" alt="Product Image"
+                                                    class="w-56 h-24 object-contain rounded-md">
                                             </td>
                                             <td
                                                 class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
