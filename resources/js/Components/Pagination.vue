@@ -13,9 +13,7 @@ defineProps({
 </script>
 
 <template>
-
-     
-    <div class="max-w-fullmx-auto py-3">
+    <div class="max-w-full mx-auto py-3">
         <div class="max-w-none mx-auto">
             <div class="bg-white overflow-hidden shadow sm:rounded-lg">
                 <div

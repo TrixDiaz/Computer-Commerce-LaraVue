@@ -141,6 +141,9 @@ class AdminProductController extends Controller
                 Storage::disk('public')->delete($product->image);
             }
             $data['image'] = $request->file('image')->store('images', 'public');
+        } else {
+            // Keep the existing image if no new file is uploaded
+            unset($data['image']);
         }
 
         // Handle boolean fields

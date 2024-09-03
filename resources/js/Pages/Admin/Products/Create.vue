@@ -34,10 +34,8 @@ const form = useForm({
     is_active: true,
 });
 
-// Add this new ref for image preview
 const imagePreview = ref(null);
 
-// Add this new function to handle image selection
 const handleImageSelection = (event) => {
     const file = event.target.files[0];
     form.image = file;
@@ -142,8 +140,8 @@ const createProducts = () => {
 
                                     <div class="col-span-6 sm:col-span-3">
                                         <InputLabel for="Image" value="Image" />
-                                        <TextInput type="file" @input="handleImageSelection" accept="image/*"
-                                            class="mt-1 block w-full border" />
+                                        <input type="file" @input="handleImageSelection" accept="image/*"
+                                            class="mt-1 block w-full border border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm" />
                                         <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                                             {{ form.progress.percentage }}%
                                         </progress>
@@ -152,7 +150,7 @@ const createProducts = () => {
 
                                     <div v-if="imagePreview" class="col-span-6 sm:col-span-3">
                                         <img :src="imagePreview" alt="Image preview"
-                                            class="max-w-full w-full h-auto max-h-72 rounded-md" />
+                                            class="max-w-full max-h-full mx-auto rounded-md" />
                                     </div>
 
                                 </div>
