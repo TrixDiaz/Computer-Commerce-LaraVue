@@ -29,6 +29,7 @@ class AdminProductController extends Controller
         $this->applySort($productsQuery, $request->sort);
         $this->applyCategoryFilter($productsQuery, $request->filterCategory);
         $this->applyBrandFilter($productsQuery, $request->filterBrand);
+        $this->applyShowOnlyFilter($productsQuery, $request->showOnly);
 
         $products = ProductResource::collection($productsQuery->paginate(10));
         $category = CategoryResource::collection(Category::all());
@@ -39,6 +40,7 @@ class AdminProductController extends Controller
             'search' => $request->search ?? '',
             'categories' => $category,
             'brands' => $brands,
+            'showOnly' => $request->showOnly ?? '',
         ]);
     }
 
@@ -72,6 +74,31 @@ class AdminProductController extends Controller
             $query->whereIn('brand_id', $is_active);
         });
     }
+
+    protected function applyShowOnlyFilter(Builder $query, $filter)
+    {
+        return $query->when($filter, function ($query, $filter) {
+            switch ($filter) {
+                case 'featured':
+                    $query->where('is_featured', true);
+                    break;
+                case 'sale':
+                    $query->where('is_sale', true);
+                    break;
+                case 'new':
+                    $query->where('is_new', true);
+                    break;
+                case 'active':
+                    $query->where('is_active', true);
+                    break;
+                case 'inactive':
+                    $query->where('is_active', false);
+                    break;
+            }
+        });
+    }
+
+   
 
     /**
      * Show the form for creating a new resource.

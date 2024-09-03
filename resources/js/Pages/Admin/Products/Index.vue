@@ -35,6 +35,7 @@ let sort = ref("");
 let filterCategory = ref([]);
 let filterBrand = ref([]);
 let pageNumber = ref(1);
+let showOnly = ref("");
 
 let productsUrl = computed(() => {
   let url = new URL(route("products.index"));
@@ -55,6 +56,10 @@ let productsUrl = computed(() => {
 
   if (filterBrand.value.length > 0) {
     url.searchParams.set("filterBrand", filterBrand.value.join(","));
+  }
+
+  if (showOnly.value) {
+    url.searchParams.set("showOnly", showOnly.value);
   }
 
   return url;
@@ -285,8 +290,10 @@ const deleteStudent = (productId) => {
                 <div class="flex flex-row items-center">
                   <input
                     id="featured"
-                    type="checkbox"
-                    value=""
+                    type="radio"
+                    value="featured"
+                    v-model="showOnly"
+                    name="showOnly"
                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
                   />
                   <InputLabel
@@ -299,8 +306,10 @@ const deleteStudent = (productId) => {
                 <div class="flex flex-row items-center">
                   <input
                     id="sale"
-                    type="checkbox"
-                    value=""
+                    type="radio"
+                    value="sale"
+                    v-model="showOnly"
+                    name="showOnly"
                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
                   />
                   <InputLabel for="sale" class="ml-2 text-sm font-medium text-gray-900">
@@ -310,8 +319,10 @@ const deleteStudent = (productId) => {
                 <div class="flex flex-row items-center">
                   <input
                     id="new"
-                    type="checkbox"
-                    value=""
+                    type="radio"
+                    value="new"
+                    v-model="showOnly"
+                    name="showOnly"
                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
                   />
                   <InputLabel for="new" class="ml-2 text-sm font-medium text-gray-900">
@@ -321,8 +332,10 @@ const deleteStudent = (productId) => {
                 <div class="flex flex-row items-center">
                   <input
                     id="active"
-                    type="checkbox"
-                    value=""
+                    type="radio"
+                    value="active"
+                    v-model="showOnly"
+                    name="showOnly"
                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
                   />
                   <InputLabel for="active" class="ml-2 text-sm font-medium text-gray-900">
@@ -332,8 +345,10 @@ const deleteStudent = (productId) => {
                 <div class="flex flex-row items-center">
                   <input
                     id="inactive"
-                    type="checkbox"
-                    value=""
+                    type="radio"
+                    value="inactive"
+                    v-model="showOnly"
+                    name="showOnly"
                     class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
                   />
                   <InputLabel
@@ -398,6 +413,24 @@ const deleteStudent = (productId) => {
                         scope="col"
                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
+                        Featured
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Sale
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        New
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
                         Status
                       </th>
                       <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6" />
@@ -441,6 +474,18 @@ const deleteStudent = (productId) => {
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize"
                       >
                         {{ product.brand.name }}
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <span v-if="product.is_featured === 1"><Check /></span>
+                        <span v-else><X /></span>
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <span v-if="product.is_sale === 1"><Check /></span>
+                        <span v-else><X /></span>
+                      </td>
+                      <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <span v-if="product.is_new === 1"><Check /></span>
+                        <span v-else><X /></span>
                       </td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         <span v-if="product.is_active === 1"><Check /></span>
