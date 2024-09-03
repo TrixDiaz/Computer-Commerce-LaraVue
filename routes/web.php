@@ -10,6 +10,8 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,9 +19,7 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        'products' => ProductResource::collection(Product::all()),
     ]);
 })->name('welcome');
 
