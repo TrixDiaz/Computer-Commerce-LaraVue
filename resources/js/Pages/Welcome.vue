@@ -15,12 +15,9 @@ import Accordion from "@/Components/Accordion.vue";
 
 const props = defineProps({
   products: Object,
-});
-
-const newProducts = computed(() => {
-  return props.products.data.filter(
-    (product) => product.is_new === 1 && product.is_active === 1
-  );
+  featuredProducts: Object,
+  saleProducts: Object,
+  newProducts: Object,
 });
 </script>
 
@@ -35,22 +32,22 @@ const newProducts = computed(() => {
           >See all new product</Link
         >
       </div>
-      <VueCarousel :products="newProducts" :itemsToShow="6">
+      <VueCarousel :products="props.newProducts.data" :itemsToShow="6">
         <template v-slot:default="{ product }">
           <ProductCard :product="product" />
         </template>
       </VueCarousel>
     </div>
 
-    <Banner class="bg-white" />
+    <Banner class="bg-white" title="Featured" />
 
-    <Products :products="props.products.data" />
-
-    <TabsProduct :products="props.products.data" />
+    <Products :products="props.featuredProducts.data" />
 
     <TabsProduct :products="props.products.data" />
 
-    <Products :products="props.products.data" />
+    <TabsProduct :products="props.products.data" />
+
+    <Products :products="props.saleProducts.data" title="Sale" />
 
     <Brands />
 

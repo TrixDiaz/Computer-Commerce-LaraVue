@@ -1,5 +1,8 @@
 <script setup>
 import { computed } from "vue";
+import Heart from "@/Components/Icons/Heart.vue";
+import Eye from "@/Components/Icons/Eye.vue";
+import Info from "@/Components/Icons/Info.vue";
 
 const props = defineProps({
   product: {
@@ -48,42 +51,13 @@ const salePercentage = computed(() => {
             type="button"
             class="p-1 text-gray-500 border rounded-full hover:bg-gray-100 hover:text-gray-900"
           >
-            <svg
-              class="h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 6C6.5 1 1 8 5.8 13l6.2 7 6.2-7C23 8 17.5 1 12 6Z"
-              />
-            </svg>
+            <Heart />
           </button>
           <button
             type="button"
             class="p-1 text-gray-500 border rounded-full hover:bg-gray-100 hover:text-gray-900"
           >
-            <svg
-              class="h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-width="2"
-                d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"
-              />
-              <path
-                stroke="currentColor"
-                stroke-width="2"
-                d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-              />
-            </svg>
+            <Eye />
           </button>
         </div>
       </div>
@@ -125,29 +99,14 @@ const salePercentage = computed(() => {
 
       <ul class="mt-2 flex items-center gap-2">
         <li class="flex items-center gap-1">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-info"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <path d="M12 16v-4" />
-            <path d="M12 8h.01" />
-          </svg>
+          <Info />
           <p class="text-xs font-medium text-gray-500 capitalize">in stock</p>
         </li>
       </ul>
 
-      <div class="mt-3 flex items-center justify-between gap-2">
-        <p class="text-lg font-bold text-gray-900">
-          <span class="leading-none" v-if="product.is_sale === 1">
+      <div class="mt-3 *:first-letter:flex items-center justify-between">
+        <p class="text-xl font-bold text-gray-900">
+          <span class="leading-2" v-if="product.is_sale === 1">
             ₱ {{ product.sale_price }}
             <span class="text-xs line-through text-gray-500">{{ product.price }}</span>
           </span>
@@ -156,7 +115,7 @@ const salePercentage = computed(() => {
         <div class="hidden group-hover/item:block group-hover/item:duration-1000">
           <button
             type="button"
-            class="inline-flex items-center rounded-full border border-blue-500 px-2 py-2 text-xs text-blue-600 hover:bg-blue-800 hover:text-white"
+            class="w-full items-center rounded-full border border-blue-500 px-2 py-2 text-xs text-blue-600 hover:bg-blue-800 hover:text-white"
           >
             Add to cart
           </button>

@@ -9,21 +9,22 @@ import InputError from "@/Components/InputError.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 
 defineProps({
-  brand: {
+  announcement: {
     type: Object,
     required: true,
   },
 });
 
-let brand = usePage().props.brand.data;
+let announcement = usePage().props.announcement.data;
 
 const form = useForm({
-  name: brand.name,
-  is_active: brand.is_active,
+  title: announcement.title,
+  description: announcement.description,
+  is_active: announcement.is_active,
 });
 
-const updateBrand = () => {
-  form.put(route("brands.update", brand.id));
+const updateannouncement = () => {
+  form.put(route("announcement.update", announcement.id));
 };
 </script>
 
@@ -32,33 +33,43 @@ const updateBrand = () => {
     <div class="max-w-full mx-auto">
       <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
         <div class="space-y-6 sm:px-6 lg:px-0 lg:col-span-12">
-          <form @submit.prevent="updateBrand">
+          <form @submit.prevent="updateannouncement">
             <div class="shadow sm:rounded-md sm:overflow-hidden">
               <div class="bg-white py-6 px-4 space-y-6 sm:p-6">
                 <div>
                   <h3 class="text-lg leading-6 font-medium text-gray-900">
-                    Brand Information
+                    Announcement Information
                   </h3>
                   <p class="mt-1 text-sm text-gray-500">
-                    Use this form to create a new brand.
+                    Use this form to create a new announcement.
                   </p>
                 </div>
 
                 <div class="grid grid-cols-6 gap-6">
                   <div class="col-span-6 sm:col-span-3">
-                    <InputLabel for="name" value="Name" />
+                    <InputLabel for="title" value="Title" />
                     <TextInput
-                      id="name"
-                      v-model="form.name"
+                      id="title"
+                      v-model="form.title"
                       type="text"
                       class="mt-1 block w-full"
                     />
-                    <InputError class="mt-2" :message="form.errors.name" />
+                    <InputError class="mt-2" :message="form.errors.title" />
+                  </div>
+                  <div class="col-span-6 sm:col-span-3">
+                    <InputLabel for="description" value="Description" />
+                    <TextInput
+                      id="description"
+                      v-model="form.description"
+                      type="text"
+                      class="mt-1 block w-full"
+                    />
+                    <InputError class="mt-2" :message="form.errors.description" />
                   </div>
                 </div>
               </div>
               <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 space-x-2">
-                <Link :href="route('brands.index')">
+                <Link :href="route('announcement.index')">
                   <SecondaryButton> Cancel </SecondaryButton>
                 </Link>
                 <PrimaryButton> Save </PrimaryButton>

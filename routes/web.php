@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminAnnouncementController;
 use App\Http\Controllers\AdminBrandController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminController;
@@ -19,7 +20,10 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
-        'products' => ProductResource::collection(Product::all()),
+        'products' => ProductResource::collection(Product::inRandomOrder()->limit(10)->get()),
+        'featuredProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_featured', 1 && 'is_active', 1)->limit(10)->get()),
+        'saleProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_sale', 1 && 'is_active', 1)->limit(10)->get()),
+        'newProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_new', 1 && 'is_active', 1)->limit(10)->get()),
     ]);
 })->name('welcome');
 
@@ -39,6 +43,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', config('sanctum.middleware.admin')])->prefix('admin')->group(function () {
     Route::resource('/', AdminController::class);
+    Route::resource('/announcement', AdminAnnouncementController::class);
     Route::resource('/users', AdminUserController::class);
     Route::resource('/products', AdminProductController::class);
     Route::resource('/brands', AdminBrandController::class);

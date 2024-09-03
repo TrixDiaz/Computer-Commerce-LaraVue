@@ -1,41 +1,43 @@
 <script setup>
 defineProps({
-    description: {
-        type: String,
-        default: 'lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit elit lorem ipsum dolor sit amet, consectetur adipiscing elit '
-    }
-})
-
+  description: {
+    type: String,
+    default:
+      "lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit lorem ipsum dolor sit amet, consectetur adipiscing elit elit lorem ipsum dolor sit amet, consectetur adipiscing elit ",
+  },
+});
 </script>
 
 <template>
-    <Transition>
-        <div class="bg-black">
-            <div class="max-w-7xl mx-auto">
-                <div class="hidden md:block overflow-hidden py-2">
-                    <div class="animate-slide uppercase text-md font-poppins whitespace-nowrap inline-block text-white">
-                        <span>
-                            <slot>{{ description }}</slot>
-                        </span>
-                    </div>
-                </div>
-            </div>
+  <Transition>
+    <div class="bg-black">
+      <div class="max-w-7xl mx-auto">
+        <div class="hidden md:block overflow-hidden py-2">
+          <div
+            class="animate-slide uppercase text-md font-poppins whitespace-nowrap inline-block text-white"
+          >
+            <span>
+              {{ description }}
+            </span>
+          </div>
         </div>
-    </Transition>
+      </div>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
 @keyframes slide {
-    0% {
-        transform: translateX(30%);
-    }
+  0% {
+    transform: translateX(30%);
+  }
 
-    100% {
-        transform: translateX(-100%);
-    }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 .animate-slide {
-    animation: slide 75s linear infinite;
+  animation: slide 50s linear infinite;
 }
 </style>

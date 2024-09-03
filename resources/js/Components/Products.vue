@@ -8,6 +8,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  title: {
+    type: String,
+    default: "Featured",
+  },
 });
 </script>
 
@@ -17,8 +21,8 @@ const props = defineProps({
       <div class="relative flex flex-col justify-center items-center">
         <img src="/images/custom-build.png" alt="picture" class="max-w-60 h-full" />
         <div class="absolute text-2xl text-white font-bold tracking-wider text-center">
-          <span class="block">Custom</span>
-          <span class="block">Builds</span>
+          <span class="block">{{ title }}</span>
+          <span class="block">Products</span>
           <p class="absolute mt-20 text-xs text-nowrap capitalize underline text-white">
             see all products
           </p>
