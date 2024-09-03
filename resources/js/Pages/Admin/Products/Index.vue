@@ -443,13 +443,13 @@ const deleteStudent = (productId) => {
                           v-if="product.image"
                           :src="`/storage/${product.image}`"
                           alt="Product Image"
-                          class="w-56 h-24 object-contain rounded-md"
+                          class="max-w-96 min-h-72 object-cover rounded-md"
                         />
                         <img
                           v-else
-                          src="https://placehold.co/1000x500"
+                          src="https://placehold.co/800x500"
                           alt="Placeholder Image"
-                          class="w-72 h-32 object-contain rounded-md"
+                          class="max-w-96 min-h-72 object-cover rounded-md"
                         />
                       </td>
                       <td

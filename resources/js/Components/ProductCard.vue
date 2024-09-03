@@ -1,9 +1,19 @@
 <script setup>
-defineProps({
+import { computed } from "vue";
+
+const props = defineProps({
   product: {
     type: Object,
     required: true,
   },
+});
+
+const salePercentage = computed(() => {
+  if (props.product.is_sale === 1 && props.product.price && props.product.sale_price) {
+    const discount = props.product.price - props.product.sale_price;
+    return Math.round((discount / props.product.price) * 100) + "%";
+  }
+  return null;
 });
 </script>
 
@@ -77,7 +87,6 @@ defineProps({
           </button>
         </div>
       </div>
-      <!-- Use the product data -->
       <a
         href="#"
         class="text-sm text-wrap font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:underline"
@@ -86,16 +95,18 @@ defineProps({
       </a>
 
       <div class="my-2 flex items-center justify-between gap-2">
-        <span class="rounded bg-primary-100 py-0.5 text-xs font-medium text-primary-800"
-          >Up to 35% off</span
+        <span
+          v-if="salePercentage"
+          class="rounded bg-primary-100 py-0.5 px-1.5 text-xs font-medium text-primary-800 capitalize"
         >
+          {{ salePercentage }} off
+        </span>
       </div>
 
       <div class="mt-2 flex items-center gap-1">
         <div class="flex items-center">
-          <!-- Example of showing the rating -->
           <svg
-            v-for="i in parseInt(5)"
+            v-for="i in parseInt(product.rating ?? 0)"
             :key="i"
             class="h-3 w-3 text-yellow-400"
             xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +118,9 @@ defineProps({
             />
           </svg>
         </div>
-        <p class="text-xs font-medium text-gray-900">5</p>
+        <p class="text-xs font-medium text-gray-900">
+          {{ product.rating ?? "No rating yet" }}
+        </p>
       </div>
 
       <ul class="mt-2 flex items-center gap-2">
@@ -133,26 +146,18 @@ defineProps({
       </ul>
 
       <div class="mt-3 flex items-center justify-between gap-2">
-        <p class="text-xl font-bold text-gray-900">₱ {{ product.price }}</p>
+        <p class="text-lg font-bold text-gray-900">
+          <span class="leading-none" v-if="product.is_sale === 1">
+            ₱ {{ product.sale_price }}
+            <span class="text-xs line-through text-gray-500">{{ product.price }}</span>
+          </span>
+          <span v-else>₱ {{ product.price }}</span>
+        </p>
         <div class="hidden group-hover/item:block group-hover/item:duration-1000">
           <button
             type="button"
             class="inline-flex items-center rounded-full border border-blue-500 px-2 py-2 text-xs text-blue-600 hover:bg-blue-800 hover:text-white"
           >
-            <svg
-              class="me-1 h-4 w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
-              />
-            </svg>
             Add to cart
           </button>
         </div>

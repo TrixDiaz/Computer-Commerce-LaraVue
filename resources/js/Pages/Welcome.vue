@@ -12,6 +12,7 @@ import Brands from "@/Components/Brands.vue";
 import Promotion from "@/Components/Promotion.vue";
 import Support from "@/Components/Support.vue";
 import Accordion from "@/Components/Accordion.vue";
+
 const props = defineProps({
   products: Object,
 });
@@ -34,7 +35,7 @@ const newProducts = computed(() => {
           >See all new product</Link
         >
       </div>
-      <VueCarousel :products="newProducts">
+      <VueCarousel :products="newProducts" :itemsToShow="6">
         <template v-slot:default="{ product }">
           <ProductCard :product="product" />
         </template>
@@ -43,13 +44,13 @@ const newProducts = computed(() => {
 
     <Banner class="bg-white" />
 
-    <Products />
+    <Products :products="props.products.data" />
 
-    <TabsProduct />
+    <TabsProduct :products="props.products.data" />
 
-    <TabsProduct />
+    <TabsProduct :products="props.products.data" />
 
-    <Products />
+    <Products :products="props.products.data" />
 
     <Brands />
 
