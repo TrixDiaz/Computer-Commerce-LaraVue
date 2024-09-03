@@ -27,8 +27,8 @@ class AdminProductController extends Controller
 
         $this->applySearch($productsQuery, $request->search);
         $this->applySort($productsQuery, $request->sort);
-        $this->applyCategoryFilter($productsQuery, $request->filter);
-        $this->applyBrandFilter($productsQuery, $request->filter);
+        $this->applyCategoryFilter($productsQuery, $request->filterCategory);
+        $this->applyBrandFilter($productsQuery, $request->filterBrand);
 
         $products = ProductResource::collection($productsQuery->paginate(10));
         $category = CategoryResource::collection(Category::all());

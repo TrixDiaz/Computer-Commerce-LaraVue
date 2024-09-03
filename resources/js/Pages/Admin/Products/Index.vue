@@ -32,7 +32,8 @@ defineProps({
 
 let search = ref(usePage().props.search ?? "");
 let sort = ref("");
-let filter = ref([]);
+let filterCategory = ref([]);
+let filterBrand = ref([]);
 let pageNumber = ref(1);
 
 let productsUrl = computed(() => {
@@ -48,8 +49,12 @@ let productsUrl = computed(() => {
     url.searchParams.set("sort", sort.value);
   }
 
-  if (filter.value.length > 0) {
-    url.searchParams.set("filter", filter.value.join(","));
+  if (filterCategory.value.length > 0) {
+    url.searchParams.set("filterCategory", filterCategory.value.join(","));
+  }
+
+  if (filterBrand.value.length > 0) {
+    url.searchParams.set("filterBrand", filterBrand.value.join(","));
   }
 
   return url;
@@ -83,11 +88,19 @@ const sortproducts = (order) => {
   sort.value = order;
 };
 
-const filterproducts = (activeId) => {
-  if (filter.value.includes(activeId)) {
-    filter.value = filter.value.filter((id) => id !== activeId);
+const filterCategories = (activeId) => {
+  if (filterCategory.value.includes(activeId)) {
+    filterCategory.value = filterCategory.value.filter((id) => id !== activeId);
   } else {
-    filter.value.push(activeId);
+    filterCategory.value.push(activeId);
+  }
+};
+
+const filterBrands = (activeId) => {
+  if (filterBrand.value.includes(activeId)) {
+    filterBrand.value = filterBrand.value.filter((id) => id !== activeId);
+  } else {
+    filterBrand.value.push(activeId);
   }
 };
 
@@ -177,60 +190,88 @@ const deleteStudent = (productId) => {
                       data-dropdown-toggle="filterDropdown"
                     >
                       <Filter />
-                      Filter
+                      Category
                       <ArrowDown />
                     </SecondaryButton>
 
-                    <!-- Dropdown menu -->
+                    <!--Category Dropdown menu -->
                     <div
                       id="filterDropdown"
                       class="z-10 hidden max-w-full p-3 bg-white rounded-lg shadow"
                     >
-                      <div class="flex flex-row justify-center items-center w-full gap-2">
-                        <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                          <h6 class="mb-3 text-sm font-medium text-gray-900">Category</h6>
-                          <li
-                            v-for="category in categories.data"
-                            :key="category.id"
-                            class="flex items-center"
+                      <div class="flex flex-col w-full">
+                        <h6 class="mb-3 text-sm font-medium text-gray-900">Category</h6>
+                        <div class="max-h-72 overflow-y-auto">
+                          <ul
+                            class="grid grid-cols-3 gap-2 text-sm"
+                            aria-labelledby="dropdownDefault"
                           >
-                            <input
-                              @change="filterproducts(category.id)"
-                              :id="category.id"
-                              type="checkbox"
-                              :value="category.id"
-                              class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
-                            />
-                            <InputLabel
-                              for="active"
-                              class="ml-2 text-sm font-medium text-gray-900"
+                            <li
+                              v-for="category in categories.data"
+                              :key="category.id"
+                              class="flex items-center"
                             >
-                              {{ category.name }}
-                            </InputLabel>
-                          </li>
-                        </ul>
-                        <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
-                          <h6 class="mb-3 text-sm font-medium text-gray-900">Brand</h6>
-                          <li
-                            v-for="brand in brands.data"
-                            :key="brand.id"
-                            class="flex items-center"
+                              <input
+                                @change="filterCategories(category.id)"
+                                :id="category.id"
+                                type="checkbox"
+                                :value="category.id"
+                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
+                              />
+                              <InputLabel
+                                :for="category.id"
+                                class="ml-2 text-sm font-medium text-gray-900"
+                              >
+                                {{ category.name }}
+                              </InputLabel>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <SecondaryButton
+                      id="brandfilterDropdownButton"
+                      data-dropdown-toggle="brandfilterDropdown"
+                    >
+                      <Filter />
+                      Brand
+                      <ArrowDown />
+                    </SecondaryButton>
+
+                    <!-- Brand Dropdown Menu -->
+                    <div
+                      id="brandfilterDropdown"
+                      class="z-10 hidden max-w-full p-3 bg-white rounded-lg shadow"
+                    >
+                      <div class="flex flex-col w-full">
+                        <h6 class="mb-3 text-sm font-medium text-gray-900">Brands</h6>
+                        <div class="max-h-72 overflow-y-auto">
+                          <ul
+                            class="grid grid-cols-3 gap-2 text-sm"
+                            aria-labelledby="dropdownDefault"
                           >
-                            <input
-                              @change="filterproducts(brand.id)"
-                              :id="brand.id"
-                              type="checkbox"
-                              :value="brand.id"
-                              class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
-                            />
-                            <InputLabel
-                              for="active"
-                              class="ml-2 text-sm font-medium text-gray-900"
+                            <li
+                              v-for="brands in brands.data"
+                              :key="brands.id"
+                              class="flex items-center"
                             >
-                              {{ brand.name }}
-                            </InputLabel>
-                          </li>
-                        </ul>
+                              <input
+                                @change="filterBrands(brands.id)"
+                                :id="brands.id"
+                                type="checkbox"
+                                :value="brands.id"
+                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
+                              />
+                              <InputLabel
+                                :for="brands.id"
+                                class="ml-2 text-sm font-medium text-gray-900"
+                              >
+                                {{ brands.name }}
+                              </InputLabel>
+                            </li>
+                          </ul>
+                        </div>
                       </div>
                     </div>
                   </div>
