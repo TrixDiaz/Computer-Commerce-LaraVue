@@ -247,7 +247,10 @@ const truncateText = (text, wordLimit) => {
           </section>
 
           <div class="my-2">
-            <p class="font-semibold text-lg">Preview Annoucement</p>
+            <p class="font-semibold text-xl">
+              This Preview Announcement will only show data with the most recent Active
+              Status. !!!! Recommended set 1 active status only
+            </p>
             <Annoucement />
           </div>
 
@@ -322,9 +325,6 @@ const truncateText = (text, wordLimit) => {
                         </td>
                         <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           {{ announcement.created_at }}
-                        </td>
-                        <td class="py-4 text-sm text-gray-500">
-                          <PrimaryButton>Preview</PrimaryButton>
                         </td>
 
                         <td

@@ -23,8 +23,8 @@ class AdminAnnouncementController extends Controller
         $announcement = AnnouncementResource::collection($announcementQuery->paginate(10));
 
         return inertia('Admin/Announcement/Index', [
-           'announcements' => $announcement,
-           'search' => $request->search ?? '', 
+            'announcements' => $announcement,
+            'search' => $request->search ?? '',
         ]);
     }
 
@@ -32,7 +32,7 @@ class AdminAnnouncementController extends Controller
     {
         return $query->when($search, function ($query, $search) {
             $query->where('title', 'like', '%' . $search . '%')
-            ->orWhere('description', 'like', '%' . $search . '%');
+                ->orWhere('description', 'like', '%' . $search . '%');
         });
     }
 
@@ -80,10 +80,19 @@ class AdminAnnouncementController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Announcement $announcement)
-    
+    public function show()
     {
-        //
+        $activeAnnouncement = Announcement::where('is_active', true)
+            ->latest()
+            ->first();
+
+        if ($activeAnnouncement) {
+            return response()->json([
+                'announcement' => new AnnouncementResource($activeAnnouncement)
+            ]);
+        }
+
+        return response()->json(['message' => 'No active announcement found'], 404);
     }
 
     /**
