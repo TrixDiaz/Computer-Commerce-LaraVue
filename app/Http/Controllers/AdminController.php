@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\UserResource;
-use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Announcement;
 
 class AdminController extends Controller
 {
@@ -62,5 +62,16 @@ class AdminController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getTotals()
+    {
+        $totalUsers = User::count();
+        $totalAnnouncements = Announcement::count();
+
+        return response()->json([
+            'totalUsers' => $totalUsers,
+            'totalAnnouncements' => $totalAnnouncements,
+        ]);
     }
 }

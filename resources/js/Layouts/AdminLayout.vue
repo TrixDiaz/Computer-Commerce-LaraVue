@@ -10,12 +10,17 @@ import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
 import AuthenticatedDropdown from "@/Layouts/AuthenticatedDropdown.vue";
 import Alert from "@/Components/Icons/Alert.vue";
+import { useAdminCount } from "@/Store/adminCount";
+import { storeToRefs } from "pinia";
 
+const adminCount = useAdminCount();
+const { totalUsers, totalAnnouncements } = storeToRefs(adminCount);
 onMounted(() => {
   initFlowbite();
+  adminCount.fetchTotals();
 });
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     default: "Flowbite",
@@ -656,7 +661,7 @@ defineProps({
               <span
                 class="inline-flex justify-center items-center w-5 h-5 text-xs font-semibold rounded-full text-primary-800 bg-primary-100 dark:bg-primary-200 dark:text-primary-800"
               >
-                4
+                {{ totalAnnouncements }}
               </span>
             </Link>
           </li>
@@ -706,7 +711,12 @@ defineProps({
               class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
             >
               <FingerPrint />
-              <span class="ml-3">Users</span>
+              <span class="flex-1 ml-3 whitespace-nowrap">Users</span>
+              <span
+                class="inline-flex justify-center items-center w-5 h-5 text-xs font-semibold rounded-full text-primary-800 bg-primary-100 dark:bg-primary-200 dark:text-primary-800"
+              >
+                {{ totalUsers }}
+              </span>
             </Link>
           </li>
         </ul>

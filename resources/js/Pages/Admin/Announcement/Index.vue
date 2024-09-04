@@ -248,8 +248,7 @@ const truncateText = (text, wordLimit) => {
 
           <div class="my-2">
             <p class="font-semibold text-xl">
-              This Preview Announcement will only show data with the most recent Active
-              Status. !!!! Recommended set 1 active status only
+              This Announcement will show data with the most recent Active Status.
             </p>
             <Annoucement />
           </div>

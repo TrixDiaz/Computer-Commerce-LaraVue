@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "flowbite": "^2.5.1",
+        "pinia": "^2.2.2",
         "vue3-carousel": "^0.3.3"
     }
 }

@@ -85,7 +85,7 @@ class AdminAnnouncementController extends Controller
         $activeAnnouncement = Announcement::where('is_active', true)
             ->latest()
             ->first();
-
+            
         if ($activeAnnouncement) {
             return response()->json([
                 'announcement' => new AnnouncementResource($activeAnnouncement)
