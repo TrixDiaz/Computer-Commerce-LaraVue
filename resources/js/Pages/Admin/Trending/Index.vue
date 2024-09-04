@@ -280,8 +280,8 @@ const deleteStudent = (trendingId) => {
                         class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"
                       >
                         <img
-                          v-if="trending.image"
-                          :src="`/storage/${trending.image}`"
+                          v-if="trending.imageUrl"
+                          :src="trending.imageUrl"
                           alt="Trending Image"
                           class="max-w-96 min-h-72 object-cover rounded-md"
                         />

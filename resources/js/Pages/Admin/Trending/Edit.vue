@@ -24,11 +24,11 @@ const form = useForm({
   is_active: trend.is_active,
 });
 
-const imagePreview = ref(trend.image ? `/storage/${trend.image}` : null);
+const imagePreview = ref(trend.image ? `trend.image` : null);
 
 const currentImageUrl = computed(() => {
-  if (trend.image) {
-    return `/storage/${trend.image}`;
+  if (trend.imageUrl) {
+    return trend.imageUrl;
   }
   return null;
 });
