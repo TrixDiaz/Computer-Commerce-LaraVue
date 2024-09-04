@@ -28,7 +28,7 @@ const updateBrand = () => {
 </script>
 
 <template>
-  <AdminLayout>
+  <AdminLayout title="Edit Brand">
     <div class="max-w-full mx-auto">
       <div class="lg:grid lg:grid-cols-12 lg:gap-x-5">
         <div class="space-y-6 sm:px-6 lg:px-0 lg:col-span-12">
@@ -44,16 +44,63 @@ const updateBrand = () => {
                   </p>
                 </div>
 
-                <div class="grid grid-cols-6 gap-6">
-                  <div class="col-span-6 sm:col-span-3">
-                    <InputLabel for="name" value="Name" />
-                    <TextInput
-                      id="name"
-                      v-model="form.name"
-                      type="text"
-                      class="mt-1 block w-full"
-                    />
-                    <InputError class="mt-2" :message="form.errors.name" />
+                <div
+                  class="grid grid-cols-12 gap-6 border rounded-md shadow-md px-4 py-6"
+                >
+                  <!-- Left column (existing fields) -->
+                  <div class="col-span-8 grid grid-cols-8 gap-6">
+                    <div class="col-span-6 sm:col-span-4">
+                      <InputLabel for="name" value="Name" />
+                      <TextInput
+                        id="name"
+                        v-model="form.name"
+                        type="text"
+                        class="mt-1 block w-full"
+                      />
+                      <InputError class="mt-2" :message="form.errors.name" />
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-4">
+                      <label
+                        for="class_id"
+                        class="block text-sm font-medium text-gray-700"
+                        >Status</label
+                      >
+                      <select
+                        v-model="form.is_active"
+                        placeholder="Select Status"
+                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                      >
+                        <option disabled>Select Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Right column (new fields) -->
+                  <div class="col-span-4 space-y-6 rounded-md shadow-md p-4">
+                    <div class="">
+                      <InputLabel for="created_at" value="Created At" />
+                      <TextInput
+                        id="created_at"
+                        v-model="brand.created_at"
+                        type="text"
+                        class="mt-1 block w-full border-none bg-gray-100"
+                        disabled
+                      />
+                    </div>
+
+                    <div>
+                      <InputLabel for="updated_at" value="Updated At" />
+                      <TextInput
+                        id="updated_at"
+                        v-model="brand.updated_at"
+                        type="text"
+                        class="mt-1 block w-full border-none bg-gray-100"
+                        disabled
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

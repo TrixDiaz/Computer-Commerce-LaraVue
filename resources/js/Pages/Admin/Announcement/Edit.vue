@@ -66,6 +66,21 @@ const updateannouncement = () => {
                     />
                     <InputError class="mt-2" :message="form.errors.description" />
                   </div>
+
+                  <div class="col-span-6 sm:col-span-3">
+                    <label for="class_id" class="block text-sm font-medium text-gray-700"
+                      >Status</label
+                    >
+                    <select
+                      v-model="form.is_active"
+                      placeholder="Select Status"
+                      class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                    >
+                      <option disabled>Select Status</option>
+                      <option value="1">Active</option>
+                      <option value="0">Inactive</option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 space-x-2">

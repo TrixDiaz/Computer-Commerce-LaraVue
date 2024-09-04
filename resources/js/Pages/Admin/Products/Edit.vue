@@ -66,11 +66,23 @@ const handleImageChange = (event) => {
 };
 
 const updateProduct = () => {
-  form.post(route("products.update", product.id), {
-    preserveScroll: true,
-    preserveState: true,
-    forceFormData: true,
-  });
+  // Remove the image field if it's null (no new image selected)
+  if (form.image === null) {
+    const formData = { ...form };
+    delete formData.image;
+
+    form.post(route("products.update", product.id), {
+      preserveScroll: true,
+      preserveState: true,
+      data: formData,
+    });
+  } else {
+    form.post(route("products.update", product.id), {
+      preserveScroll: true,
+      preserveState: true,
+      forceFormData: true,
+    });
+  }
 };
 </script>
 
@@ -91,137 +103,235 @@ const updateProduct = () => {
                   </p>
                 </div>
 
-                <div class="grid grid-cols-6 gap-6">
-                  <div class="col-span-6 sm:col-span-3">
-                    <InputLabel for="name" value="Name" />
-                    <TextInput
-                      id="name"
-                      v-model="form.name"
-                      type="text"
-                      class="mt-1 block w-full"
-                    />
-                    <InputError class="mt-2" :message="form.errors.name" />
-                  </div>
+                <div
+                  class="grid grid-cols-12 gap-6 border rounded-md shadow-md px-4 py-6"
+                >
+                  <!-- Left column (existing fields) -->
+                  <div class="col-span-8 grid grid-cols-8 gap-6">
+                    <div class="col-span-6 sm:col-span-4">
+                      <InputLabel for="name" value="Name" />
+                      <TextInput
+                        id="name"
+                        v-model="form.name"
+                        type="text"
+                        class="mt-1 block w-full"
+                      />
+                      <InputError class="mt-2" :message="form.errors.name" />
+                    </div>
 
-                  <div class="col-span-6 sm:col-span-3">
-                    <InputLabel for="price" value="Price" />
-                    <TextInput
-                      id="price"
-                      v-model="form.price"
-                      type="text"
-                      class="mt-1 block w-full"
-                    />
-                    <InputError class="mt-2" :message="form.errors.price" />
-                  </div>
+                    <div class="col-span-6 sm:col-span-4">
+                      <InputLabel for="price" value="Price" />
+                      <TextInput
+                        id="price"
+                        v-model="form.price"
+                        type="text"
+                        class="mt-1 block w-full"
+                      />
+                      <InputError class="mt-2" :message="form.errors.price" />
+                    </div>
 
-                  <div class="col-span-6 sm:col-span-6">
-                    <InputLabel for="description" value="Description" />
-                    <TextInput
-                      id="description"
-                      v-model="form.description"
-                      type="text"
-                      class="mt-1 block w-full"
-                    />
-                    <InputError class="mt-2" :message="form.errors.description" />
-                  </div>
+                    <div class="col-span-6 sm:col-span-8">
+                      <InputLabel for="description" value="Description" />
+                      <TextInput
+                        id="description"
+                        v-model="form.description"
+                        type="text"
+                        class="mt-1 block w-full"
+                      />
+                      <InputError class="mt-2" :message="form.errors.description" />
+                    </div>
 
-                  <div class="col-span-6 sm:col-span-3">
-                    <InputLabel for="sale_price" value="Sale Price" />
-                    <TextInput
-                      id="sale_price"
-                      v-model="form.sale_price"
-                      type="text"
-                      class="mt-1 block w-full"
-                    />
-                    <InputError class="mt-2" :message="form.errors.sale_price" />
-                  </div>
+                    <div class="col-span-6 sm:col-span-4">
+                      <InputLabel for="sale_price" value="Sale Price" />
+                      <TextInput
+                        id="sale_price"
+                        v-model="form.sale_price"
+                        type="text"
+                        class="mt-1 block w-full"
+                      />
+                      <InputError class="mt-2" :message="form.errors.sale_price" />
+                    </div>
 
-                  <div class="col-span-6 sm:col-span-3">
-                    <InputLabel for="stock" value="Stock" />
-                    <TextInput
-                      id="stock"
-                      v-model="form.stocks"
-                      type="text"
-                      class="mt-1 block w-full"
-                    />
-                    <InputError class="mt-2" :message="form.errors.stock" />
-                  </div>
+                    <div class="col-span-6 sm:col-span-4">
+                      <InputLabel for="stock" value="Stock" />
+                      <TextInput
+                        id="stock"
+                        v-model="form.stocks"
+                        type="text"
+                        class="mt-1 block w-full"
+                      />
+                      <InputError class="mt-2" :message="form.errors.stock" />
+                    </div>
 
-                  <div class="col-span-6 sm:col-span-3">
-                    <label
-                      for="category_id"
-                      class="block text-sm font-medium text-gray-700"
-                      >Category</label
-                    >
-                    <select
-                      v-model="form.category_id"
-                      placeholder="Select Category"
-                      class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
-                    >
-                      <option disabled>Select Category</option>
-                      <option
-                        v-for="category in categories.data"
-                        :key="category.id"
-                        :value="category.id"
-                        class="capitalize"
+                    <div class="col-span-6 sm:col-span-4">
+                      <label
+                        for="category_id"
+                        class="block text-sm font-medium text-gray-700"
+                        >Category</label
                       >
-                        {{ category.name }}
-                      </option>
-                    </select>
-                  </div>
-
-                  <div class="col-span-6 sm:col-span-3">
-                    <label for="brand_id" class="block text-sm font-medium text-gray-700"
-                      >Brand</label
-                    >
-                    <select
-                      v-model="form.brand_id"
-                      placeholder="Select Category"
-                      class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
-                    >
-                      <option disabled>Select Brand</option>
-                      <option
-                        v-for="brand in brands.data"
-                        :key="brand.id"
-                        :value="brand.id"
-                        class="capitalize"
+                      <select
+                        v-model="form.category_id"
+                        placeholder="Select Category"
+                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
                       >
-                        {{ brand.name }}
-                      </option>
-                    </select>
-                  </div>
+                        <option disabled>Select Category</option>
+                        <option
+                          v-for="category in categories.data"
+                          :key="category.id"
+                          :value="category.id"
+                          class="capitalize"
+                        >
+                          {{ category.name }}
+                        </option>
+                      </select>
+                    </div>
 
-                  <div class="col-span-6 sm:col-span-3">
-                    <InputLabel for="Image" value="Image" />
-                    <input
-                      type="file"
-                      @input="handleImageChange"
-                      class="w-full border"
-                      accept="image/*"
-                    />
-                    <progress
-                      v-if="form.progress"
-                      :value="form.progress.percentage"
-                      max="100"
-                    >
-                      {{ form.progress.percentage }}%
-                    </progress>
-                    <InputError class="mt-2" :message="form.errors.image" />
-                  </div>
+                    <div class="col-span-6 sm:col-span-4">
+                      <label
+                        for="brand_id"
+                        class="block text-sm font-medium text-gray-700"
+                        >Brand</label
+                      >
+                      <select
+                        v-model="form.brand_id"
+                        placeholder="Select Category"
+                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                      >
+                        <option disabled>Select Brand</option>
+                        <option
+                          v-for="brand in brands.data"
+                          :key="brand.id"
+                          :value="brand.id"
+                          class="capitalize"
+                        >
+                          {{ brand.name }}
+                        </option>
+                      </select>
+                    </div>
 
-                  <div class="col-span-6 sm:col-span-3">
-                    <img
-                      v-if="currentImageUrl && !imagePreview"
-                      :src="currentImageUrl"
-                      alt="Current Product Image"
-                      class="max-w-full max-h-full mx-auto rounded-md"
-                    />
-                    <img
-                      v-if="imagePreview"
-                      :src="imagePreview"
-                      alt="New Product Image"
-                      class="max-w-full max-h-full mx-auto rounded-md"
-                    />
+                    <div class="col-span-6 sm:col-span-4">
+                      <label
+                        for="class_id"
+                        class="block text-sm font-medium text-gray-700"
+                        >Featured</label
+                      >
+                      <select
+                        v-model="form.is_featured"
+                        placeholder="Select Featured"
+                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                      >
+                        <option disabled>Select Featured</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-4">
+                      <label
+                        for="class_id"
+                        class="block text-sm font-medium text-gray-700"
+                        >Sale</label
+                      >
+                      <select
+                        v-model="form.is_sale"
+                        placeholder="Select Featured"
+                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                      >
+                        <option disabled>Select Sale</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-4">
+                      <label
+                        for="class_id"
+                        class="block text-sm font-medium text-gray-700"
+                        >New</label
+                      >
+                      <select
+                        v-model="form.is_new"
+                        placeholder="Select New"
+                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                      >
+                        <option disabled>Select New</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-4">
+                      <label
+                        for="class_id"
+                        class="block text-sm font-medium text-gray-700"
+                        >Status</label
+                      >
+                      <select
+                        v-model="form.is_active"
+                        placeholder="Select Status"
+                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                      >
+                        <option disabled>Select Status</option>
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                      </select>
+                    </div>
+                  </div>
+                  <!-- Right column (new fields) -->
+                  <div class="col-span-4 space-y-6 rounded-md shadow-md p-4">
+                    <div class="col-span-6 sm:col-span-3">
+                      <InputLabel for="Image" value="Image" />
+                      <input
+                        type="file"
+                        @input="handleImageChange"
+                        class="w-full border"
+                        accept="image/*"
+                      />
+                      <progress
+                        v-if="form.progress"
+                        :value="form.progress.percentage"
+                        max="100"
+                      >
+                        {{ form.progress.percentage }}%
+                      </progress>
+                      <InputError class="mt-2" :message="form.errors.image" />
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-3">
+                      <img
+                        v-if="currentImageUrl && !imagePreview"
+                        :src="currentImageUrl"
+                        alt="Current Product Image"
+                        class="max-w-full max-h-full mx-auto rounded-md"
+                      />
+                      <img
+                        v-if="imagePreview"
+                        :src="imagePreview"
+                        alt="New Product Image"
+                        class="max-w-full max-h-full mx-auto rounded-md"
+                      />
+                    </div>
+                    <div class="">
+                      <InputLabel for="created_at" value="Created At" />
+                      <TextInput
+                        id="created_at"
+                        v-model="product.created_at"
+                        type="text"
+                        class="mt-1 block w-full border-none bg-gray-100"
+                        disabled
+                      />
+                    </div>
+
+                    <div>
+                      <InputLabel for="updated_at" value="Updated At" />
+                      <TextInput
+                        id="updated_at"
+                        v-model="product.updated_at"
+                        type="text"
+                        class="mt-1 block w-full border-none bg-gray-100"
+                        disabled
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
