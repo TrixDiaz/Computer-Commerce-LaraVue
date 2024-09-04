@@ -2,16 +2,19 @@
 import { onMounted } from "vue";
 import { initFlowbite } from "flowbite";
 import { Head, Link } from "@inertiajs/vue3";
+import { storeToRefs } from "pinia";
+import { useAdminCount } from "@/Store/adminCount";
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import AuthenticatedDropdown from "@/Layouts/AuthenticatedDropdown.vue";
 import FingerPrint from "@/Components/Icons/FingerPrint.vue";
 import ArrowDown from "@/Components/Icons/ArrowDown.vue";
 import ShoppingBag from "@/Components/Icons/ShoppingBag.vue";
 import PieChart from "@/Components/Icons/PieChart.vue";
-import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
-import AuthenticatedDropdown from "@/Layouts/AuthenticatedDropdown.vue";
+import Menu from "@/Components/Icons/Menu.vue";
 import Alert from "@/Components/Icons/Alert.vue";
-import { useAdminCount } from "@/Store/adminCount";
-import { storeToRefs } from "pinia";
+import Bell from "@/Components/Icons/Bell.vue";
+import Images from "@/Components/Icons/Images.vue";
 
 const adminCount = useAdminCount();
 const { totalUsers, totalAnnouncements } = storeToRefs(adminCount);
@@ -43,32 +46,7 @@ const props = defineProps({
             aria-controls="drawer-navigation"
             class="p-2 mr-2 text-gray-600 rounded-lg cursor-pointer md:hidden hover:text-gray-900"
           >
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-            <svg
-              aria-hidden="true"
-              class="hidden w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
+            <Menu />
             <span class="sr-only">Toggle sidebar</span>
           </button>
           <Link :href="route('index')" class="flex items-center justify-between mr-4">
@@ -104,19 +82,7 @@ const props = defineProps({
             class="p-2 mr-1 text-gray-500 rounded-lg md:hidden hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
           >
             <span class="sr-only">Toggle search</span>
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                clip-rule="evenodd"
-                fill-rule="evenodd"
-                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              ></path>
-            </svg>
+            <MagnifyingGlass />
           </button>
 
           <!-- Notifications -->
@@ -127,17 +93,7 @@ const props = defineProps({
           >
             <span class="sr-only">View notifications</span>
             <!-- Bell icon -->
-            <svg
-              aria-hidden="true"
-              class="w-6 h-6"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"
-              ></path>
-            </svg>
+            <Bell />
           </button>
           <!-- Dropdown menu -->
           <div
@@ -619,19 +575,9 @@ const props = defineProps({
             <div
               class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none"
             >
-              <svg
-                class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                ></path>
-              </svg>
+              <MagnifyingGlass />
             </div>
+
             <input
               type="text"
               name="search"
@@ -649,6 +595,15 @@ const props = defineProps({
             >
               <PieChart />
               <span class="ml-3">Overview</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              :href="route('trending.index')"
+              class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            >
+              <Images />
+              <span class="ml-3">Trending</span>
             </Link>
           </li>
           <li>

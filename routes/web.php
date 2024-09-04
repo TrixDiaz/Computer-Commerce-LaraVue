@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminBrandController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminTrendingController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CatalogController;
@@ -48,6 +49,7 @@ Route::middleware(['auth', config('sanctum.middleware.admin')])->prefix('admin')
     Route::resource('/products', AdminProductController::class);
     Route::resource('/brands', AdminBrandController::class);
     Route::resource('/categories', AdminCategoryController::class);
+    Route::resource('/trending', AdminTrendingController::class);
    
 });
 
