@@ -1,8 +1,16 @@
 <script setup>
-import UserLayout from '@/Layouts/UserLayout.vue';
-import Welcome from '@/Pages/Welcome.vue';
+import Welcome from "@/Pages/Welcome.vue";
+import { Head, usePage } from "@inertiajs/vue3";
+
+const { props } = usePage();
 </script>
 
 <template>
-    <Welcome />
+  <Head title="Dashboard" />
+  <Welcome
+    :products="props.products"
+    :featuredProducts="props.featuredProducts"
+    :saleProducts="props.saleProducts"
+    :newProducts="props.newProducts"
+  />
 </template>

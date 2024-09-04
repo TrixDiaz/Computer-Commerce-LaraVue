@@ -413,6 +413,12 @@ const deleteStudent = (productId) => {
                         scope="col"
                         class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
+                        Series
+                      </th>
+                      <th
+                        scope="col"
+                        class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
                         Featured
                       </th>
                       <th
@@ -474,6 +480,11 @@ const deleteStudent = (productId) => {
                         class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize"
                       >
                         {{ product.brand.name }}
+                      </td>
+                      <td
+                        class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 capitalize"
+                      >
+                        {{ product.series.name }}
                       </td>
                       <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         <span v-if="product.is_featured === 1"><Check /></span>

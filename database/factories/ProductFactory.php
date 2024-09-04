@@ -2,6 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Series;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,19 +21,26 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word,
+            'brand_id' => Brand::inRandomOrder()->first()->id,
+            'category_id' => Category::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
+            'series_id' => Series::inRandomOrder()->first()->id,
+
+            'name' => $this->faker->name,
             'description' => $this->faker->sentence,
             'price' => $this->faker->randomFloat(2, 1, 1000),
             'sale_price' => $this->faker->randomFloat(2, 1, 1000),
             'image' => null,
+            'hover_image' => null,
             'stocks' => $this->faker->numberBetween(1, 100),
-            'brand_id' => \App\Models\Brand::factory(),
-            'category_id' => \App\Models\Category::factory(),
-            'user_id' => \App\Models\User::factory(),
+         
             'is_active' => $this->faker->boolean,
             'is_featured' => $this->faker->boolean,
             'is_sale' => $this->faker->boolean,
             'is_new' => $this->faker->boolean,
+            
+             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
+             'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];
     }
 }

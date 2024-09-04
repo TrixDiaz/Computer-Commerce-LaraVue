@@ -10,7 +10,7 @@ const backgroundImage = computed(() => {
   if (trendingStore.images.length > 0) {
     return `url(${trendingStore.images[currentIndex.value]})`;
   }
-  return "";
+  return "url('https://placehold.co/600x400')";
 });
 let intervalId;
 

@@ -11,6 +11,7 @@ import InputLabel from "@/Components/InputLabel.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import ArrowDown from "@/Components/Icons/ArrowDown.vue";
 import Filter from "@/Components/Icons/Filter.vue";
+import Hero from "@/Components/Hero.vue";
 
 onMounted(() => {
   initFlowbite();
@@ -95,6 +96,10 @@ const deleteStudent = (trendingId) => {
 <template>
   <AdminLayout title="trendings">
     <div>
+      <div class="my-4">
+        <p class="font-semibold text-xl">This is the Preview for Trending Images.</p>
+        <Hero />
+      </div>
       <div class="mx-auto max-w-full">
         <section class="flex items-center">
           <div class="w-full">

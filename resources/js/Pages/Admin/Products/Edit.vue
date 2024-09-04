@@ -21,6 +21,10 @@ defineProps({
     type: Object,
     required: true,
   },
+  series: {
+    type: Object,
+    required: true,
+  },
 });
 
 let product = usePage().props.product.data;
@@ -35,6 +39,7 @@ const form = useForm({
   image: null,
   category_id: product.category.id,
   brand_id: product.brand.id,
+  series_id: product.series.id,
   is_featured: product.is_featured,
   is_sale: product.is_sale,
   is_new: product.is_new,
@@ -205,6 +210,29 @@ const updateProduct = () => {
                           class="capitalize"
                         >
                           {{ brand.name }}
+                        </option>
+                      </select>
+                    </div>
+
+                    <div class="col-span-6 sm:col-span-4">
+                      <label
+                        for="series_id"
+                        class="block text-sm font-medium text-gray-700"
+                        >Series</label
+                      >
+                      <select
+                        v-model="form.series_id"
+                        placeholder="Select Category"
+                        class="mt-1 block w-full bg-white border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-red-500 focus:border-red-500"
+                      >
+                        <option disabled>Select Series</option>
+                        <option
+                          v-for="series in series.data"
+                          :key="series.id"
+                          :value="series.id"
+                          class="capitalize"
+                        >
+                          {{ series.name }}
                         </option>
                       </select>
                     </div>

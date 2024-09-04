@@ -29,7 +29,12 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Dashboard', [
+        'products' => ProductResource::collection(Product::inRandomOrder()->limit(10)->get()),
+        'featuredProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_featured', 1)->where('is_active', 1)->limit(10)->get()),
+        'saleProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_sale', 1)->where('is_active', 1)->limit(10)->get()),
+        'newProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_new', 1)->where('is_active', 1)->limit(10)->get()),
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

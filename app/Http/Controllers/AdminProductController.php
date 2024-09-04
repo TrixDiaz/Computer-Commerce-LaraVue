@@ -7,9 +7,11 @@ use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\BrandResource;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\SeriesResource;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Series;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -107,10 +109,12 @@ class AdminProductController extends Controller
     {
         $categories = CategoryResource::collection(Category::all());
         $brands = BrandResource::collection(Brand::all());
+        $series = SeriesResource::collection(Series::all());
 
         return inertia('Admin/Products/Create', [
             'categories' => $categories,
             'brands' => $brands,
+            'series' => $series,
         ]);
     }
 
@@ -147,11 +151,13 @@ class AdminProductController extends Controller
     {
         $categories = CategoryResource::collection(Category::all());
         $brands = BrandResource::collection(Brand::all());
+        $series = SeriesResource::collection(Series::all());
 
         return inertia('Admin/Products/Edit', [
             'product' => ProductResource::make($product),
             'categories' => $categories,
             'brands' => $brands,
+            'series' => $series,
         ]);
     }
 
