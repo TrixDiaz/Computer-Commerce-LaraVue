@@ -22,42 +22,50 @@ const salePercentage = computed(() => {
 
 <template>
   <div
-    class="group/item relative rounded bg-white p-4 mb-6 max-w-60 hover:border hover:border-gray-200 hover:shadow"
+    class="group/item relative rounded bg-white p-4 mb-6 max-w-60 hover:border hover:border-gray-200 hover:shadow transition-all duration-300 ease-in-out"
   >
-    <div class="relative h-32 w-auto">
-      <a href="#">
+    <div class="relative h-48 w-full overflow-hidden">
+      <a href="#" class="block h-full w-full">
         <img
-          v-if="product.image === null"
-          class="mx-auto h-full group-hover/item:hidden"
+          v-if="product.image_url === null"
+          class="w-full h-full object-cover group-hover/item:opacity-0 transition-opacity duration-300 ease-in-out"
           src="/images/laptop-image.png"
+          alt="Product Image"
         />
         <img
           v-else
-          class="mx-auto h-full group-hover/item:hidden"
-          :src="'/storage/' + product.image"
+          class="w-full h-full object-cover group-hover/item:opacity-0 transition-opacity duration-300 ease-in-out"
+          :src="product.image_url"
+          alt="Product Image"
         />
 
         <img
-          class="mx-auto h-full hidden group-hover/item:block"
+          v-if="product.hover_image_url === null"
+          class="w-full h-full object-cover opacity-0 group-hover/item:opacity-100 absolute inset-0 transition-opacity duration-300 ease-in-out"
           src="/images/hover-image.png"
+          alt="Product Image"
+        />
+        <img
+          v-else
+          class="w-full h-full object-cover opacity-0 group-hover/item:opacity-100 absolute inset-0 transition-opacity duration-300 ease-in-out"
+          :src="product.hover_image_url"
           alt="Product Image"
         />
       </a>
     </div>
     <div>
-      <div class="absolute top-2 right-2 hidden group-hover/item:block">
+      <div
+        class="absolute top-2 right-2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 ease-in-out"
+      >
         <div class="flex flex-col items-center gap-1">
           <button
             type="button"
-            class="p-1 text-gray-500 border rounded-full hover:bg-gray-100 hover:text-gray-900"
+            class="p-1 text-transparent rounded-full hover:bg-red-300"
           >
-            <Heart />
+            <Heart class="w-7 h-7" />
           </button>
-          <button
-            type="button"
-            class="p-1 text-gray-500 border rounded-full hover:bg-gray-100 hover:text-gray-900"
-          >
-            <Eye />
+          <button type="button" class="p-1 text-gray-500 rounded-full hover:bg-gray-300">
+            <Eye class="w-7 h-7" />
           </button>
         </div>
       </div>
@@ -112,10 +120,12 @@ const salePercentage = computed(() => {
           </span>
           <span v-else>₱ {{ product.price }}</span>
         </p>
-        <div class="hidden group-hover/item:block group-hover/item:duration-1000">
+        <div
+          class="opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 ease-in-out"
+        >
           <button
             type="button"
-            class="w-full items-center rounded-full border border-blue-500 px-2 py-2 text-xs text-blue-600 hover:bg-blue-800 hover:text-white"
+            class="w-full items-center rounded-full border border-blue-500 px-2 py-2 text-xs text-blue-600 hover:bg-blue-800 hover:text-white transition-colors duration-300 ease-in-out"
           >
             Add to cart
           </button>

@@ -30,6 +30,7 @@ const form = useForm({
   sale_price: "",
   stocks: "",
   image: null,
+  hover_image: null,
   category_id: "",
   brand_id: "",
   series_id: "",
@@ -40,11 +41,11 @@ const form = useForm({
 });
 
 const imagePreview = ref(null);
+const hoverImagePreview = ref(null);
 
 const handleImageSelection = (event) => {
   const file = event.target.files[0];
   form.image = file;
-
   if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
@@ -53,6 +54,20 @@ const handleImageSelection = (event) => {
     reader.readAsDataURL(file);
   } else {
     imagePreview.value = null;
+  }
+};
+
+const handleHoverImageSelection = (event) => {
+  const file = event.target.files[0];
+  form.hover_image = file;
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      hoverImagePreview.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    hoverImagePreview.value = null;
   }
 };
 
@@ -135,7 +150,7 @@ const createProducts = () => {
                       type="text"
                       class="mt-1 block w-full"
                     />
-                    <InputError class="mt-2" :message="form.errors.stock" />
+                    <InputError class="mt-2" :message="form.errors.stocks" />
                   </div>
 
                   <div class="col-span-6 sm:col-span-3">
@@ -224,6 +239,24 @@ const createProducts = () => {
                   <div v-if="imagePreview" class="col-span-6 sm:col-span-3">
                     <img
                       :src="imagePreview"
+                      alt="Image preview"
+                      class="max-w-full max-h-full mx-auto rounded-md"
+                    />
+                  </div>
+
+                  <div class="col-span-6 sm:col-span-3">
+                    <InputLabel for="hover_image" value="Hover Image" />
+                    <input
+                      type="file"
+                      @input="handleHoverImageSelection"
+                      accept="image/*"
+                      class="mt-1 block w-full border border-gray-300 focus:border-red-500 focus:ring-red-500 rounded-md shadow-sm"
+                    />
+                  </div>
+
+                  <div v-if="hoverImagePreview" class="col-span-6 sm:col-span-3">
+                    <img
+                      :src="hoverImagePreview"
                       alt="Image preview"
                       class="max-w-full max-h-full mx-auto rounded-md"
                     />

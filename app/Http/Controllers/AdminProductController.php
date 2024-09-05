@@ -129,6 +129,10 @@ class AdminProductController extends Controller
             $data['image'] = $request->file('image')->store('images', 'public');
         }
 
+        if ($request->hasFile('hover_image')) {
+            $data['hover_image'] = $request->file('hover_image')->store('images', 'public');
+        }
+
         $data['user_id'] = Auth::id();
 
         Product::create($data);
@@ -167,7 +171,6 @@ class AdminProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $data = $request->validated();
-
         if ($request->hasFile('image')) {
             // Delete old image if exists
             if ($product->image) {
@@ -184,6 +187,17 @@ class AdminProductController extends Controller
         $data['is_sale'] = $request->boolean('is_sale');
         $data['is_new'] = $request->boolean('is_new');
         $data['is_active'] = $request->boolean('is_active');
+
+        if ($request->hasFile('hover_image')) {
+            // Delete old image if exists
+            if ($product->hover_image) {
+                Storage::disk('public')->delete($product->hover_image);
+            }
+            $data['hover_image'] = $request->file('hover_image')->store('images', 'public');
+        } else {
+            // Keep the existing image if no new file is uploaded
+            unset($data['hover_image']);
+        }
 
         $product->update($data);
 

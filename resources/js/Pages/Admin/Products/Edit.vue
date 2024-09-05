@@ -37,6 +37,7 @@ const form = useForm({
   sale_price: product.sale_price,
   stocks: String(product.stocks),
   image: null,
+  hover_image: null,
   category_id: product.category.id,
   brand_id: product.brand.id,
   series_id: product.series.id,
@@ -46,11 +47,19 @@ const form = useForm({
   is_active: product.is_active,
 });
 
-const imagePreview = ref(product.image ? `/storage/${product.image}` : null);
+const imagePreview = ref(product.image_url ? product.image_url : null);
+const hoverImagePreview = ref(product.hover_image_url ? product.hover_image_url : null);
 
 const currentImageUrl = computed(() => {
   if (product.image) {
     return `/storage/${product.image}`;
+  }
+  return null;
+});
+
+const currentHoverImageUrl = computed(() => {
+  if (product.hover_image) {
+    return `/storage/${product.hover_image}`;
   }
   return null;
 });
@@ -70,11 +79,26 @@ const handleImageChange = (event) => {
   }
 };
 
+const handleHoverImageChange = (event) => {
+  const file = event.target.files[0];
+  form.hover_image = file;
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      hoverImagePreview.value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    hoverImagePreview.value = null;
+  }
+};
+
 const updateProduct = () => {
-  // Remove the image field if it's null (no new image selected)
-  if (form.image === null) {
+  if (form.image === null || form.hover_image === null) {
     const formData = { ...form };
     delete formData.image;
+    delete formData.hover_image;
 
     form.post(route("products.update", product.id), {
       preserveScroll: true,
@@ -325,7 +349,7 @@ const updateProduct = () => {
                       <InputError class="mt-2" :message="form.errors.image" />
                     </div>
 
-                    <div class="col-span-6 sm:col-span-3">
+                    <div class="relative col-span-6 sm:col-span-3">
                       <img
                         v-if="currentImageUrl && !imagePreview"
                         :src="currentImageUrl"
@@ -339,7 +363,40 @@ const updateProduct = () => {
                         class="max-w-full max-h-full mx-auto rounded-md"
                       />
                     </div>
-                    <div class="">
+
+                    <div class="col-span-6 sm:col-span-3">
+                      <InputLabel for="hover_image" value="Hover Image" />
+                      <input
+                        type="file"
+                        @input="handleHoverImageChange"
+                        class="w-full border"
+                        accept="image/*"
+                      />
+                      <progress
+                        v-if="form.progress"
+                        :value="form.progress.percentage"
+                        max="100"
+                      >
+                        {{ form.progress.percentage }}%
+                      </progress>
+                      <InputError class="mt-2" :message="form.errors.hover_image" />
+                    </div>
+
+                    <div class="relative col-span-6 sm:col-span-3">
+                      <img
+                        v-if="currentHoverImageUrl && !hoverImagePreview"
+                        :src="currentHoverImageUrl"
+                        alt="Current Product Image"
+                        class="max-w-full max-h-full mx-auto rounded-md"
+                      />
+                      <img
+                        v-if="hoverImagePreview"
+                        :src="hoverImagePreview"
+                        alt="New Product Image"
+                        class="max-w-full max-h-full mx-auto rounded-md"
+                      />
+                    </div>
+                    <div class="col-span-6 sm:col-span-3">
                       <InputLabel for="created_at" value="Created At" />
                       <TextInput
                         id="created_at"

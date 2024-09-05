@@ -446,8 +446,8 @@ const deleteStudent = (productId) => {
                     <tr v-for="product in products.data" :key="product.id">
                       <td class="py-4 pl-2 text-sm font-medium text-gray-900">
                         <img
-                          v-if="product.image"
-                          :src="`/storage/${product.image}`"
+                          v-if="product.image_url"
+                          :src="product.image_url"
                           alt="Product Image"
                           class="max-w-96 min-h-72 object-cover rounded-md"
                         />
