@@ -12,5 +12,6 @@ const { props } = usePage();
     :featuredProducts="props.featuredProducts"
     :saleProducts="props.saleProducts"
     :newProducts="props.newProducts"
+    :categories="props.categories"
   />
 </template>

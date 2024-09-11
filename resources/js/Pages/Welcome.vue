@@ -7,7 +7,7 @@ import VueCarousel from "@/Components/VueCarousel.vue";
 import ProductCard from "@/Components/ProductCard.vue";
 import Banner from "@/Components/Banner.vue";
 import Products from "@/Components/Products.vue";
-import TabsProduct from "@/Components/TabsProduct.vue";
+// import TabsProduct from "@/Components/TabsProduct.vue";
 import Brands from "@/Components/Brands.vue";
 import Promotion from "@/Components/Promotion.vue";
 import Support from "@/Components/Support.vue";
@@ -18,7 +18,14 @@ const props = defineProps({
   featuredProducts: Object,
   saleProducts: Object,
   newProducts: Object,
+  categories: {
+    type: Object,
+    default: () => ({}),
+  },
 });
+
+// If categories is an object with a 'data' property, we can extract it
+const categoriesArray = computed(() => props.categories?.data || []);
 </script>
 
 <template>
@@ -43,9 +50,11 @@ const props = defineProps({
 
     <Products :products="props.featuredProducts.data" />
 
-    <TabsProduct :products="props.products.data" />
-
-    <TabsProduct :products="props.products.data" />
+    <!-- <TabsProduct
+      v-if="products && categories"
+      :products="products.data"
+      :categories="categoriesArray"
+    /> -->
 
     <Products :products="props.saleProducts.data" title="Sale" />
 

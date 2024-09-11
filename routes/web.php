@@ -12,7 +12,9 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -25,15 +27,17 @@ Route::get('/', function () {
         'featuredProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_featured', 1 && 'is_active', 1)->limit(10)->get()),
         'saleProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_sale', 1 && 'is_active', 1)->limit(10)->get()),
         'newProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_new', 1 && 'is_active', 1)->limit(10)->get()),
+        'categories' => CategoryResource::collection(Category::where('is_active', 1)->get()),
     ]);
 })->name('welcome');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', [
-        'products' => ProductResource::collection(Product::inRandomOrder()->limit(10)->get()),
-        'featuredProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_featured', 1)->where('is_active', 1)->limit(10)->get()),
-        'saleProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_sale', 1)->where('is_active', 1)->limit(10)->get()),
-        'newProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_new', 1)->where('is_active', 1)->limit(10)->get()),
+       'products' => ProductResource::collection(Product::inRandomOrder()->limit(10)->get()),
+        'featuredProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_featured', 1 && 'is_active', 1)->limit(10)->get()),
+        'saleProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_sale', 1 && 'is_active', 1)->limit(10)->get()),
+        'newProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_new', 1 && 'is_active', 1)->limit(10)->get()),
+        'categories' => CategoryResource::collection(Category::where('is_active', 1)->get()),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 

@@ -62,10 +62,10 @@ export default defineComponent({
   background-color: #6b7280;
   border-radius: 100%;
   padding-block: 1rem;
-  width: 3rem;
+  width: 2.5rem;
   margin-inline: 0px;
   color: #ffffff;
-  opacity: 25%;
+  opacity: 50%;
 }
 
 .carousel__prev {

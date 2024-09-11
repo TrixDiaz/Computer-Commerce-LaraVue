@@ -18,7 +18,7 @@ const props = defineProps({
 <template>
   <div class="max-w-7xl mx-auto">
     <div class="flex flex-row">
-      <div class="relative flex flex-col justify-center items-center">
+      <div class="relative flex flex-col justify-center items-center mr-2">
         <img src="/images/custom-build.png" alt="picture" class="max-w-60 h-full" />
         <div class="absolute text-2xl text-white font-bold tracking-wider text-center">
           <span class="block">{{ title }}</span>
