@@ -15,6 +15,7 @@ import Menu from "@/Components/Icons/Menu.vue";
 import Alert from "@/Components/Icons/Alert.vue";
 import Bell from "@/Components/Icons/Bell.vue";
 import Images from "@/Components/Icons/Images.vue";
+import Featured from "@/Components/Icons/Featured.vue";
 
 const adminCount = useAdminCount();
 const { totalUsers, totalAnnouncements } = storeToRefs(adminCount);
@@ -604,6 +605,15 @@ const props = defineProps({
             >
               <Images />
               <span class="ml-3">Trending</span>
+            </Link>
+          </li>
+          <li>
+            <Link
+              :href="route('trending.index')"
+              class="flex items-center p-2 text-base font-medium text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            >
+              <Featured />
+              <span class="ml-3">Featured</span>
             </Link>
           </li>
           <li>

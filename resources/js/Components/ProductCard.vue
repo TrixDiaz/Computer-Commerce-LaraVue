@@ -1,7 +1,6 @@
 <script setup>
 import { computed } from "vue";
 import Heart from "@/Components/Icons/Heart.vue";
-import Eye from "@/Components/Icons/Eye.vue";
 import Info from "@/Components/Icons/Info.vue";
 
 const props = defineProps({
@@ -63,9 +62,6 @@ const salePercentage = computed(() => {
             class="p-1 text-transparent rounded-full hover:bg-red-300"
           >
             <Heart class="w-7 h-7" />
-          </button>
-          <button type="button" class="p-1 text-gray-500 rounded-full hover:bg-gray-300">
-            <Eye class="w-7 h-7" />
           </button>
         </div>
       </div>

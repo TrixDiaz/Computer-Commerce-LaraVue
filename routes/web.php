@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminAnnouncementController;
 use App\Http\Controllers\AdminBrandController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminFeaturedController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminTrendingController;
 use App\Http\Controllers\AdminUserController;
@@ -59,7 +60,7 @@ Route::middleware(['auth', config('sanctum.middleware.admin')])->prefix('admin')
     Route::resource('/brands', AdminBrandController::class);
     Route::resource('/categories', AdminCategoryController::class);
     Route::resource('/trending', AdminTrendingController::class);
-   
+    Route::resource('/featured', AdminFeaturedController::class);
 });
 
 require __DIR__ . '/auth.php';
