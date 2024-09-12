@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\FeaturedResource;
+use App\Http\Resources\ProductResource;
 use App\Models\Featured;
+use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class AdminFeaturedController extends Controller
@@ -12,7 +16,33 @@ class AdminFeaturedController extends Controller
      */
     public function index()
     {
-        //
+       return inertia('Admin/Featured/Index', [
+        'products' => ProductResource::collection(Product::inRandomOrder()->limit(10)->get()),
+        ]
+    );
+    }
+
+    protected function applySearch(Builder $query, $search)
+    {
+        return $query->when($search, function ($query, $search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        });
+    }
+
+    protected function applySort(Builder $query, $sort)
+    {
+        return $query->when($sort, function ($query, $sort) {
+            $direction = $sort === 'asc' ? 'asc' : 'desc';
+            $query->orderBy('name', $direction);
+        });
+    }
+
+    protected function applyFilter(Builder $query, $filter)
+    {
+        return $query->when($filter, function ($query, $filter) {
+            $is_active = explode(',', $filter);
+            $query->whereIn('is_active', $is_active);
+        });
     }
 
     /**

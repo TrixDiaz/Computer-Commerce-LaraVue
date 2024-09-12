@@ -4,7 +4,6 @@ use App\Http\Controllers\AdminAnnouncementController;
 use App\Http\Controllers\AdminBrandController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AdminFeaturedController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminTrendingController;
 use App\Http\Controllers\AdminUserController;
@@ -34,7 +33,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard', [
-       'products' => ProductResource::collection(Product::inRandomOrder()->limit(10)->get()),
+        'products' => ProductResource::collection(Product::inRandomOrder()->limit(10)->get()),
         'featuredProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_featured', 1 && 'is_active', 1)->limit(10)->get()),
         'saleProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_sale', 1 && 'is_active', 1)->limit(10)->get()),
         'newProducts' => ProductResource::collection(Product::inRandomOrder()->where('is_new', 1 && 'is_active', 1)->limit(10)->get()),
@@ -60,7 +59,6 @@ Route::middleware(['auth', config('sanctum.middleware.admin')])->prefix('admin')
     Route::resource('/brands', AdminBrandController::class);
     Route::resource('/categories', AdminCategoryController::class);
     Route::resource('/trending', AdminTrendingController::class);
-    Route::resource('/featured', AdminFeaturedController::class);
 });
 
 require __DIR__ . '/auth.php';

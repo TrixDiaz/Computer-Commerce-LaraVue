@@ -21,7 +21,7 @@ const salePercentage = computed(() => {
 
 <template>
   <div
-    class="group/item relative rounded bg-white p-4 mb-6 max-w-60 hover:border hover:border-gray-200 hover:shadow transition-all duration-300 ease-in-out"
+    class="group/item relative bg-white p-6 mb-6 max-w-72 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 w-full"
   >
     <div class="relative h-48 w-full overflow-hidden">
       <a href="#" class="block h-full w-full">

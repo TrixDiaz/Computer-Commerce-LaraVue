@@ -61,7 +61,7 @@ export default defineComponent({
   box-sizing: content-box;
   background-color: #6b7280;
   border-radius: 100%;
-  padding-block: 1rem;
+  padding-block: 0.5rem;
   width: 2.5rem;
   margin-inline: 0px;
   color: #ffffff;

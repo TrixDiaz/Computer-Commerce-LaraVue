@@ -7,7 +7,7 @@ import VueCarousel from "@/Components/VueCarousel.vue";
 import ProductCard from "@/Components/ProductCard.vue";
 import Banner from "@/Components/Banner.vue";
 import Products from "@/Components/Products.vue";
-import TabsProduct from "@/Components/TabsProduct.vue";
+// import TabsProduct from "@/Components/TabsProduct.vue";
 import Brands from "@/Components/Brands.vue";
 import Promotion from "@/Components/Promotion.vue";
 import Support from "@/Components/Support.vue";
@@ -45,9 +45,9 @@ const props = defineProps({
 
     <Banner class="bg-white" title="Featured" />
 
-    <Products :products="props.featuredProducts.data" />
+    <Products :products="props.featuredProducts.data" class="mb-4" />
 
-    <TabsProduct :products="props.newProducts.data" :categories="props.categories.data" />
+    <!-- <TabsProduct :products="props.products.data" /> -->
 
     <Products :products="props.saleProducts.data" title="Sale" />
 

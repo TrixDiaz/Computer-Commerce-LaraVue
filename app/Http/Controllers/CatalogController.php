@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CatalogController extends Controller
@@ -11,7 +13,10 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        return inertia('Catalog');
+        $products = ProductResource::collection(Product::paginate(10));
+        return inertia('Catalog', [
+            'products' => $products,
+        ]);
     }
 
     /**
