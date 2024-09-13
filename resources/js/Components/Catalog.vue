@@ -1,8 +1,9 @@
 <script setup>
 import { ref, computed, watch, onMounted } from "vue";
-import { usePage, router } from "@inertiajs/vue3";
+import { usePage, router, Link } from "@inertiajs/vue3";
 import { initFlowbite } from "flowbite";
 import ArrowDown from "@/Components/Icons/ArrowDown.vue";
+import InputLabel from "@/Components/InputLabel.vue";
 import ArrowLeft from "@/Components/Icons/ArrowLeft.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import BlockLayout from "@/Components/Icons/BlockLayout.vue";
@@ -35,6 +36,8 @@ const isRowLayout = ref(false);
 let search = ref(usePage().props.search ?? "");
 let sort = ref("");
 let pageNumber = ref(1);
+let filterCategory = ref([]);
+let filterBrand = ref([]);
 
 let productsUrl = computed(() => {
   let url = new URL(route("catalog.index"));
@@ -43,6 +46,14 @@ let productsUrl = computed(() => {
 
   if (sort.value) {
     url.searchParams.set("sort", sort.value);
+  }
+
+  if (filterCategory.value.length > 0) {
+    url.searchParams.set("filterCategory", filterCategory.value.join(","));
+  }
+
+  if (filterBrand.value.length > 0) {
+    url.searchParams.set("filterBrand", filterBrand.value.join(","));
   }
 
   return url;
@@ -83,6 +94,22 @@ const sortproducts = (order) => {
   sort.value = order;
 };
 
+const filterCategories = (activeId) => {
+  if (filterCategory.value.includes(activeId)) {
+    filterCategory.value = filterCategory.value.filter((id) => id !== activeId);
+  } else {
+    filterCategory.value.push(activeId);
+  }
+};
+
+const filterBrands = (activeId) => {
+  if (filterBrand.value.includes(activeId)) {
+    filterBrand.value = filterBrand.value.filter((id) => id !== activeId);
+  } else {
+    filterBrand.value.push(activeId);
+  }
+};
+
 const salePercentage = (product) => {
   if (product.is_sale === 1 && product.price && product.sale_price) {
     const discount = product.price - product.sale_price;
@@ -95,14 +122,22 @@ const salePercentage = (product) => {
 <template>
   <div class="max-w-7xl mx-auto pt-2">
     <div class="flex flex-none justify-center items-center my-2 gap-2">
+      <!-- Back to home  -->
       <div
         class="hidden lg:flex flex-none w-64 justify-center items-center cursor-pointer"
       >
-        <ArrowLeft />
-        <p class="text-lg font-bold">Back</p>
+        <Link
+          href="/"
+          class="flex flex-row justify-center items-center text-lg font-bold"
+        >
+          <ArrowLeft /> Back</Link
+        >
       </div>
       <div class="flex flex-col md:flex-row flex-1 justify-between items-center">
-        <p class="text-gray-400 text-sm tracking-tight">Items 1-35 of 61</p>
+        <p class="text-gray-400 text-sm tracking-tight">
+          Items {{ products.meta.from }} - {{ products.meta.to }} of
+          {{ products.meta.total }}
+        </p>
         <!-- Dropdowns Container -->
         <div class="flex flex-col md:flex-row items-center gap-4">
           <!-- Left Dropdown -->
@@ -245,8 +280,19 @@ const salePercentage = (product) => {
                   :key="category.id"
                   class="flex flex-row justify-between items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
-                  <p>{{ category.name }}</p>
-                  <p>6</p>
+                  <input
+                    @change="filterCategories(category.id)"
+                    :id="category.id"
+                    type="checkbox"
+                    :value="category.id"
+                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
+                  />
+                  <InputLabel
+                    :for="category.id"
+                    class="ml-2 text-sm font-medium text-gray-900"
+                  >
+                    {{ category.name }}
+                  </InputLabel>
                 </li>
               </ul>
             </div>
@@ -328,6 +374,9 @@ const salePercentage = (product) => {
           </div>
         </div>
         <!-- End Filter Section -->
+        <!-- Pagination -->
+        <Pagination :data="props.products" :pageNumberUpdated="pageNumberUpdated" />
+        <!-- End of Pagination -->
         <!-- This will be where the main content (e.g., product cards) goes -->
         <main class="flex-1 px-2">
           <div

@@ -20,8 +20,10 @@ class CatalogController extends Controller
     {
         $productsQuery = Product::query();
         $this->applySort($productsQuery, $request->sort);
-
-        $products = ProductResource::collection($productsQuery->paginate(10));
+        $this->applyCategoryFilter($productsQuery, $request->filterCategory);
+        $this->applyBrandFilter($productsQuery, $request->filterBrand);
+        
+        $products = ProductResource::collection($productsQuery->paginate(8));
         $brands = BrandResource::collection(Brand::all());
         $categories = CategoryResource::collection(Category::all());
         return inertia('Catalog', [
@@ -59,6 +61,22 @@ class CatalogController extends Controller
                 default:
                     $query->orderBy('name', 'asc');
             }
+        });
+    }
+
+    protected function applyCategoryFilter(Builder $query, $filter)
+    {
+        return $query->when($filter, function ($query, $filter) {
+            $is_active = explode(',', $filter);
+            $query->whereIn('category_id', $is_active);
+        });
+    }
+
+    protected function applyBrandFilter(Builder $query, $filter)
+    {
+        return $query->when($filter, function ($query, $filter) {
+            $is_active = explode(',', $filter);
+            $query->whereIn('brand_id', $is_active);
         });
     }
 
