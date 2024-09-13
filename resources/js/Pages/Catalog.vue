@@ -13,6 +13,14 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  categories: {
+    type: Object,
+    required: true,
+  },
+  brands: {
+    type: Object,
+    required: true,
+  },
 });
 </script>
 
@@ -40,7 +48,11 @@ const props = defineProps({
       </p>
     </div>
 
-    <ProductCatalog :products="props.products.data" />
+    <ProductCatalog
+      :products="props.products"
+      :categories="props.categories"
+      :brands="props.brands"
+    />
 
     <Support />
 

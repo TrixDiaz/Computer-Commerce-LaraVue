@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BrandResource;
+use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class CatalogController extends Controller
@@ -11,12 +16,50 @@ class CatalogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = ProductResource::collection(Product::paginate(10));
+        $productsQuery = Product::query();
+        $this->applySort($productsQuery, $request->sort);
+
+        $products = ProductResource::collection($productsQuery->paginate(10));
+        $brands = BrandResource::collection(Brand::all());
+        $categories = CategoryResource::collection(Category::all());
         return inertia('Catalog', [
             'products' => $products,
+            'categories' => $categories,
+            'brands' => $brands,
         ]);
+    }
+
+    protected function applySort(Builder $query, $sort)
+    {
+        return $query->when($sort, function ($query, $sort) {
+            switch ($sort) {
+                case 'name_asc':
+                    $query->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $query->orderBy('name', 'desc');
+                    break;
+                case 'price_asc':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'date_desc':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                case 'date_asc':
+                    $query->orderBy('created_at', 'asc');
+                    break;
+                case 'discount_desc':
+                    $query->orderByRaw('(price - sale_price) / price DESC');
+                    break;
+                default:
+                    $query->orderBy('name', 'asc');
+            }
+        });
     }
 
     /**

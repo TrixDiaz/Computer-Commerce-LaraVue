@@ -1,26 +1,87 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
+import { usePage, router } from "@inertiajs/vue3";
+import { initFlowbite } from "flowbite";
+import ArrowDown from "@/Components/Icons/ArrowDown.vue";
+import ArrowLeft from "@/Components/Icons/ArrowLeft.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import BlockLayout from "@/Components/Icons/BlockLayout.vue";
+import RowLayout from "@/Components/Icons/RowLayout.vue";
+import Pagination from "@/Components/Pagination.vue";
+import Info from "@/Components/Icons/Info.vue";
+import Heart from "@/Components/Icons/Heart.vue";
+import X from "@/Components/Icons/X.vue";
+
+onMounted(() => {
+  initFlowbite();
+});
+
+const props = defineProps({
+  products: {
+    type: Object,
+    required: true,
+  },
+  categories: {
+    type: Object,
+    required: true,
+  },
+  brands: {
+    type: Object,
+    required: true,
+  },
+});
+
 const isRowLayout = ref(false);
+let search = ref(usePage().props.search ?? "");
+let sort = ref("");
+let pageNumber = ref(1);
+
+let productsUrl = computed(() => {
+  let url = new URL(route("catalog.index"));
+
+  url.searchParams.set("page", pageNumber.value);
+
+  if (sort.value) {
+    url.searchParams.set("sort", sort.value);
+  }
+
+  return url;
+});
+
 const setRowLayout = () => {
   isRowLayout.value = true;
 };
 const setBlockLayout = () => {
   isRowLayout.value = false;
 };
-import ArrowDown from "@/Components/Icons/ArrowDown.vue";
-import ArrowLeft from "@/Components/Icons/ArrowLeft.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import BlockLayout from "@/Components/Icons/BlockLayout.vue";
-import RowLayout from "@/Components/Icons/RowLayout.vue";
-import Info from "@/Components/Icons/Info.vue";
-import Heart from "@/Components/Icons/Heart.vue";
-import X from "@/Components/Icons/X.vue";
-const props = defineProps({
-  products: {
-    type: Object,
-    required: true,
-  },
-});
+
+const pageNumberUpdated = (link) => {
+  pageNumber.value = link.url.split("=")[1];
+};
+
+watch(
+  () => productsUrl.value,
+  (updateproductUrl) => {
+    router.visit(updateproductUrl, {
+      preserveScroll: true,
+      preserveState: true,
+      replace: true,
+    });
+  }
+);
+
+watch(
+  () => search.value,
+  (value) => {
+    if (value) {
+      pageNumber.value = 1;
+    }
+  }
+);
+
+const sortproducts = (order) => {
+  sort.value = order;
+};
 
 const salePercentage = (product) => {
   if (product.is_sale === 1 && product.price && product.sale_price) {
@@ -51,62 +112,55 @@ const salePercentage = (product) => {
               <label
                 for="select-1"
                 class="flex w-full cursor-pointer select-none rounded-lg border p-2 px-3 text-sm text-gray-700"
-                >Select Option
+                >Sort by
               </label>
               <ArrowDown
                 class="pointer-events-none absolute right-0 top-3 ml-auto mr-5 h-4 text-gray-600 transition peer-checked:rotate-180"
               />
               <ul
-                class="absolute z-50 bg-white w-full rounded-b-lg shadow-xl transition-all duration-300 peer-checked:max-h-56 peer-checked:py-3 overflow-hidden max-h-0 flex-col"
+                class="absolute z-50 bg-white w-full rounded-b-lg shadow-xl transition-all duration-300 peer-checked:max-h-72 peer-checked:py-3 overflow-hidden max-h-0 flex-col"
               >
                 <li
+                  @click.prevent="sortproducts('name_asc')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
-                  Nikola Tesla
+                  Sort by A - Z
                 </li>
                 <li
+                  @click.prevent="sortproducts('name_desc')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
-                  Lorem Ipsanum
+                  Sort by Z - A
                 </li>
                 <li
+                  @click.prevent="sortproducts('price_asc')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
-                  Albert Einstein
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- Right Dropdown -->
-          <div class="relative">
-            <div class="relative w-56">
-              <input class="peer hidden" type="checkbox" name="select-2" id="select-2" />
-              <label
-                for="select-2"
-                class="flex w-full cursor-pointer select-none rounded-lg border p-2 px-3 text-sm text-gray-700"
-                >Select Option 2
-              </label>
-              <ArrowDown
-                class="pointer-events-none absolute right-0 top-3 ml-auto mr-5 h-4 text-gray-600 transition peer-checked:rotate-180"
-              />
-              <ul
-                class="absolute z-50 bg-white w-full rounded-b-lg shadow-xl transition-all duration-300 peer-checked:max-h-56 peer-checked:py-3 overflow-hidden max-h-0 flex-col"
-              >
-                <li
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
-                  Isaac Newton
+                  Price: Low to High
                 </li>
                 <li
+                  @click.prevent="sortproducts('price_desc')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
-                  Marie Curie
+                  Price: High to Low
                 </li>
                 <li
+                  @click.prevent="sortproducts('date_desc')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
-                  Galileo Galilei
+                  Date: New to Old
+                </li>
+                <li
+                  @click.prevent="sortproducts('date_asc')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
+                >
+                  Date: Old to New
+                </li>
+                <li
+                  @click.prevent="sortproducts('discount_desc')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
+                >
+                  Discount: High to Low
                 </li>
               </ul>
             </div>
@@ -146,7 +200,7 @@ const salePercentage = (product) => {
               <label
                 for="select-3"
                 class="flex w-full cursor-pointer select-none rounded-lg p-2 px-3 text-md font-bold text-gray-700 mt-4"
-                >Category</label
+                >Brands</label
               >
               <ArrowDown
                 class="pointer-events-none absolute right-0 top-3 ml-auto mr-3 h-4 text-gray-600 transition peer-checked:rotate-180"
@@ -155,22 +209,12 @@ const salePercentage = (product) => {
                 class="relative w-full transition-all duration-300 peer-checked:max-h-56 peer-checked:py-0 overflow-hidden max-h-0 flex-col"
               >
                 <li
+                  v-for="brand in props.brands.data"
+                  :key="brand.id"
                   class="flex flex-row justify-between items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
-                  <p>Isaac newton</p>
-                  <p>56</p>
-                </li>
-                <li
-                  class="flex flex-row justify-between items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
-                  <p>Isaac newton</p>
-                  <p>56</p>
-                </li>
-                <li
-                  class="flex flex-row justify-between items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
-                  <p>Isaac newton</p>
-                  <p>56</p>
+                  <p>{{ brand.name }}</p>
+                  <p>5</p>
                 </li>
               </ul>
             </div>
@@ -197,22 +241,12 @@ const salePercentage = (product) => {
                 class="relative w-full transition-all duration-300 peer-checked:max-h-56 peer-checked:py-0 overflow-hidden max-h-0 flex-col"
               >
                 <li
+                  v-for="category in props.categories.data"
+                  :key="category.id"
                   class="flex flex-row justify-between items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
-                  <p>Isaac newton</p>
-                  <p>56</p>
-                </li>
-                <li
-                  class="flex flex-row justify-between items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
-                  <p>Isaac newton</p>
-                  <p>56</p>
-                </li>
-                <li
-                  class="flex flex-row justify-between items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
-                  <p>Isaac newton</p>
-                  <p>56</p>
+                  <p>{{ category.name }}</p>
+                  <p>6</p>
                 </li>
               </ul>
             </div>
@@ -306,7 +340,7 @@ const salePercentage = (product) => {
           >
             <!-- Product Card -->
             <div
-              v-for="product in props.products"
+              v-for="product in props.products.data"
               :key="product.id"
               :class="
                 isRowLayout
@@ -377,7 +411,7 @@ const salePercentage = (product) => {
                     v-if="salePercentage(product)"
                     class="text-sm font-medium text-red-600"
                   >
-                    -{{ salePercentage(product) }} Off
+                    {{ salePercentage(product) }} Off
                   </span>
                 </div>
 
@@ -456,6 +490,7 @@ const salePercentage = (product) => {
             <!-- End of Product Card -->
           </div>
           <!-- Pagination -->
+          <Pagination :data="props.products" :pageNumberUpdated="pageNumberUpdated" />
           <!-- End of Pagination -->
         </main>
       </slot>
