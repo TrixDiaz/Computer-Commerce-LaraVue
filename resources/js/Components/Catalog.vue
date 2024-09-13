@@ -12,6 +12,7 @@ import Pagination from "@/Components/Pagination.vue";
 import Info from "@/Components/Icons/Info.vue";
 import Heart from "@/Components/Icons/Heart.vue";
 import X from "@/Components/Icons/X.vue";
+import Catalog from "@/Pages/Catalog.vue";
 
 onMounted(() => {
   initFlowbite();
@@ -38,6 +39,7 @@ let sort = ref("");
 let pageNumber = ref(1);
 let filterCategory = ref([]);
 let filterBrand = ref([]);
+const categoryCheckboxes = ref({});
 
 let productsUrl = computed(() => {
   let url = new URL(route("catalog.index"));
@@ -116,6 +118,16 @@ const salePercentage = (product) => {
     return Math.round((discount / product.price) * 100) + "%";
   }
   return null;
+};
+
+const getCategoryName = (categoryId) => {
+  const category = props.categories.data.find((cat) => cat.id === categoryId);
+  return category ? category.name : "";
+};
+
+const getBrandName = (brandId) => {
+  const brand = props.brands.data.find((b) => b.id === brandId);
+  return brand ? brand.name : "";
 };
 </script>
 
@@ -219,9 +231,11 @@ const salePercentage = (product) => {
       <slot name="sidebar">
         <div class="bg-blue-50 border-r border-gray-400 p-4 mb-2">
           <h3 class="font-bold text-lg text-center mb-4 capitalize">Filters</h3>
-          <PrimaryButton class="w-full rounded-full border border-gray-400"
-            >Clear Filter
-          </PrimaryButton>
+          <Link :href="route('catalog.index')">
+            <PrimaryButton class="w-full rounded-full border border-gray-400"
+              >Clear Filter
+            </PrimaryButton></Link
+          >
           <!-- Category Dropdown -->
           <div class="relative">
             <div class="relative w-56">
@@ -246,10 +260,21 @@ const salePercentage = (product) => {
                 <li
                   v-for="brand in props.brands.data"
                   :key="brand.id"
-                  class="flex flex-row justify-between items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
+                  class="flex flex-row justify-start items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-gray-300 hover:text-white"
                 >
-                  <p>{{ brand.name }}</p>
-                  <p>5</p>
+                  <input
+                    @change="filterBrands(brand.id)"
+                    :id="brand.id"
+                    type="checkbox"
+                    :value="brand.id"
+                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  />
+                  <InputLabel
+                    :for="brand.id"
+                    class="ml-2 text-sm font-medium text-gray-900"
+                  >
+                    {{ brand.name }}
+                  </InputLabel>
                 </li>
               </ul>
             </div>
@@ -278,14 +303,14 @@ const salePercentage = (product) => {
                 <li
                   v-for="category in props.categories.data"
                   :key="category.id"
-                  class="flex flex-row justify-between items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
+                  class="flex flex-row justify-start items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-gray-300 hover:text-white"
                 >
                   <input
                     @change="filterCategories(category.id)"
                     :id="category.id"
                     type="checkbox"
                     :value="category.id"
-                    class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600"
+                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <InputLabel
                     :for="category.id"
@@ -358,18 +383,26 @@ const salePercentage = (product) => {
     <main class="flex-1 px-2">
       <slot name="content">
         <!-- Filter Section -->
-        <div class="">
-          <div class="flex flex-row gap-2">
-            <div class="flex flex-row border px-4 py-2 space-x-1">
-              <p class="text-black font-bold capitalize">Custom PCS(24)</p>
-              <X class="m-0.5" />
+        <div class="mb-4">
+          <div class="flex flex-row flex-wrap gap-2">
+            <!-- Display selected category filters -->
+            <div
+              v-for="categoryId in filterCategory"
+              :key="`category-${categoryId}`"
+              class="flex flex-row border px-4 py-2 space-x-1"
+            >
+              <p class="text-black font-bold capitalize">
+                {{ getCategoryName(categoryId) }}
+              </p>
             </div>
-            <div class="flex flex-row border px-4 py-2 space-x-1">
-              <p class="text-black font-bold capitalize">HP/COMPAC PCS(24)</p>
-              <X class="m-0.5" />
-            </div>
-            <div class="flex flex-row border px-4 py-2 space-x-1">
-              <p class="text-black font-bold capitalize">clear all</p>
+
+            <!-- Display selected brand filters -->
+            <div
+              v-for="brandId in filterBrand"
+              :key="`brand-${brandId}`"
+              class="flex flex-row border px-4 py-2 space-x-1"
+            >
+              <p class="text-black font-bold capitalize">{{ getBrandName(brandId) }}</p>
             </div>
           </div>
         </div>
