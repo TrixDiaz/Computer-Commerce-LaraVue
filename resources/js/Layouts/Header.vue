@@ -3,8 +3,13 @@ import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import AuthenticatedDropdown from "@/Layouts/AuthenticatedDropdown.vue";
-
+import X from "@/Components/Icons/X.vue";
+import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
+import Cart from "@/Components/Icons/Cart.vue";
+import Login from "@/Components/Icons/Login.vue";
+import Menu from "@/Components/Icons/Menu.vue";
 const isOpen = ref(false);
+
 defineProps({
   canLogin: {
     type: Boolean,
@@ -21,20 +26,7 @@ defineProps({
     <input type="checkbox" class="peer hidden" id="navbar-open" />
     <label class="absolute right-4 top-2 cursor-pointer lg:hidden" for="navbar-open">
       <span class="sr-only">Toggle menu</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        stroke-width="2"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M4 6h16M4 12h16M4 18h16"
-        />
-      </svg>
+      <Menu />
     </label>
     <nav
       aria-labelledby="header-navigation"
@@ -55,21 +47,7 @@ defineProps({
             <div
               class="relative mb-2 w-full flex items-center justify-between rounded-md"
             >
-              <svg
-                class="absolute left-2 block h-5 w-5 text-gray-400"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="11" cy="11" r="8" class=""></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65" class=""></line>
-              </svg>
+              <MagnifyingGlass class="absolute left-2 block h-5 w-5 text-gray-400" />
               <input
                 type="name"
                 name="search"
@@ -90,21 +68,7 @@ defineProps({
             class="flex ml-2 h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-gray-600 hover:text-black hover:shadow"
           >
             <!-- Search Icon -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-search h-5 w-5"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.3-4.3" />
-            </svg>
+            <MagnifyingGlass />
           </li>
           <li
             v-if="isOpen"
@@ -112,21 +76,7 @@ defineProps({
             class="flex ml-2 h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-gray-600 hover:text-black hover:shadow"
           >
             <!-- X Icon -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-x h-5 w-5 text-blue-600"
-            >
-              <path d="M18 6 6 18" />
-              <path d="m6 6 12 12" />
-            </svg>
+            <X />
           </li>
           <li
             class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-gray-600 hover:text-black"
@@ -134,24 +84,7 @@ defineProps({
             <!-- Cart Icon -->
             <div class="relative me-4">
               <Link :href="route('cart.index')">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-shopping-cart h-6 w-6 hover:text-blue-600 transition-colors duration-200 ease-in-out"
-                >
-                  <circle cx="8" cy="21" r="1" />
-                  <circle cx="19" cy="21" r="1" />
-                  <path
-                    d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"
-                  />
-                </svg>
+                <Cart />
                 <span
                   class="absolute z-0 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-blue-600 rounded-full top-0 end-0 transform translate-x-1/2 -translate-y-1/2"
                 >
@@ -169,22 +102,7 @@ defineProps({
             class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-gray-600 hover:text-black hover:shadow"
           >
             <Link :href="route('login')">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-circle-user-round"
-              >
-                <path d="M18 20a6 6 0 0 0-12 0" />
-                <circle cx="12" cy="10" r="4" />
-                <circle cx="12" cy="12" r="10" />
-              </svg>
+              <Login />
             </Link>
           </li>
         </ul>

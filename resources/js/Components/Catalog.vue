@@ -353,10 +353,7 @@ const getBrandName = (brandId) => {
           </div>
         </div>
         <div class="bg-blue-50 border-r border-gray-400 p-4">
-          <h3 class="font-bold text-lg text-center my-4 capitalize">Brands</h3>
-          <PrimaryButton class="w-full rounded-full border border-gray-400 text-gray-400"
-            >All Brands
-          </PrimaryButton>
+          <h3 class="font-bold text-lg text-center my-2 capitalize">Brands</h3>
         </div>
         <div class="max-w-sm mx-auto place-content-center">
           <div class="grid grid-cols-2 place-content-center">
@@ -488,7 +485,7 @@ const getBrandName = (brandId) => {
                   {{ product.name }}
                 </a>
 
-                <div class="my-3 flex items-center gap-2">
+                <div class="flex items-center gap-2">
                   <span
                     v-if="salePercentage(product)"
                     class="text-sm font-medium text-red-600"
@@ -497,7 +494,11 @@ const getBrandName = (brandId) => {
                   </span>
                 </div>
 
-                <div class="mt-2 flex items-center gap-2">
+                <div class="uppercase text-gray-400 text-sm">
+                  {{ product.brand.name }} - {{ product.category.name }}
+                </div>
+
+                <div class="mt-1 flex items-center gap-1">
                   <div class="flex items-center">
                     <svg
                       v-for="i in parseInt(product.rating ?? 0)"
@@ -517,9 +518,11 @@ const getBrandName = (brandId) => {
                   </p>
                 </div>
 
-                <div class="mt-3 flex items-center gap-3">
-                  <Info class="w-4 h-4 text-green-500" />
-                  <p class="text-sm font-medium text-green-600 capitalize">in stock</p>
+                <div class="mt-1 flex items-center gap-1">
+                  <Info class="w-2 h-2 text-green-500" />
+                  <p class="text-sm font-medium text-green-600 capitalize">
+                    stock {{ product.stocks }}
+                  </p>
                 </div>
 
                 <div
