@@ -45,11 +45,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/catalog', CatalogController::class);
-    Route::resource('/cart', CartController::class);
     Route::resource('/checkout', CheckoutController::class);
-    Route::resource('/product', ProductController::class);
 });
+
+Route::resource('/catalog', CatalogController::class);
+Route::resource('/cart', CartController::class);
+Route::resource('/product', ProductController::class);
 
 Route::middleware(['auth', config('sanctum.middleware.admin')])->prefix('admin')->group(function () {
     Route::resource('/', AdminController::class);

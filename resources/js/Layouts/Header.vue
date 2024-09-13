@@ -9,6 +9,7 @@ import Cart from "@/Components/Icons/Cart.vue";
 import Login from "@/Components/Icons/Login.vue";
 import Menu from "@/Components/Icons/Menu.vue";
 const isOpen = ref(false);
+const isMobileMenuOpen = ref(false);
 
 defineProps({
   canLogin: {
@@ -18,40 +19,41 @@ defineProps({
 </script>
 
 <template>
-  <div class="relative flex max-w-7xl flex-col m-4 sm:mx-auto sm:flex-row z-20">
-    <!-- Icon -->
-    <p class="ml-2">
-      <ApplicationLogo />
-    </p>
-    <input type="checkbox" class="peer hidden" id="navbar-open" />
-    <label class="absolute right-4 top-2 cursor-pointer lg:hidden" for="navbar-open">
-      <span class="sr-only">Toggle menu</span>
-      <Menu />
-    </label>
+  <div class="relative flex flex-col m-4 z-20 md:max-w-7xl md:mx-auto md:flex-row">
+    <!-- Logo and mobile menu button -->
+    <div class="flex justify-between items-center">
+      <ApplicationLogo class="ml-2" />
+      <button @click="isMobileMenuOpen = !isMobileMenuOpen" class="md:hidden">
+        <Menu class="h-6 w-6" />
+      </button>
+    </div>
+
+    <!-- Navigation menu -->
     <nav
-      aria-labelledby="header-navigation"
-      class="lg:peer-checked:mt-0 peer-checked:max-h-full flex max-h-0 w-full flex-col items-center justify-between transition-all lg:ml-24 lg:max-h-full lg:flex-row lg:items-start"
+      :class="{ hidden: !isMobileMenuOpen, flex: isMobileMenuOpen }"
+      class="flex-col w-full mt-4 md:flex md:flex-row md:justify-between md:items-center md:mt-0 md:ml-6"
     >
-      <div class="flex flex-none" v-if="isOpen === false">
-        <ul class="flex flex-col items-center sm:flex-row sm:gap-4 lg:mt-2">
-          <li class="text-gray-800 cursor-pointer font-bold">Products</li>
-          <li class="text-gray-800 cursor-pointer">Laptop</li>
-          <li class="text-gray-800 cursor-pointer">Desktop</li>
-          <li class="text-gray-800 cursor-pointer">Components</li>
-          <li class="text-gray-800 cursor-pointer">Peripherals</li>
-        </ul>
-      </div>
-      <div class="grow">
+      <!-- Product categories -->
+      <ul v-if="!isOpen" class="flex flex-col md:flex-row md:space-x-4 mb-4 md:mb-0">
+        <li class="text-gray-800 cursor-pointer font-bold py-2 md:py-0">
+          <Link :href="route('catalog.index')">Products</Link>
+        </li>
+        <li class="text-gray-800 cursor-pointer py-2 md:py-0">Laptop</li>
+        <li class="text-gray-800 cursor-pointer py-2 md:py-0">Desktop</li>
+        <li class="text-gray-800 cursor-pointer py-2 md:py-0">Components</li>
+        <li class="text-gray-800 cursor-pointer py-2 md:py-0">Peripherals</li>
+      </ul>
+
+      <!-- Search form -->
+      <div class="grow mb-4 md:mb-0">
         <Transition name="slide-fade">
           <form v-if="isOpen" action="">
-            <div
-              class="relative mb-2 w-full flex items-center justify-between rounded-md"
-            >
+            <div class="relative w-full flex items-center justify-between rounded-md">
               <MagnifyingGlass class="absolute left-2 block h-5 w-5 text-gray-400" />
               <input
                 type="name"
                 name="search"
-                class="h-8 w-full cursor-text border border-gray-200 bg-gray-200 py-4 pr-40 pl-12 shadow-sm outline-none rounded-full"
+                class="h-10 w-full cursor-text border border-gray-200 bg-gray-200 py-2 pr-4 pl-10 shadow-sm outline-none rounded-full"
                 placeholder="Search..."
                 aria-autocomplete="inline"
                 autofocus
@@ -60,53 +62,44 @@ defineProps({
           </form>
         </Transition>
       </div>
-      <div class="mt-0.5">
-        <ul class="flex flex-none space-x-2">
-          <li
-            v-if="isOpen === false"
-            @click="isOpen = true"
-            class="flex ml-2 h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-gray-600 hover:text-black hover:shadow"
-          >
-            <!-- Search Icon -->
-            <MagnifyingGlass />
-          </li>
-          <li
-            v-if="isOpen"
-            @click="isOpen = false"
-            class="flex ml-2 h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-gray-600 hover:text-black hover:shadow"
-          >
-            <!-- X Icon -->
-            <X />
-          </li>
-          <li
-            class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-gray-600 hover:text-black"
-          >
-            <!-- Cart Icon -->
-            <div class="relative me-4">
-              <Link :href="route('cart.index')">
-                <Cart />
-                <span
-                  class="absolute z-0 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-blue-600 rounded-full top-0 end-0 transform translate-x-1/2 -translate-y-1/2"
-                >
-                  5</span
-                >
-              </Link>
-            </div>
-          </li>
-          <!-- User Icon -->
-          <li v-if="$page.props.auth.user">
-            <AuthenticatedDropdown />
-          </li>
-          <li
-            v-else
-            class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl text-gray-600 hover:text-black hover:shadow"
-          >
-            <Link :href="route('login')">
-              <Login />
+
+      <!-- Icons -->
+      <ul class="flex items-center space-x-4">
+        <li
+          v-if="!isOpen"
+          @click="isOpen = true"
+          class="cursor-pointer text-gray-600 hover:text-black"
+        >
+          <MagnifyingGlass class="h-6 w-6" />
+        </li>
+        <li
+          v-else
+          @click="isOpen = false"
+          class="cursor-pointer text-gray-600 hover:text-black"
+        >
+          <X class="h-6 w-6" />
+        </li>
+        <li class="cursor-pointer text-gray-600 hover:text-black">
+          <div class="relative">
+            <Link :href="route('cart.index')">
+              <Cart class="h-6 w-6" />
+              <span
+                class="absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-blue-600 rounded-full"
+              >
+                5
+              </span>
             </Link>
-          </li>
-        </ul>
-      </div>
+          </div>
+        </li>
+        <li v-if="$page.props.auth.user">
+          <AuthenticatedDropdown />
+        </li>
+        <li v-else class="cursor-pointer text-gray-600 hover:text-black">
+          <Link :href="route('login')">
+            <Login class="h-6 w-6" />
+          </Link>
+        </li>
+      </ul>
     </nav>
   </div>
   <hr />

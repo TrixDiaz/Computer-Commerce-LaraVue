@@ -355,6 +355,7 @@ const getBrandName = (brandId) => {
         <div class="bg-blue-50 border-r border-gray-400 p-4">
           <h3 class="font-bold text-lg text-center my-2 capitalize">Brands</h3>
         </div>
+        <!-- Brands -->
         <div class="max-w-sm mx-auto place-content-center">
           <div class="grid grid-cols-2 place-content-center">
             <img src="/images/roccat.png" class="w-24" alt="Roccat logo" />
