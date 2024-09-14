@@ -2,6 +2,7 @@
 import { ref, computed, watch, onMounted } from "vue";
 import { usePage, router, Link } from "@inertiajs/vue3";
 import { initFlowbite } from "flowbite";
+import { useCartStore } from "@/Store/CartStore";
 import ArrowDown from "@/Components/Icons/ArrowDown.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import ArrowLeft from "@/Components/Icons/ArrowLeft.vue";
@@ -17,6 +18,8 @@ import Catalog from "@/Pages/Catalog.vue";
 onMounted(() => {
   initFlowbite();
 });
+
+const cartStore = useCartStore();
 
 const props = defineProps({
   products: {
@@ -128,6 +131,16 @@ const getCategoryName = (categoryId) => {
 const getBrandName = (brandId) => {
   const brand = props.brands.data.find((b) => b.id === brandId);
   return brand ? brand.name : "";
+};
+
+const addToCart = (product) => {
+  cartStore.addItem({
+    id: product.id,
+    name: product.name,
+    price: product.is_sale === 1 ? product.sale_price : product.price,
+    image: product.image_url || "/images/laptop-image.png",
+    url: `/products/${product.id}`, // Adjust this URL as needed
+  });
 };
 </script>
 
@@ -553,6 +566,7 @@ const getBrandName = (brandId) => {
                   <div :class="isRowLayout ? 'flex items-center gap-2' : 'w-full'">
                     <button
                       type="button"
+                      @click="addToCart(product)"
                       :class="
                         isRowLayout
                           ? 'flex items-center'
