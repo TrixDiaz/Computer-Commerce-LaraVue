@@ -1,7 +1,10 @@
 <script setup>
 import { computed } from "vue";
+import { useCartStore } from "@/Store/CartStore";
 import Heart from "@/Components/Icons/Heart.vue";
 import Info from "@/Components/Icons/Info.vue";
+
+const cartStore = useCartStore();
 
 const props = defineProps({
   product: {
@@ -17,6 +20,16 @@ const salePercentage = computed(() => {
   }
   return null;
 });
+
+const addToCart = () => {
+  cartStore.addItem({
+    id: props.product.id,
+    name: props.product.name,
+    price: props.product.is_sale === 1 ? props.product.sale_price : props.product.price,
+    image: props.product.image_url || "/images/laptop-image.png",
+    url: `/products/${props.product.id}`, // Adjust this URL as needed
+  });
+};
 </script>
 
 <template>
@@ -121,6 +134,7 @@ const salePercentage = computed(() => {
         >
           <button
             type="button"
+            @click="addToCart"
             class="w-full items-center rounded-full border border-blue-500 px-2 py-2 text-xs text-blue-600 hover:bg-blue-800 hover:text-white transition-colors duration-300 ease-in-out"
           >
             Add to cart
