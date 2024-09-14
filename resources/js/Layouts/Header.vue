@@ -38,10 +38,18 @@ defineProps({
         <li class="text-gray-800 cursor-pointer font-bold py-2 md:py-0">
           <Link :href="route('catalog.index')">Products</Link>
         </li>
-        <li class="text-gray-800 cursor-pointer py-2 md:py-0">Laptop</li>
-        <li class="text-gray-800 cursor-pointer py-2 md:py-0">Desktop</li>
-        <li class="text-gray-800 cursor-pointer py-2 md:py-0">Components</li>
-        <li class="text-gray-800 cursor-pointer py-2 md:py-0">Peripherals</li>
+        <li class="text-gray-800 cursor-pointer py-2 md:py-0">
+          <Link :href="route('catalog.index', { filterCategory: '1' })">Laptop</Link>
+        </li>
+        <li class="text-gray-800 cursor-pointer py-2 md:py-0">
+          <Link :href="route('catalog.index', { filterCategory: '2' })">Desktop</Link>
+        </li>
+        <li class="text-gray-800 cursor-pointer py-2 md:py-0">
+          <Link :href="route('catalog.index', { filterCategory: '3' })">Components</Link>
+        </li>
+        <li class="text-gray-800 cursor-pointer py-2 md:py-0">
+          <Link :href="route('catalog.index', { filterCategory: '4' })">Peripherals</Link>
+        </li>
       </ul>
 
       <!-- Search form -->

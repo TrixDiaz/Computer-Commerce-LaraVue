@@ -44,6 +44,18 @@ let filterCategory = ref([]);
 let filterBrand = ref([]);
 const categoryCheckboxes = ref({});
 
+const urlParams = computed(() => new URLSearchParams(window.location.search));
+
+const selectedCategories = computed(() => {
+  const categoryParam = urlParams.value.get("filterCategory");
+  return categoryParam ? categoryParam.split(",").map(Number) : [];
+});
+
+const selectedBrands = computed(() => {
+  const brandParam = urlParams.value.get("filterBrand");
+  return brandParam ? brandParam.split(",").map(Number) : [];
+});
+
 let productsUrl = computed(() => {
   let url = new URL(route("catalog.index"));
 
@@ -105,6 +117,7 @@ const filterCategories = (activeId) => {
   } else {
     filterCategory.value.push(activeId);
   }
+  updateUrl();
 };
 
 const filterBrands = (activeId) => {
@@ -113,6 +126,14 @@ const filterBrands = (activeId) => {
   } else {
     filterBrand.value.push(activeId);
   }
+  updateUrl();
+};
+
+const updateUrl = () => {
+  const url = new URL(window.location);
+  url.searchParams.set("filterCategory", filterCategory.value.join(","));
+  url.searchParams.set("filterBrand", filterBrand.value.join(","));
+  window.history.pushState({}, "", url);
 };
 
 const salePercentage = (product) => {
@@ -142,6 +163,11 @@ const addToCart = (product) => {
     url: `/products/${product.id}`, // Adjust this URL as needed
   });
 };
+
+onMounted(() => {
+  filterCategory.value = selectedCategories.value;
+  filterBrand.value = selectedBrands.value;
+});
 </script>
 
 <template>
@@ -280,6 +306,7 @@ const addToCart = (product) => {
                     :id="brand.id"
                     type="checkbox"
                     :value="brand.id"
+                    :checked="selectedBrands.includes(brand.id)"
                     class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <InputLabel
@@ -323,6 +350,7 @@ const addToCart = (product) => {
                     :id="category.id"
                     type="checkbox"
                     :value="category.id"
+                    :checked="selectedCategories.includes(category.id)"
                     class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                   />
                   <InputLabel
@@ -331,35 +359,6 @@ const addToCart = (product) => {
                   >
                     {{ category.name }}
                   </InputLabel>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- Button Dropdown -->
-          <div class="relative">
-            <div class="relative w-56">
-              <input
-                class="peer hidden"
-                checked
-                type="checkbox"
-                name="select-5"
-                id="select-5"
-              />
-              <label
-                for="select-5"
-                class="flex w-full cursor-pointer select-none rounded-lg p-2 px-3 text-md font-bold text-gray-700 mt-4"
-                >Category</label
-              >
-              <ArrowDown
-                class="pointer-events-none absolute right-0 top-3 ml-auto mr-3 h-4 text-gray-600 transition peer-checked:rotate-180"
-              />
-              <ul
-                class="relative w-full transition-all duration-300 peer-checked:max-h-56 peer-checked:py-0 overflow-hidden max-h-0 flex-col"
-              >
-                <li>
-                  <PrimaryButton class="bg-blue-500 text-white w-full rounded-full"
-                    >Apply Filter (2)</PrimaryButton
-                  >
                 </li>
               </ul>
             </div>
