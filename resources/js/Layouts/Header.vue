@@ -8,8 +8,11 @@ import MagnifyingGlass from "@/Components/Icons/MagnifyingGlass.vue";
 import Cart from "@/Components/Icons/Cart.vue";
 import Login from "@/Components/Icons/Login.vue";
 import Menu from "@/Components/Icons/Menu.vue";
+import { useCartStore } from "@/Store/CartStore";
+
 const isOpen = ref(false);
 const isMobileMenuOpen = ref(false);
+const cartStore = useCartStore();
 
 defineProps({
   canLogin: {
@@ -92,9 +95,10 @@ defineProps({
             <Link :href="route('cart.index')">
               <Cart class="h-6 w-6" />
               <span
-                class="absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-blue-600 rounded-full"
+                v-if="cartStore.items.length > 0"
+                class="absolute -top-2 -right-2 inline-flex items-center justify-center w-5 h-4 text-xs font-bold text-white bg-blue-600 rounded-full"
               >
-                5
+                {{ cartStore.items.length }}
               </span>
             </Link>
           </div>
