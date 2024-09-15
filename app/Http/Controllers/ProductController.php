@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
@@ -33,9 +36,11 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        return Inertia::render('Product', [
+            'product' => ProductResource::make($product->load(['category', 'brand'])),
+        ]);
     }
 
     /**

@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/catalog', CatalogController::class);
 Route::resource('/cart', CartController::class);
-Route::resource('/product', ProductController::class);
+Route::get('/product/{product}/view', [ProductController::class, 'show'])->name('product.show');
 
 Route::middleware(['auth', config('sanctum.middleware.admin')])->prefix('admin')->group(function () {
     Route::resource('/', AdminController::class);

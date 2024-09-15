@@ -11,7 +11,7 @@ import BlockLayout from "@/Components/Icons/BlockLayout.vue";
 import RowLayout from "@/Components/Icons/RowLayout.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Info from "@/Components/Icons/Info.vue";
-import Heart from "@/Components/Icons/Heart.vue";
+import Eye from "@/Components/Icons/Eye.vue";
 import X from "@/Components/Icons/X.vue";
 import Catalog from "@/Pages/Catalog.vue";
 
@@ -142,7 +142,7 @@ const addToCart = (product) => {
     name: product.name,
     price: product.is_sale === 1 ? product.sale_price : product.price,
     image: product.image_url || "/images/laptop-image.png",
-    url: `/products/${product.id}`, // Adjust this URL as needed
+    url: `/products/${product.id}/view`, // Adjust this URL as needed
   });
 };
 
@@ -464,7 +464,7 @@ watch(
             >
               <!-- Image -->
               <div :class="isRowLayout ? 'w-1/3' : 'w-full'" class="relative h-48">
-                <a href="#" class="block h-full w-full">
+                <Link :href="`/product/${product.id}/view`" class="block h-full w-full">
                   <img
                     v-if="product.image_url === null"
                     class="w-full h-full object-cover group-hover/item:opacity-0 transition-opacity duration-300 ease-in-out"
@@ -490,10 +490,10 @@ watch(
                     :src="product.hover_image_url"
                     alt="Product Image"
                   />
-                </a>
+                </Link>
               </div>
 
-              <!-- Add to Card and Heart Icon -->
+              <!-- Add to Card and Eye Icon -->
               <div
                 :class="
                   isRowLayout
@@ -501,13 +501,14 @@ watch(
                     : 'hidden group-hover/item:flex absolute top-4 right-4 flex-col items-center gap-2'
                 "
               >
-                <button
+                <Link
+                  :href="`/product/${product.id}/view`"
                   v-if="!isRowLayout"
                   type="button"
-                  class="p-1 text-transparent rounded-full hover:bg-red-300"
+                  class="p-1 rounded-full hover:bg-slate-200"
                 >
-                  <Heart class="w-7 h-7" />
-                </button>
+                  <Eye class="w-7 h-7" />
+                </Link>
               </div>
 
               <!-- Description -->
@@ -533,7 +534,7 @@ watch(
                   </div>
                 </div>
                 <Link
-                  href="#"
+                  :href="`/product/${product.id}/view`"
                   class="text-lg font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:text-blue-600 transition-colors duration-300"
                 >
                   {{ product.name }}
