@@ -62,4 +62,14 @@ Route::middleware(['auth', config('sanctum.middleware.admin')])->prefix('admin')
     Route::resource('/trending', AdminTrendingController::class);
 });
 
+Route::get('/payment/success', function () {
+    // Handle successful payment
+    return Inertia::render('PaymentSuccess');
+})->name('payment.success');
+
+Route::get('/payment/cancel', function () {
+    // Handle cancelled payment
+    return Inertia::render('PaymentCancel');
+})->name('payment.cancel');
+
 require __DIR__ . '/auth.php';

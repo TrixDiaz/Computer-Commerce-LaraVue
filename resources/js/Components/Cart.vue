@@ -38,8 +38,34 @@ const updateQuantity = (productId, newQuantity) => {
                 <div
                   class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0"
                 >
-                  <Link :href="item.url" class="w-20 shrink-0 md:order-1">
-                    <img class="h-20 w-20" :src="item.image" :alt="item.name" />
+                  <Link :href="item.url" class="group/item w-20 shrink-0 md:order-1">
+                    <div class="relative w-20 h-20 overflow-hidden">
+                      <img
+                        v-if="item.image_url === null"
+                        class="w-full h-full object-cover group-hover/item:opacity-0 transition-opacity duration-300 ease-in-out"
+                        src="/images/laptop-image.png"
+                        alt="Product Image"
+                      />
+                      <img
+                        v-else
+                        class="w-full h-full object-cover group-hover/item:opacity-0 transition-opacity duration-300 ease-in-out"
+                        :src="item.image_url"
+                        alt="Product Image"
+                      />
+
+                      <img
+                        v-if="item.hover_image_url === null"
+                        class="w-full h-full object-cover opacity-0 group-hover/item:opacity-100 absolute inset-0 transition-opacity duration-300 ease-in-out"
+                        src="/images/hover-image.png"
+                        alt="Product Image"
+                      />
+                      <img
+                        v-else
+                        class="w-full h-full object-cover opacity-0 group-hover/item:opacity-100 absolute inset-0 transition-opacity duration-300 ease-in-out"
+                        :src="item.hover_image_url"
+                        alt="Product Image"
+                      />
+                    </div>
                   </Link>
 
                   <div

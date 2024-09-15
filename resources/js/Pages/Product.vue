@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { Head, usePage } from "@inertiajs/vue3";
+import { Head, usePage, router } from "@inertiajs/vue3";
 import Annoucement from "@/Components/Annoucement.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
@@ -10,6 +10,7 @@ import HeaderNav from "@/Layouts/Header.vue";
 import Footer from "@/Layouts/Footer.vue";
 import Banner from "@/Components/Banner.vue";
 import { useCartStore } from "@/Store/CartStore";
+import axios from "axios";
 
 const openTab = ref(1);
 const product = ref(null);
@@ -23,6 +24,27 @@ onMounted(() => {
 const addToCart = () => {
   if (product.value) {
     cartStore.addItem(product.value);
+  }
+};
+
+const processGcashPayment = async () => {
+  if (product.value) {
+    try {
+      const response = await axios.post("/api/product/gcash-payment", {
+        product_id: product.value.id,
+        amount: product.value.is_sale ? product.value.sale_price : product.value.price,
+      });
+
+      if (response.data.success) {
+        // Redirect to the PayMongo checkout URL
+        window.location.href = response.data.checkout_url;
+      } else {
+        alert("GCash payment session creation failed: " + response.data.message);
+      }
+    } catch (error) {
+      console.error("Error processing GCash payment:", error);
+      alert("An error occurred while processing your payment. Please try again.");
+    }
   }
 };
 </script>
@@ -84,7 +106,11 @@ const addToCart = () => {
             >
           </p>
           <SecondaryButton @click="addToCart">Add to Cart</SecondaryButton>
-          <PrimaryButton class="rounded-full bg-blue-500 text-white">GCash</PrimaryButton>
+          <PrimaryButton
+            @click="processGcashPayment"
+            class="rounded-full bg-blue-500 text-white"
+            >Pay with GCash</PrimaryButton
+          >
         </div>
       </div>
 
