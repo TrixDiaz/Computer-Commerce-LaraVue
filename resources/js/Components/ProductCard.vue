@@ -101,20 +101,24 @@ const addToCart = () => {
           >
         </div>
       </div>
-      <Link
+      <a
         :href="route('product.show', { product: product.id })"
         class="text-sm text-wrap font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:underline"
       >
         {{ product.name }}
-      </Link>
+      </a>
 
       <div class="my-2 flex items-center justify-between gap-2">
         <span
           v-if="salePercentage"
-          class="rounded bg-primary-100 py-0.5 px-1.5 text-xs font-medium text-primary-800 capitalize"
+          class="rounded bg-primary-100 py-0.5 px-1.5 text-xs font-medium text-red-500 capitalize"
         >
           {{ salePercentage }} off
         </span>
+      </div>
+
+      <div class="text-start uppercase text-gray-400 text-sm">
+        {{ product.brand.name }} - {{ product.category.name }}
       </div>
 
       <div class="mt-2 flex items-center gap-1">
@@ -140,7 +144,9 @@ const addToCart = () => {
       <ul class="mt-2 flex items-center gap-2">
         <li class="flex items-center gap-1">
           <Info />
-          <p class="text-xs font-medium text-gray-500 capitalize">in stock</p>
+          <p class="text-sm font-medium text-green-600 capitalize">
+            stock {{ product.stocks }}
+          </p>
         </li>
       </ul>
 

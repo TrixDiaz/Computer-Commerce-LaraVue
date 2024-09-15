@@ -7,7 +7,7 @@ import VueCarousel from "@/Components/VueCarousel.vue";
 import ProductCard from "@/Components/ProductCard.vue";
 import Banner from "@/Components/Banner.vue";
 import Products from "@/Components/Products.vue";
-// import TabsProduct from "@/Components/TabsProduct.vue";
+import TabsProduct from "@/Components/TabsProduct.vue";
 import Brands from "@/Components/Brands.vue";
 import Promotion from "@/Components/Promotion.vue";
 import Support from "@/Components/Support.vue";
@@ -53,7 +53,7 @@ const props = defineProps({
       :link="route('catalog.index', { page: 1, sort: 'featured_products' })"
     />
 
-    <!-- <TabsProduct :products="props.products.data" /> -->
+    <TabsProduct :products="props.products.data" />
 
     <Products
       :products="props.saleProducts.data"
