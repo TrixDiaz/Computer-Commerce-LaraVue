@@ -58,6 +58,15 @@ class CatalogController extends Controller
                 case 'discount_desc':
                     $query->orderByRaw('(price - sale_price) / price DESC');
                     break;
+                case 'featured_products' :
+                    $query->where('is_featured', true);
+                    break;
+                case 'new_products' :
+                    $query->where('is_new', true)->orderBy('created_at', 'desc');
+                    break;
+                case 'sale_products' :
+                    $query->where('is_sale', true);
+                    break;
                 default:
                     $query->orderBy('name', 'asc');
             }

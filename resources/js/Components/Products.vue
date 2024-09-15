@@ -2,6 +2,7 @@
 import { defineProps } from "vue";
 import VueCarousel from "@/Components/VueCarousel.vue";
 import ProductCard from "@/Components/ProductCard.vue";
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
   products: {
@@ -11,6 +12,10 @@ const props = defineProps({
   title: {
     type: String,
     default: "Featured",
+  },
+  link: {
+    type: String,
+    required: false,
   },
 });
 </script>
@@ -24,7 +29,7 @@ const props = defineProps({
           <span class="block">{{ title }}</span>
           <span class="block">Products</span>
           <p class="absolute mt-20 text-xs text-nowrap capitalize underline text-white">
-            see all products
+            <Link :href="link">see all products </Link>
           </p>
         </div>
       </div>

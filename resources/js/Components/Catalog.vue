@@ -17,9 +17,10 @@ import Catalog from "@/Pages/Catalog.vue";
 
 onMounted(() => {
   initFlowbite();
+  filterCategory.value = selectedCategories.value;
+  filterBrand.value = selectedBrands.value;
+  selectedSort.value = selectedSorts.value;
 });
-
-const cartStore = useCartStore();
 
 const props = defineProps({
   products: {
@@ -36,14 +37,14 @@ const props = defineProps({
   },
 });
 
+const cartStore = useCartStore();
 const isRowLayout = ref(false);
 let search = ref(usePage().props.search ?? "");
 let sort = ref("");
 let pageNumber = ref(1);
 let filterCategory = ref([]);
 let filterBrand = ref([]);
-const categoryCheckboxes = ref({});
-
+const selectedSortLabel = ref("Sort by");
 const urlParams = computed(() => new URLSearchParams(window.location.search));
 
 const selectedCategories = computed(() => {
@@ -73,7 +74,7 @@ let productsUrl = computed(() => {
     url.searchParams.set("filterBrand", filterBrand.value.join(","));
   }
 
-  return url;
+  return url.toString();
 });
 
 const setRowLayout = () => {
@@ -87,28 +88,9 @@ const pageNumberUpdated = (link) => {
   pageNumber.value = link.url.split("=")[1];
 };
 
-watch(
-  () => productsUrl.value,
-  (updateproductUrl) => {
-    router.visit(updateproductUrl, {
-      preserveScroll: true,
-      preserveState: true,
-      replace: true,
-    });
-  }
-);
-
-watch(
-  () => search.value,
-  (value) => {
-    if (value) {
-      pageNumber.value = 1;
-    }
-  }
-);
-
-const sortproducts = (order) => {
+const sortProducts = (order, label) => {
   sort.value = order;
+  selectedSortLabel.value = label;
 };
 
 const filterCategories = (activeId) => {
@@ -164,10 +146,25 @@ const addToCart = (product) => {
   });
 };
 
-onMounted(() => {
-  filterCategory.value = selectedCategories.value;
-  filterBrand.value = selectedBrands.value;
-});
+watch(
+  () => productsUrl.value,
+  (updateproductUrl) => {
+    router.visit(updateproductUrl, {
+      preserveScroll: true,
+      preserveState: true,
+      replace: true,
+    });
+  }
+);
+
+watch(
+  () => search.value,
+  (value) => {
+    if (value) {
+      pageNumber.value = 1;
+    }
+  }
+);
 </script>
 
 <template>
@@ -198,55 +195,73 @@ onMounted(() => {
               <label
                 for="select-1"
                 class="flex w-full cursor-pointer select-none rounded-lg border p-2 px-3 text-sm text-gray-700"
-                >Sort by
+                >{{ selectedSortLabel }}
               </label>
               <ArrowDown
                 class="pointer-events-none absolute right-0 top-3 ml-auto mr-5 h-4 text-gray-600 transition peer-checked:rotate-180"
               />
               <ul
-                class="absolute z-50 bg-white w-full rounded-b-lg shadow-xl transition-all duration-300 peer-checked:max-h-72 peer-checked:py-3 overflow-hidden max-h-0 flex-col"
+                class="absolute z-50 bg-white w-full rounded-b-lg shadow-xl transition-all duration-300 peer-checked:max-h-96 peer-checked:py-3 overflow-hidden max-h-0 flex-col"
               >
                 <li
-                  @click.prevent="sortproducts('name_asc')"
+                  @click.prevent="sortProducts('name_asc', 'Sort by A - Z')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
                   Sort by A - Z
                 </li>
                 <li
-                  @click.prevent="sortproducts('name_desc')"
+                  @click.prevent="sortProducts('name_desc', 'Sort by Z - A')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
                   Sort by Z - A
                 </li>
                 <li
-                  @click.prevent="sortproducts('price_asc')"
+                  @click.prevent="sortProducts('price_asc', 'Price: Low to High')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
                   Price: Low to High
                 </li>
                 <li
-                  @click.prevent="sortproducts('price_desc')"
+                  @click.prevent="sortProducts('price_desc', 'Price: High to Low')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
                   Price: High to Low
                 </li>
                 <li
-                  @click.prevent="sortproducts('date_desc')"
+                  @click.prevent="sortProducts('date_desc', 'Date: New to Old')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
                   Date: New to Old
                 </li>
                 <li
-                  @click.prevent="sortproducts('date_asc')"
+                  @click.prevent="sortProducts('date_asc', 'Date: Old to New')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
                   Date: Old to New
                 </li>
                 <li
-                  @click.prevent="sortproducts('discount_desc')"
+                  @click.prevent="sortProducts('discount_desc', 'Discount: High to Low')"
                   class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
                 >
                   Discount: High to Low
+                </li>
+                <li
+                  @click.prevent="sortProducts('featured_products', 'Featured Products')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
+                >
+                  Featured Products
+                </li>
+                <li
+                  @click.prevent="sortProducts('new_products', 'New Products')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
+                >
+                  New Products
+                </li>
+                <li
+                  @click.prevent="sortProducts('sale_products', 'Sale Products')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
+                >
+                  Sale Products
                 </li>
               </ul>
             </div>
@@ -418,7 +433,13 @@ onMounted(() => {
         </div>
         <!-- End Filter Section -->
         <!-- Pagination -->
-        <Pagination :data="props.products" :pageNumberUpdated="pageNumberUpdated" />
+        <Pagination
+          :data="props.products"
+          :pageNumberUpdated="pageNumberUpdated"
+          :preserveState="true"
+          :preserveScroll="true"
+          :replace="true"
+        />
         <!-- End of Pagination -->
         <!-- This will be where the main content (e.g., product cards) goes -->
         <main class="flex-1 px-2">
@@ -491,12 +512,32 @@ onMounted(() => {
 
               <!-- Description -->
               <div :class="isRowLayout ? 'w-2/3 pl-6' : 'w-full mt-4'" class="relative">
-                <a
+                <div class="flex flex-row justify-center items-center my-0.5">
+                  <div v-if="product.is_featured" class="text-sm">
+                    <span
+                      class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+                      >Featured</span
+                    >
+                  </div>
+                  <div v-if="product.is_sale" class="text-sm">
+                    <span
+                      class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"
+                      >Sale</span
+                    >
+                  </div>
+                  <div v-if="product.is_new" class="text-sm">
+                    <span
+                      class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"
+                      >New</span
+                    >
+                  </div>
+                </div>
+                <Link
                   href="#"
                   class="text-lg font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:text-blue-600 transition-colors duration-300"
                 >
                   {{ product.name }}
-                </a>
+                </Link>
 
                 <div class="flex items-center gap-2">
                   <span
@@ -589,7 +630,13 @@ onMounted(() => {
             <!-- End of Product Card -->
           </div>
           <!-- Pagination -->
-          <Pagination :data="props.products" :pageNumberUpdated="pageNumberUpdated" />
+          <Pagination
+            :data="props.products"
+            :pageNumberUpdated="pageNumberUpdated"
+            :preserveState="true"
+            :preserveScroll="true"
+            :replace="true"
+          />
           <!-- End of Pagination -->
         </main>
       </slot>

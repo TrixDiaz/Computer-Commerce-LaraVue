@@ -32,7 +32,9 @@ const props = defineProps({
     <div class="max-w-7xl mx-auto">
       <div class="flex flex-col sm:flex-row justify-between items-center">
         <p class="text-xl font-bold my-4">New Products</p>
-        <Link href="#" class="text-blue-600 underline capitalize text-sm"
+        <Link
+          :href="route('catalog.index', { page: 1, sort: 'new_products' })"
+          class="text-blue-600 underline capitalize text-sm"
           >See all new product</Link
         >
       </div>
@@ -45,11 +47,19 @@ const props = defineProps({
 
     <Banner class="bg-white" title="Featured" />
 
-    <Products :products="props.featuredProducts.data" class="mb-4" />
+    <Products
+      :products="props.featuredProducts.data"
+      class="mb-4"
+      :link="route('catalog.index', { page: 1, sort: 'featured_products' })"
+    />
 
     <!-- <TabsProduct :products="props.products.data" /> -->
 
-    <Products :products="props.saleProducts.data" title="Sale" />
+    <Products
+      :products="props.saleProducts.data"
+      title="Sale"
+      :link="route('catalog.index', { page: 1, sort: 'sale_products' })"
+    />
 
     <Brands />
 

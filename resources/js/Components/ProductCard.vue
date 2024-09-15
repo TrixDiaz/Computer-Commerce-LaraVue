@@ -78,12 +78,32 @@ const addToCart = () => {
           </button>
         </div>
       </div>
-      <a
+      <div class="flex flex-row justify-center items-center my-0.5">
+        <div v-if="product.is_featured" class="text-sm">
+          <span
+            class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
+            >Featured</span
+          >
+        </div>
+        <div v-if="product.is_sale" class="text-sm">
+          <span
+            class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"
+            >Sale</span
+          >
+        </div>
+        <div v-if="product.is_new" class="text-sm">
+          <span
+            class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"
+            >New</span
+          >
+        </div>
+      </div>
+      <Link
         href="#"
         class="text-sm text-wrap font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:underline"
       >
         {{ product.name }}
-      </a>
+      </Link>
 
       <div class="my-2 flex items-center justify-between gap-2">
         <span
