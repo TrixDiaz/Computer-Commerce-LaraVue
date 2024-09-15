@@ -125,7 +125,7 @@ const updateQuantity = (productId, newQuantity) => {
                   or
                 </span>
                 <a
-                  href="#"
+                  :href="route('catalog.index')"
                   title=""
                   class="inline-flex items-center gap-2 text-sm font-medium text-slate-700 underline hover:no-underline dark:text-slate-500"
                 >

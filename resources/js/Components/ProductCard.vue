@@ -1,9 +1,9 @@
 <script setup>
 import { computed } from "vue";
 import { useCartStore } from "@/Store/CartStore";
+import { Link } from "@inertiajs/vue3";
 import Eye from "@/Components/Icons/Eye.vue";
 import Info from "@/Components/Icons/Info.vue";
-import { Link } from "@inertiajs/vue3";
 
 const cartStore = useCartStore();
 
@@ -13,8 +13,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-const productUrl = computed(() => `/product/${props.product.id}/view`);
 
 const salePercentage = computed(() => {
   if (props.product.is_sale === 1 && props.product.price && props.product.sale_price) {
@@ -40,7 +38,10 @@ const addToCart = () => {
     class="group/item relative bg-white p-6 mb-6 max-w-72 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 w-full"
   >
     <div class="relative h-48 w-full overflow-hidden">
-      <Link :href="productUrl" class="block h-full w-full">
+      <Link
+        :href="route('product.show', { product: product.id })"
+        class="block h-full w-full"
+      >
         <img
           v-if="product.image_url === null"
           class="w-full h-full object-cover group-hover/item:opacity-0 transition-opacity duration-300 ease-in-out"
@@ -73,7 +74,7 @@ const addToCart = () => {
         class="absolute top-2 right-2 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 ease-in-out"
       >
         <div class="flex flex-col items-center gap-1">
-          <Link :href="productUrl">
+          <Link :href="route('product.show', { product: product.id })">
             <button type="button" class="p-1 rounded-full hover:bg-gray-200">
               <Eye class="w-7 h-7" />
             </button>
@@ -101,7 +102,7 @@ const addToCart = () => {
         </div>
       </div>
       <Link
-        :href="productUrl"
+        :href="route('product.show', { product: product.id })"
         class="text-sm text-wrap font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:underline"
       >
         {{ product.name }}

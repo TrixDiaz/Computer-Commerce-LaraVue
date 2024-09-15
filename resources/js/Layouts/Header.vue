@@ -39,19 +39,19 @@ defineProps({
       <!-- Product categories -->
       <ul v-if="!isOpen" class="flex flex-col md:flex-row md:space-x-4 mb-4 md:mb-0">
         <li class="text-gray-800 cursor-pointer font-bold py-2 md:py-0">
-          <Link :href="route('catalog.index')">Products</Link>
+          <a :href="route('catalog.index')">Products</a>
         </li>
         <li class="text-gray-800 cursor-pointer py-2 md:py-0">
-          <Link :href="route('catalog.index', { filterCategory: '1' })">Laptop</Link>
+          <a :href="route('catalog.index', { filterCategory: '1' })">Laptop</a>
         </li>
         <li class="text-gray-800 cursor-pointer py-2 md:py-0">
-          <Link :href="route('catalog.index', { filterCategory: '2' })">Desktop</Link>
+          <a :href="route('catalog.index', { filterCategory: '2' })">Desktop</a>
         </li>
         <li class="text-gray-800 cursor-pointer py-2 md:py-0">
-          <Link :href="route('catalog.index', { filterCategory: '3' })">Components</Link>
+          <a :href="route('catalog.index', { filterCategory: '3' })">Components</a>
         </li>
         <li class="text-gray-800 cursor-pointer py-2 md:py-0">
-          <Link :href="route('catalog.index', { filterCategory: '4' })">Peripherals</Link>
+          <a :href="route('catalog.index', { filterCategory: '4' })">Peripherals</a>
         </li>
       </ul>
 

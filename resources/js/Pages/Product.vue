@@ -177,14 +177,14 @@ const addToCart = () => {
             v-if="product.image_url"
             :src="product.image_url"
             :alt="product.name"
-            class="w-full h-full object-contain transition-opacity duration-300 ease-in-out group-hover:opacity-0"
+            class="w-full max-h-80 object-contain transition-opacity duration-300 ease-in-out group-hover:opacity-0"
             loading="lazy"
           />
           <img
             v-else
-            src="/images/laptop-image.png"
+            src="/images/msilaptop.png"
             alt="Default Product Image"
-            class="w-full h-full object-contain transition-opacity duration-300 ease-in-out group-hover:opacity-0"
+            class="w-full max-h-80 object-contain transition-opacity duration-300 ease-in-out group-hover:opacity-0"
             loading="lazy"
           />
 
@@ -192,13 +192,13 @@ const addToCart = () => {
             v-if="product.hover_image_url"
             :src="product.hover_image_url"
             :alt="`${product.name} - Hover Image`"
-            class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+            class="absolute inset-0 w-full max-h-80 object-contain opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
           />
           <img
             v-else
-            src="/images/hover-image.png"
+            src="/images/laptop-image2.png"
             alt="Default Hover Image"
-            class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
+            class="absolute inset-0 w-full max-h-80 object-contain opacity-0 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
           />
 
           <!-- <div

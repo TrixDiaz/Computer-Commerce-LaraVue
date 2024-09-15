@@ -464,7 +464,7 @@ watch(
             >
               <!-- Image -->
               <div :class="isRowLayout ? 'w-1/3' : 'w-full'" class="relative h-48">
-                <Link :href="`/product/${product.id}/view`" class="block h-full w-full">
+                <a :href="route('product.show', product.id)" class="block h-full w-full">
                   <img
                     v-if="product.image_url === null"
                     class="w-full h-full object-cover group-hover/item:opacity-0 transition-opacity duration-300 ease-in-out"
@@ -490,7 +490,7 @@ watch(
                     :src="product.hover_image_url"
                     alt="Product Image"
                   />
-                </Link>
+                </a>
               </div>
 
               <!-- Add to Card and Eye Icon -->
@@ -501,14 +501,14 @@ watch(
                     : 'hidden group-hover/item:flex absolute top-4 right-4 flex-col items-center gap-2'
                 "
               >
-                <Link
-                  :href="`/product/${product.id}/view`"
+                <a
+                  :href="route('product.show', product.id)"
                   v-if="!isRowLayout"
                   type="button"
                   class="p-1 rounded-full hover:bg-slate-200"
                 >
                   <Eye class="w-7 h-7" />
-                </Link>
+                </a>
               </div>
 
               <!-- Description -->
@@ -533,12 +533,12 @@ watch(
                     >
                   </div>
                 </div>
-                <Link
-                  :href="`/product/${product.id}/view`"
+                <a
+                  :href="route('product.show', product.id)"
                   class="text-lg font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:text-blue-600 transition-colors duration-300"
                 >
                   {{ product.name }}
-                </Link>
+                </a>
 
                 <div class="flex items-center gap-2">
                   <span
