@@ -5,6 +5,7 @@ import X from "@/Components/Icons/X.vue";
 import Minus from "@/Components/Icons/Minus.vue";
 import Plus from "@/Components/Icons/Plus.vue";
 import { Link } from "@inertiajs/vue3";
+import axios from "axios";
 
 const cartStore = useCartStore();
 const { items, totalPrice } = storeToRefs(cartStore);
@@ -12,6 +13,25 @@ const { items, totalPrice } = storeToRefs(cartStore);
 const updateQuantity = (productId, newQuantity) => {
   if (newQuantity > 0) {
     cartStore.updateQuantity(productId, newQuantity);
+  }
+};
+
+const processPayment = async () => {
+  try {
+    const response = await axios.post("api/cart/process-payment", {
+      items: items.value,
+      totalPrice: totalPrice.value,
+    });
+
+    if (response.data.success) {
+      window.location.href = response.data.checkout_url;
+    } else {
+      console.error("Payment processing failed:", response.data.message);
+      // Handle error (e.g., show an error message to the user)
+    }
+  } catch (error) {
+    console.error("Error processing payment:", error);
+    // Handle error (e.g., show an error message to the user)
   }
 };
 </script>
@@ -140,11 +160,12 @@ const updateQuantity = (productId, newQuantity) => {
                 </dl>
               </div>
 
-              <Link
-                href="#"
+              <button
+                @click="processPayment"
                 class="flex w-full items-center justify-center rounded-lg bg-slate-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-700 dark:focus:ring-slate-800"
-                >Proceed to Checkout</Link
               >
+                Proceed to Checkout
+              </button>
 
               <div class="flex items-center justify-center gap-2">
                 <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
