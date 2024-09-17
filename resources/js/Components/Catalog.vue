@@ -171,15 +171,9 @@ watch(
   <div class="max-w-7xl mx-auto pt-2">
     <div class="flex flex-none justify-center items-center my-2 gap-2">
       <!-- Back to home  -->
-      <div
-        class="hidden lg:flex flex-none w-64 justify-center items-center cursor-pointer"
-      >
-        <Link
-          href="/"
-          class="flex flex-row justify-center items-center text-lg font-bold"
-        >
-          <ArrowLeft /> Back</Link
-        >
+      <div class="hidden lg:flex flex-none w-64 justify-center items-center cursor-pointer">
+        <Link href="/" class="flex flex-row justify-center items-center text-lg font-bold">
+        <ArrowLeft /> Back</Link>
       </div>
       <div class="flex flex-col md:flex-row flex-1 justify-between items-center">
         <p class="text-gray-400 text-sm tracking-tight">
@@ -192,75 +186,52 @@ watch(
           <div class="relative">
             <div class="relative w-56">
               <input class="peer hidden" type="checkbox" name="select-1" id="select-1" />
-              <label
-                for="select-1"
-                class="flex w-full cursor-pointer select-none rounded-lg border p-2 px-3 text-sm text-gray-700"
-                >{{ selectedSortLabel }}
+              <label for="select-1"
+                class="flex w-full cursor-pointer select-none rounded-lg border p-2 px-3 text-sm text-gray-700">{{
+                  selectedSortLabel }}
               </label>
               <ArrowDown
-                class="pointer-events-none absolute right-0 top-3 ml-auto mr-5 h-4 text-gray-600 transition peer-checked:rotate-180"
-              />
+                class="pointer-events-none absolute right-0 top-3 ml-auto mr-5 h-4 text-gray-600 transition peer-checked:rotate-180" />
               <ul
-                class="absolute z-50 bg-white w-full rounded-b-lg shadow-xl transition-all duration-300 peer-checked:max-h-96 peer-checked:py-3 overflow-hidden max-h-0 flex-col"
-              >
-                <li
-                  @click.prevent="sortProducts('name_asc', 'Sort by A - Z')"
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
+                class="absolute z-50 bg-white w-full rounded-b-lg shadow-xl transition-all duration-300 peer-checked:max-h-96 peer-checked:py-3 overflow-hidden max-h-0 flex-col">
+                <li @click.prevent="sortProducts('name_asc', 'Sort by A - Z')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
                   Sort by A - Z
                 </li>
-                <li
-                  @click.prevent="sortProducts('name_desc', 'Sort by Z - A')"
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
+                <li @click.prevent="sortProducts('name_desc', 'Sort by Z - A')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
                   Sort by Z - A
                 </li>
-                <li
-                  @click.prevent="sortProducts('price_asc', 'Price: Low to High')"
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
+                <li @click.prevent="sortProducts('price_asc', 'Price: Low to High')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
                   Price: Low to High
                 </li>
-                <li
-                  @click.prevent="sortProducts('price_desc', 'Price: High to Low')"
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
+                <li @click.prevent="sortProducts('price_desc', 'Price: High to Low')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
                   Price: High to Low
                 </li>
-                <li
-                  @click.prevent="sortProducts('date_desc', 'Date: New to Old')"
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
+                <li @click.prevent="sortProducts('date_desc', 'Date: New to Old')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
                   Date: New to Old
                 </li>
-                <li
-                  @click.prevent="sortProducts('date_asc', 'Date: Old to New')"
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
+                <li @click.prevent="sortProducts('date_asc', 'Date: Old to New')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
                   Date: Old to New
                 </li>
-                <li
-                  @click.prevent="sortProducts('discount_desc', 'Discount: High to Low')"
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
+                <li @click.prevent="sortProducts('discount_desc', 'Discount: High to Low')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
                   Discount: High to Low
                 </li>
-                <li
-                  @click.prevent="sortProducts('featured_products', 'Featured Products')"
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
+                <li @click.prevent="sortProducts('featured_products', 'Featured Products')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
                   Featured Products
                 </li>
-                <li
-                  @click.prevent="sortProducts('new_products', 'New Products')"
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
+                <li @click.prevent="sortProducts('new_products', 'New Products')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
                   New Products
                 </li>
-                <li
-                  @click.prevent="sortProducts('sale_products', 'Sale Products')"
-                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white"
-                >
+                <li @click.prevent="sortProducts('sale_products', 'Sale Products')"
+                  class="cursor-pointer px-3 py-2 text-sm text-gray-500 hover:bg-blue-500 hover:text-white">
                   Sale Products
                 </li>
               </ul>
@@ -286,48 +257,25 @@ watch(
         <div class="bg-blue-50 border-r border-gray-400 p-4 mb-2">
           <h3 class="font-bold text-lg text-center mb-4 capitalize">Filters</h3>
           <Link :href="route('catalog.index')">
-            <PrimaryButton class="w-full rounded-full border border-gray-400"
-              >Clear Filter
-            </PrimaryButton></Link
-          >
+          <PrimaryButton class="w-full rounded-full border border-gray-400">Clear Filter
+          </PrimaryButton>
+          </Link>
           <!-- Category Dropdown -->
           <div class="relative">
             <div class="relative w-56">
-              <input
-                class="peer hidden"
-                checked
-                type="checkbox"
-                name="select-3"
-                id="select-3"
-              />
-              <label
-                for="select-3"
-                class="flex w-full cursor-pointer select-none rounded-lg p-2 px-3 text-md font-bold text-gray-700 mt-4"
-                >Brands</label
-              >
+              <input class="peer hidden" checked type="checkbox" name="select-3" id="select-3" />
+              <label for="select-3"
+                class="flex w-full cursor-pointer select-none rounded-lg p-2 px-3 text-md font-bold text-gray-700 mt-4">Brands</label>
               <ArrowDown
-                class="pointer-events-none absolute right-0 top-3 ml-auto mr-3 h-4 text-gray-600 transition peer-checked:rotate-180"
-              />
+                class="pointer-events-none absolute right-0 top-3 ml-auto mr-3 h-4 text-gray-600 transition peer-checked:rotate-180" />
               <ul
-                class="relative w-full transition-all duration-300 peer-checked:max-h-56 peer-checked:py-0 overflow-hidden max-h-0 flex-col"
-              >
-                <li
-                  v-for="brand in props.brands.data"
-                  :key="brand.id"
-                  class="flex flex-row justify-start items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-gray-300 hover:text-white"
-                >
-                  <input
-                    @change="filterBrands(brand.id)"
-                    :id="brand.id"
-                    type="checkbox"
-                    :value="brand.id"
+                class="relative w-full transition-all duration-300 peer-checked:max-h-56 peer-checked:py-0 overflow-hidden max-h-0 flex-col">
+                <li v-for="brand in props.brands.data" :key="brand.id"
+                  class="flex flex-row justify-start items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-gray-300 hover:text-white">
+                  <input @change="filterBrands(brand.id)" :id="brand.id" type="checkbox" :value="brand.id"
                     :checked="selectedBrands.includes(brand.id)"
-                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <InputLabel
-                    :for="brand.id"
-                    class="ml-2 text-sm font-medium text-gray-900"
-                  >
+                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                  <InputLabel :for="brand.id" class="ml-2 text-sm font-medium text-gray-900">
                     {{ brand.name }}
                   </InputLabel>
                 </li>
@@ -337,41 +285,19 @@ watch(
           <!-- Price Dropdown -->
           <div class="relative">
             <div class="relative w-56">
-              <input
-                class="peer hidden"
-                checked
-                type="checkbox"
-                name="select-4"
-                id="select-4"
-              />
-              <label
-                for="select-4"
-                class="flex w-full cursor-pointer select-none rounded-lg p-2 px-3 text-md font-bold text-gray-700 mt-4"
-                >Category</label
-              >
+              <input class="peer hidden" checked type="checkbox" name="select-4" id="select-4" />
+              <label for="select-4"
+                class="flex w-full cursor-pointer select-none rounded-lg p-2 px-3 text-md font-bold text-gray-700 mt-4">Category</label>
               <ArrowDown
-                class="pointer-events-none absolute right-0 top-3 ml-auto mr-3 h-4 text-gray-600 transition peer-checked:rotate-180"
-              />
+                class="pointer-events-none absolute right-0 top-3 ml-auto mr-3 h-4 text-gray-600 transition peer-checked:rotate-180" />
               <ul
-                class="relative w-full transition-all duration-300 peer-checked:max-h-56 peer-checked:py-0 overflow-hidden max-h-0 flex-col"
-              >
-                <li
-                  v-for="category in props.categories.data"
-                  :key="category.id"
-                  class="flex flex-row justify-start items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-gray-300 hover:text-white"
-                >
-                  <input
-                    @change="filterCategories(category.id)"
-                    :id="category.id"
-                    type="checkbox"
-                    :value="category.id"
+                class="relative w-full transition-all duration-300 peer-checked:max-h-56 peer-checked:py-0 overflow-hidden max-h-0 flex-col">
+                <li v-for="category in props.categories.data" :key="category.id"
+                  class="flex flex-row justify-start items-center cursor-pointer px-3 py-1 text-sm text-gray-500 hover:bg-gray-300 hover:text-white">
+                  <input @change="filterCategories(category.id)" :id="category.id" type="checkbox" :value="category.id"
                     :checked="selectedCategories.includes(category.id)"
-                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  />
-                  <InputLabel
-                    :for="category.id"
-                    class="ml-2 text-sm font-medium text-gray-900"
-                  >
+                    class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                  <InputLabel :for="category.id" class="ml-2 text-sm font-medium text-gray-900">
                     {{ category.name }}
                   </InputLabel>
                 </li>
@@ -395,11 +321,7 @@ watch(
           </div>
         </div>
         <div>
-          <img
-            src="/images/noblechair.png"
-            class="w-full h-full object-contain"
-            alt="Roccat logo"
-          />
+          <img src="/images/noblechair.png" class="w-full h-full object-contain" alt="Roccat logo" />
         </div>
       </slot>
     </aside>
@@ -411,103 +333,63 @@ watch(
         <div class="mb-4">
           <div class="flex flex-row flex-wrap gap-2">
             <!-- Display selected category filters -->
-            <div
-              v-for="categoryId in filterCategory"
-              :key="`category-${categoryId}`"
-              class="flex flex-row border px-4 py-2 space-x-1"
-            >
+            <div v-for="categoryId in filterCategory" :key="`category-${categoryId}`"
+              class="flex flex-row border px-4 py-2 space-x-1">
               <p class="text-black font-bold capitalize">
                 {{ getCategoryName(categoryId) }}
               </p>
             </div>
 
             <!-- Display selected brand filters -->
-            <div
-              v-for="brandId in filterBrand"
-              :key="`brand-${brandId}`"
-              class="flex flex-row border px-4 py-2 space-x-1"
-            >
+            <div v-for="brandId in filterBrand" :key="`brand-${brandId}`"
+              class="flex flex-row border px-4 py-2 space-x-1">
               <p class="text-black font-bold capitalize">{{ getBrandName(brandId) }}</p>
             </div>
           </div>
         </div>
         <!-- End Filter Section -->
         <!-- Pagination -->
-        <Pagination
-          :data="props.products"
-          :pageNumberUpdated="pageNumberUpdated"
-          :preserveState="true"
-          :preserveScroll="true"
-          :replace="true"
-        />
+        <Pagination :data="props.products" :pageNumberUpdated="pageNumberUpdated" :preserveState="true"
+          :preserveScroll="true" :replace="true" />
         <!-- End of Pagination -->
         <!-- This will be where the main content (e.g., product cards) goes -->
         <main class="flex-1 px-2">
-          <div
-            :class="
-              isRowLayout
-                ? 'grid grid-cols-1 w-full relative'
-                : 'relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-            "
-            class="place-items-center gap-4 p-1 lg:p-4 w-full"
-          >
+          <div :class="isRowLayout
+            ? 'grid grid-cols-1 w-full relative'
+            : 'relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+            " class="place-items-center gap-4 p-1 lg:p-4 w-full">
             <!-- Product Card -->
-            <div
-              v-for="product in props.products.data"
-              :key="product.id"
-              :class="
-                isRowLayout
-                  ? 'flex flex-row items-center bg-white p-4 shadow-md rounded-lg mb-4 w-full'
-                  : 'group/item relative bg-white p-6 mb-6 max-w-72 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 w-full'
-              "
-              class="group/item"
-            >
+            <div v-for="product in props.products.data" :key="product.id" :class="isRowLayout
+              ? 'flex flex-row items-center bg-white p-4 shadow-md rounded-lg mb-4 w-full'
+              : 'group/item relative bg-white p-6 mb-6 max-w-72 rounded-lg transition-all duration-300 hover:shadow-lg hover:scale-105 w-full'
+              " class="group/item">
               <!-- Image -->
               <div :class="isRowLayout ? 'w-1/3' : 'w-full'" class="relative h-48">
                 <a :href="route('product.show', product.id)" class="block h-full w-full">
-                  <img
-                    v-if="product.image_url === null"
+                  <img v-if="product.image_url === null"
                     class="w-full h-full object-cover group-hover/item:opacity-0 transition-opacity duration-300 ease-in-out"
-                    src="/images/laptop-image.png"
-                    alt="Product Image"
-                  />
-                  <img
-                    v-else
+                    src="/images/laptop-image.png" alt="Product Image" />
+                  <img v-else
                     class="w-full h-full object-cover group-hover/item:opacity-0 transition-opacity duration-300 ease-in-out"
-                    :src="product.image_url"
-                    alt="Product Image"
-                  />
+                    :src="product.image_url" alt="Product Image" />
 
-                  <img
-                    v-if="product.hover_image_url === null"
+                  <img v-if="product.hover_image_url === null"
                     class="w-full h-full object-cover opacity-0 group-hover/item:opacity-100 absolute inset-0 transition-opacity duration-300 ease-in-out"
-                    src="/images/hover-image.png"
-                    alt="Product Image"
-                  />
-                  <img
-                    v-else
+                    src="/images/hover-image.png" alt="Product Image" />
+                  <img v-else
                     class="w-full h-full object-cover opacity-0 group-hover/item:opacity-100 absolute inset-0 transition-opacity duration-300 ease-in-out"
-                    :src="product.hover_image_url"
-                    alt="Product Image"
-                  />
+                    :src="product.hover_image_url" alt="Product Image" />
                 </a>
               </div>
 
               <!-- Add to Card and Eye Icon -->
-              <div
-                :class="
-                  isRowLayout
-                    ? 'flex flex-row items-center gap-2 mt-4'
-                    : 'hidden group-hover/item:flex absolute top-4 right-4 flex-col items-center gap-2'
-                "
-              >
-                <a
-                  :href="route('product.show', product.id)"
-                  v-if="!isRowLayout"
-                  type="button"
-                  class="p-1 rounded-full hover:bg-slate-200"
-                >
-                  <Eye class="w-7 h-7" />
+              <div :class="isRowLayout
+                ? 'flex flex-row items-center gap-2 mt-4'
+                : 'hidden group-hover/item:flex absolute top-4 right-4 flex-col items-center gap-2'
+                ">
+                <a :href="route('product.show', product.id)" v-if="!isRowLayout" type="button"
+                  class="p-1 rounded-full hover:bg-slate-200">
+                  <Eye class="w-5 h-5 text-gray-600" />
                 </a>
               </div>
 
@@ -516,112 +398,77 @@ watch(
                 <div class="flex flex-row justify-center items-center my-0.5">
                   <div v-if="product.is_featured" class="text-sm">
                     <span
-                      class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300"
-                      >Featured</span
-                    >
+                      class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Featured</span>
                   </div>
                   <div v-if="product.is_sale" class="text-sm">
                     <span
-                      class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300"
-                      >Sale</span
-                    >
+                      class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Sale</span>
                   </div>
                   <div v-if="product.is_new" class="text-sm">
                     <span
-                      class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300"
-                      >New</span
-                    >
+                      class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">New</span>
                   </div>
                 </div>
-                <a
-                  :href="route('product.show', product.id)"
-                  class="text-lg font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:text-blue-600 transition-colors duration-300"
-                >
+                <a :href="route('product.show', product.id)" :class="!isRowLayout ? 'text-center mt-2  ' : ''"
+                  class="text-lg font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:text-blue-600 transition-colors duration-300">
                   {{ product.name }}
                 </a>
 
-                <div class="flex items-center gap-2">
-                  <span
-                    v-if="salePercentage(product)"
-                    class="text-sm font-medium text-red-600"
-                  >
+                <div class="flex items-center" :class="!isRowLayout ? 'justify-center' : ''">
+                  <span v-if="salePercentage(product)" class="text-sm font-medium text-red-600">
                     {{ salePercentage(product) }} Off
                   </span>
                 </div>
 
-                <div class="uppercase text-gray-400 text-sm">
+                <div :class="!isRowLayout ? 'text-center' : ''" class="uppercase text-gray-400 text-sm">
                   {{ product.brand.name }} - {{ product.category.name }}
                 </div>
 
-                <div class="mt-1 flex items-center gap-1">
-                  <div class="flex items-center">
-                    <svg
-                      v-for="i in parseInt(product.rating ?? 0)"
-                      :key="i"
-                      class="h-4 w-4 text-yellow-400"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z"
-                      />
-                    </svg>
+                <div :class="!isRowLayout ? 'flex justify-between items-center' : ''">
+                  <div class="mt-1 flex items-center">
+                    <div class="flex items-center">
+                      <svg v-for="i in parseInt(product.rating ?? 0)" :key="i" class="h-4 w-4 text-yellow-400"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M13.8 4.2a2 2 0 0 0-3.6 0L8.4 8.4l-4.6.3a2 2 0 0 0-1.1 3.5l3.5 3-1 4.4c-.5 1.7 1.4 3 2.9 2.1l3.9-2.3 3.9 2.3c1.5 1 3.4-.4 3-2.1l-1-4.4 3.4-3a2 2 0 0 0-1.1-3.5l-4.6-.3-1.8-4.2Z" />
+                      </svg>
+                    </div>
+                    <p class="text-sm font-medium text-gray-700">
+                      {{ product.rating ?? "No rating yet" }}
+                    </p>
                   </div>
-                  <p class="text-sm font-medium text-gray-700">
-                    {{ product.rating ?? "No rating yet" }}
-                  </p>
+
+                  <div class="mt-1 flex items-center gap-1">
+                    <p class="text-sm font-medium text-green-600 capitalize">
+                      stock {{ product.stocks }}
+                    </p>
+                  </div>
                 </div>
 
-                <div class="mt-1 flex items-center gap-1">
-                  <Info class="w-2 h-2 text-green-500" />
-                  <p class="text-sm font-medium text-green-600 capitalize">
-                    stock {{ product.stocks }}
-                  </p>
-                </div>
-
-                <div
-                  :class="
-                    isRowLayout
-                      ? 'mt-4 flex justify-between items-center w-full'
-                      : 'mt-4 flex flex-col items-center'
-                  "
-                >
-                  <div
-                    :class="
-                      isRowLayout
-                        ? 'flex items-center gap-2'
-                        : 'flex items-center gap-4 mb-3'
-                    "
-                  >
-                    <p class="text-2xl font-bold text-gray-900">
+                <div :class="isRowLayout
+                  ? 'mt-4 flex justify-between items-center w-full'
+                  : 'mt-4 flex flex-col items-center'
+                  ">
+                  <div :class="isRowLayout
+                    ? 'flex items-center gap-2'
+                    : 'flex items-center gap-4 mb-3'
+                    ">
+                    <p class="text-lg font-bold text-gray-900">
                       ₱{{ product.is_sale === 1 ? product.sale_price : product.price }}
                     </p>
-                    <p
-                      v-if="product.is_sale === 1"
-                      class="text-lg text-gray-500 line-through"
-                    >
+                    <p v-if="product.is_sale === 1" class="text-md text-gray-500 line-through">
                       ₱{{ product.price }}
                     </p>
                   </div>
                   <div :class="isRowLayout ? 'flex items-center gap-2' : 'w-full'">
-                    <button
-                      type="button"
-                      @click="addToCart(product)"
-                      :class="
-                        isRowLayout
-                          ? 'flex items-center'
-                          : 'w-full opacity-0 group-hover/item:opacity-100 transition-opacity duration-300'
+                    <button type="button" @click="addToCart(product)" :class="isRowLayout
+                      ? 'flex items-center'
+                      : 'w-full opacity-0 group-hover/item:opacity-100 transition-opacity duration-300'
                       "
-                      class="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors duration-300"
-                    >
+                      class="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors duration-300">
                       Add to cart
                     </button>
-                    <button
-                      v-if="isRowLayout"
-                      type="button"
-                      class="p-1 text-transparent rounded-full hover:bg-red-300"
-                    >
+                    <button v-if="isRowLayout" type="button" class="p-1 text-transparent rounded-full hover:bg-red-300">
                       <Heart class="w-7 h-7" />
                     </button>
                   </div>
@@ -631,13 +478,8 @@ watch(
             <!-- End of Product Card -->
           </div>
           <!-- Pagination -->
-          <Pagination
-            :data="props.products"
-            :pageNumberUpdated="pageNumberUpdated"
-            :preserveState="true"
-            :preserveScroll="true"
-            :replace="true"
-          />
+          <Pagination :data="props.products" :pageNumberUpdated="pageNumberUpdated" :preserveState="true"
+            :preserveScroll="true" :replace="true" />
           <!-- End of Pagination -->
         </main>
       </slot>

@@ -58,10 +58,13 @@ defineProps({
 
     <!-- Navigation menu -->
     <nav :class="{ hidden: !isMobileMenuOpen, flex: isMobileMenuOpen }"
-      class="flex-col w-full mt-4 md:flex md:flex-row md:justify-between md:items-center md:mt-0 md:ml-6">
+      class="relative flex-col w-full mt-4 md:flex md:flex-row md:justify-between md:items-center md:mt-0 md:ml-6">
       <!-- Product categories -->
       <ul v-if="!isOpen" class="flex flex-col md:flex-row md:space-x-4 mb-4 md:mb-0">
-        <li class="text-gray-800 cursor-pointer font-bold py-2 md:py-0">
+        <li class="text-gray-800 cursor-pointer py-2 md:py-0">
+          <a :href="route('welcome')">Home</a>
+        </li>
+        <li class="text-gray-800 cursor-pointer py-2 md:py-0">
           <a :href="route('catalog.index')">Products</a>
         </li>
         <li class="text-gray-800 cursor-pointer py-2 md:py-0">
