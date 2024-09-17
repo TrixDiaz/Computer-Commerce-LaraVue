@@ -23,3 +23,5 @@ Route::post('/product/gcash-payment', [ProductController::class, 'processGcashPa
 
 Route::post('/cart/process-payment', [CartController::class, 'processPayment']);
 
+Route::get('/search', [ProductController::class, 'search']);
+

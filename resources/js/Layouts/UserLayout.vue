@@ -3,8 +3,8 @@ import { onMounted } from "vue";
 import { Head } from "@inertiajs/vue3";
 import { initFlowbite } from "flowbite";
 import Header from "@/Layouts/Header.vue";
-import Footer from "@/Layouts/Footer.vue";
 import Annoucement from "@/Components/Annoucement.vue";
+import Footer from "@/Layouts/Footer.vue";
 
 defineProps({
   title: String,
@@ -23,8 +23,8 @@ onMounted(() => {
 
   <Header />
 
-  <main>
-    <slot />
+  <main class="min-h-screen">
+    <slot /> 
   </main>
 
   <Footer />

@@ -120,4 +120,16 @@ class ProductController extends Controller
             ], 400);
         }
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $products = Product::where('name', 'like', "%{$query}%")
+            ->orWhere('description', 'like', "%{$query}%")
+            ->with(['series', 'category', 'brand'])
+            ->limit(5)
+            ->get();
+
+        return ProductResource::collection($products);
+    }
 }
