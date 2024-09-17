@@ -32,6 +32,13 @@ watch(searchQuery, (newValue) => {
   }
 });
 
+watch(isOpen, (newValue) => {
+  if (!newValue) {
+    searchStore.searchResults = [];
+    searchQuery.value = '';
+  }
+});
+
 defineProps({
   canLogin: {
     type: Boolean,
@@ -87,9 +94,9 @@ defineProps({
    
 
       <!-- Add search results display -->
-      <div v-if="searchStore.searchResults.length > 0"
+      <div v-if="isOpen && searchStore.searchResults.length > 0"
         class="absolute top-full left-0 right-0 bg-white shadow-md rounded-md mt-2 z-50">
-        <ul v-if="searchStore.searchResults.length > 0">
+        <ul>
           <li v-for="product in searchStore.searchResults" :key="product.id" class="p-2 hover:bg-gray-100">
             <Link :href="route('product.show', product.id)" class="flex items-center">
             <img v-if="product.image_url === null" src="/images/laptop-image.png" alt="Product Null"
