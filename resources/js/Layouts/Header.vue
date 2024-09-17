@@ -65,19 +65,19 @@ defineProps({
           <a :href="route('welcome')">Home</a>
         </li>
         <li class="text-gray-800 cursor-pointer py-2 md:py-0">
-          <a :href="route('catalog.index')">Products</a>
+          <a target="_blank" :href="route('catalog.index')">Products</a>
         </li>
         <li class="text-gray-800 cursor-pointer py-2 md:py-0">
-          <a :href="route('catalog.index', { filterCategory: '1' })">Laptop</a>
+          <a target="_blank"  :href="route('catalog.index', { filterCategory: '1' })">Laptop</a>
         </li>
         <li class="text-gray-800 cursor-pointer py-2 md:py-0">
-          <a :href="route('catalog.index', { filterCategory: '2' })">Desktop</a>
+          <a  target="_blank" :href="route('catalog.index', { filterCategory: '2' })">Desktop</a>
         </li>
         <li class="text-gray-800 cursor-pointer py-2 md:py-0">
-          <a :href="route('catalog.index', { filterCategory: '3' })">Components</a>
+          <a target="_blank"  :href="route('catalog.index', { filterCategory: '3' })">Components</a>
         </li>
         <li class="text-gray-800 cursor-pointer py-2 md:py-0">
-          <a :href="route('catalog.index', { filterCategory: '4' })">Peripherals</a>
+          <a target="_blank"  :href="route('catalog.index', { filterCategory: '4' })">Peripherals</a>
         </li>
       </ul>
 
@@ -101,7 +101,7 @@ defineProps({
         class="absolute top-full left-0 right-0 bg-white shadow-md rounded-md mt-2 z-50">
         <ul>
           <li v-for="product in searchStore.searchResults" :key="product.id" class="p-2 hover:bg-gray-100">
-            <Link :href="route('product.show', product.id)" class="flex items-center">
+            <a target="_blank" :href="route('product.show', product.id)" class="flex items-center">
             <img v-if="product.image_url === null" src="/images/laptop-image.png" alt="Product Null"
               class="w-12 h-12 object-cover mr-2">
             <img v-else :src="product.image_url" :alt="product.name" class="w-12 h-12 object-cover mr-2">
@@ -109,7 +109,7 @@ defineProps({
               <h3 class="font-semibold">{{ product.name }}</h3>
               <p class="text-sm text-gray-600">{{ product.price }}</p>
             </div>
-            </Link>
+            </a>
           </li>
         </ul>
       </div>

@@ -23,8 +23,10 @@ const props = defineProps({
 <template>
   <UserLayout title="Catalog">
     <HeroCard class="hidden lg:block" />
-
+    
+    <div class="relative">
     <ProductCatalog :products="props.products" :categories="props.categories" :brands="props.brands" />
+    </div>
 
     <Support />
   </UserLayout>

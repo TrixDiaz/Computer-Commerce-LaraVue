@@ -10,10 +10,11 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import BlockLayout from "@/Components/Icons/BlockLayout.vue";
 import RowLayout from "@/Components/Icons/RowLayout.vue";
 import Pagination from "@/Components/Pagination.vue";
-import Info from "@/Components/Icons/Info.vue";
 import Eye from "@/Components/Icons/Eye.vue";
-import X from "@/Components/Icons/X.vue";
-import Catalog from "@/Pages/Catalog.vue";
+import Heart from "@/Components/Icons/Heart.vue";
+
+const selectedSort = ref('');
+const selectedSorts = ref('');
 
 onMounted(() => {
   initFlowbite();
@@ -249,7 +250,7 @@ watch(
       </div>
     </div>
   </div>
-  <div class="max-w-7xl mx-auto flex min-h-screen my-4">
+  <div class="max-w-7xl mx-auto flex my-4">
     <!-- Sidebar -->
     <aside class="hidden lg:block w-64">
       <!-- Sidebar content (e.g., filters) -->
@@ -468,9 +469,7 @@ watch(
                       class="rounded-full bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors duration-300">
                       Add to cart
                     </button>
-                    <button v-if="isRowLayout" type="button" class="p-1 text-transparent rounded-full hover:bg-red-300">
-                      <Heart class="w-7 h-7" />
-                    </button>
+                    <Heart v-if="isRowLayout" class="w-7 h-7" />
                   </div>
                 </div>
               </div>
