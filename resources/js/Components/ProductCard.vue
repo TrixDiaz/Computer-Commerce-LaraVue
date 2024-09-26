@@ -78,7 +78,7 @@ const addToCart = () => {
         </div>
       </div>
       <a :href="route('product.show', { product: product.id })"
-        class="text-lg text-wrap font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:underline my-2">
+        class="text-lg text-wrap font-semibold leading-tight tracking-tight line-clamp-2 text-gray-900 hover:text-blue-500 my-2">
         {{ product.name }}
       </a>
 

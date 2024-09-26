@@ -121,7 +121,7 @@ defineProps({
           <MagnifyingGlass class="h-6 w-6" />
         </li>
         <li v-else @click="isOpen = false" class="cursor-pointer text-gray-600 hover:text-black">
-          <X class="h-6 w-6" />
+          <X class="h-6 w-6 ml-2" />
         </li>
         <li class="cursor-pointer text-gray-600 hover:text-black">
           <div class="relative">

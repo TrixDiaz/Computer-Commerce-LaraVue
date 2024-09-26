@@ -15,6 +15,7 @@ const backgroundImage = computed(() => {
 let intervalId;
 
 const startCarousel = () => {
+  stopCarousel(); // Stop any existing interval
   intervalId = setInterval(() => {
     currentIndex.value = (currentIndex.value + 1) % trendingStore.images.length;
   }, 3000);
@@ -27,7 +28,7 @@ const stopCarousel = () => {
 // Fetch trending items when the component is mounted
 onMounted(() => {
   trendingStore.fetchTrendingItems();
-  startCarousel();
+  // Remove startCarousel() from here
 });
 
 watch(
@@ -35,11 +36,12 @@ watch(
   (newImages) => {
     if (newImages.length > 0) {
       currentIndex.value = 0; // Reset to first image when new images are loaded
-      startCarousel();
+      startCarousel(); // Move startCarousel() here
     } else {
       stopCarousel();
     }
-  }
+  },
+  { immediate: true } // Add this option
 );
 
 const changeSlide = (index) => {
