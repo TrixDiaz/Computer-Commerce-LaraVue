@@ -101,7 +101,8 @@ const deleteStudent = (userId) => {
                     <div class="w-full">
                         <p class="px-2 pb-2 font-medium text-xl Capitalize">View all Users</p>
                         <div class="relative bg-white shadow-md sm:rounded-lg">
-                            <div class="flex flex-col items-center justify-between p-4 space-y-2 md:flex-row md:space-y-0 md:space-x-4">
+                            <div
+                                class="flex flex-col items-center justify-between p-4 space-y-2 md:flex-row md:space-y-0 md:space-x-4">
                                 <div class="w-full md:w-1/2">
                                     <form class="flex items-center gap-2">
                                         <InputLabel for="simple-search" class="sr-only">Search</InputLabel>
@@ -118,18 +119,18 @@ const deleteStudent = (userId) => {
                                 </div>
                                 <div
                                     class="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center md:space-x-2">
-                                    <Link :href="route('users.create')">
+                                    <!-- <Link :href="route('users.create')">
                                     <PrimaryButton>
                                         Add User
                                     </PrimaryButton>
-                                    </Link>
+                                    </Link> -->
 
                                     <div class="flex items-center w-full space-x-2 md:w-auto">
                                         <SecondaryButton id="actionsDropdownButton"
                                             data-dropdown-toggle="actionsDropdown"
                                             class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto hover:bg-gray-100 hover:text-primary-700"
                                             type="button">
-                                            <ArrowDown/>
+                                            <ArrowDown />
                                             Sort
                                         </SecondaryButton>
                                         <div id="actionsDropdown"
@@ -152,9 +153,9 @@ const deleteStudent = (userId) => {
                                         <SecondaryButton id="filterDropdownButton" data-dropdown-toggle="filterDropdown"
                                             class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto hover:bg-gray-100 hover:text-primary-700"
                                             type="button">
-                                            <Filter/>
+                                            <Filter />
                                             Filter
-                                            <ArrowDown/>
+                                            <ArrowDown />
                                         </SecondaryButton>
 
                                         <!-- Dropdown menu -->
@@ -165,8 +166,7 @@ const deleteStudent = (userId) => {
                                             </h6>
                                             <ul class="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                                                 <li class="flex items-center">
-                                                    <input @change="filterUsers(1)" id="users" type="checkbox"
-                                                        value=""
+                                                    <input @change="filterUsers(1)" id="users" type="checkbox" value=""
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                     <InputLabel for="users"
                                                         class="ml-2 text-sm font-medium text-gray-900">
@@ -183,8 +183,7 @@ const deleteStudent = (userId) => {
                                                     </InputLabel>
                                                 </li>
                                                 <li class="flex items-center">
-                                                    <input @change="filterUsers(3)" id="admins" type="checkbox"
-                                                        value=""
+                                                    <input @change="filterUsers(3)" id="admins" type="checkbox" value=""
                                                         class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600" />
                                                     <InputLabel for="admins"
                                                         class="ml-2 text-sm font-medium text-gray-900">

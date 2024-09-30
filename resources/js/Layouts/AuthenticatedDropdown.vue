@@ -45,22 +45,6 @@ const logout = () => {
           My profile
         </Link>
       </li>
-      <li v-if="$page.url === '/admin'">
-        <Link
-          :href="route('welcome')"
-          class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
-        >
-          Users
-        </Link>
-      </li>
-      <li v-else>
-        <Link
-          :href="route('index')"
-          class="block py-2 px-4 text-sm hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white"
-        >
-          Admin
-        </Link>
-      </li>
       <li class="cursor-pointer">
         <form @submit.prevent="logout">
           <Link
